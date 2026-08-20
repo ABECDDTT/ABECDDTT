@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>问道山海 · 修仙文字游戏 v1.3.20</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="bg-layer" class="bg-layer">
+    <div class="bg-image" id="bg-image"></div>
+    <div class="bg-overlay"></div>
+  </div>
+  <header id="status-bar" class="status-bar hidden">
+    <div class="status-left">
+      <span class="status-name" id="s-name">求道者</span>
+      <span class="status-realm" id="s-realm">炼气期</span>
+    </div>
+    <div class="status-mid">
+      <div class="bar-block">
+        <span class="bar-label">气血</span>
+        <div class="bar"><div class="bar-fill bar-hp" id="bar-hp"></div></div>
+        <span class="bar-text" id="txt-hp">100/100</span>
+      </div>
+      <div class="bar-block">
+        <span class="bar-label">灵力</span>
+        <div class="bar"><div class="bar-fill bar-mp" id="bar-mp"></div></div>
+        <span class="bar-text" id="txt-mp">100/100</span>
+      </div>
+      <div class="bar-block" id="evil-block" title="点击查看各国恶念" style="cursor:pointer;">
+        <span class="bar-label" id="evil-label">恶念</span>
+        <div class="bar"><div class="bar-fill bar-evil" id="bar-evil"></div></div>
+        <span class="bar-text" id="txt-evil">0</span>
+      </div>
+    </div>
+    <div class="status-right">
+      <span class="status-pet" id="s-pet" title="主力灵宠"></span>
+      <button id="btn-home" class="top-btn" title="返回家园（随时回家发育）">🏠</button>
+      <button id="btn-character" class="top-btn" title="角色面板">角色</button>
+      <button id="btn-bag" class="top-btn" title="背包">背包</button>
+      <button id="btn-favor" class="top-btn" title="好感度">好感</button>
+      <button id="btn-mute" class="top-btn" title="背景音乐开关">🔊</button>
+      <button id="btn-save" class="top-btn" title="存档">存档</button>
+      <button id="btn-menu" class="top-btn" title="菜单">菜单</button>
+    </div>
+  </header>
+  <aside id="quest-guide" class="quest-guide hidden">
+    <div class="qg-title" id="qg-title"><span>当前指引</span><button class="qg-toggle" id="qg-toggle" title="折叠/展开">−</button></div>
+    <div class="qg-body" id="qg-body">
+      <div class="qg-primary" id="qg-primary"></div>
+      <ul class="qg-items" id="qg-items"></ul>
+    </div>
+  </aside>
+  <main id="stage" class="stage">
+    <section id="screen-title" class="screen active">
+      <button class="title-settings-btn" id="btn-title-settings" title="设置">⚙️</button>
+      <div class="title-layout">
+        <!-- 左侧功能栏 -->
+        <aside class="title-sidebar" id="title-sidebar">
+          <div class="title-sidebar-title">山海万象</div>
+          <button class="sidebar-btn" id="btn-side-signin" title="每日签到">📅 每日签到</button>
+          <button class="sidebar-btn" id="btn-side-novice" title="新手历程">🧭 新手历程</button>
+          <button class="sidebar-btn" id="btn-side-mingsign" title="命签抽卡">🔮 命签抽卡</button>
+          <button class="sidebar-btn" id="btn-side-weekly" title="每周任务">📜 每周任务</button>
+          <button class="sidebar-btn" id="btn-side-challenge" title="挑战模式">⚔️ 挑战模式</button>
+          <button class="sidebar-btn" id="btn-side-tome" title="山海绘卷">📜 山海绘卷</button>
+          <button class="sidebar-btn" id="btn-side-characters" title="角色图鉴">👥 角色图鉴</button>
+          <button class="sidebar-btn" id="btn-side-pets" title="灵宠图鉴">🐾 灵宠图鉴</button>
+          <button class="sidebar-btn" id="btn-side-skins" title="皮肤图鉴">🎨 皮肤图鉴</button>
+          <button class="sidebar-btn" id="btn-side-ach" title="全局成就">🎖️ 全局成就</button>
+          <button class="sidebar-btn" id="btn-side-legacy" title="传承树">🌳 传承树</button>
+          <button class="sidebar-btn" id="btn-side-builds" title="流派图鉴">📖 流派图鉴</button>
+          <div class="title-sidebar-ming" id="title-sidebar-ming">命数：0</div>
+        </aside>
+        <!-- 中区 -->
+        <div class="title-inner">
+          <h1 class="game-title">问道山海</h1>
+          <p class="game-subtitle">以《山海经》异闻为骨，修仙问道为魂</p>
+          <p class="game-tip">— 纯文字剧情驱动 · 命格先天 · 因果后天 · 人人如龙 —</p>
+          <div class="title-buttons">
+            <button class="btn btn-primary" id="btn-newgame">踏 入 山 海</button>
+            <button class="btn btn-ghost" id="btn-load">续 道 前 程</button>
+            <button class="btn btn-ghost" id="btn-credits">更 新 公 告</button>
+            <button class="btn btn-ghost debug-btn hidden" id="btn-debug-skip">[调试] 跳过教程</button>
+          </div>
+          <p class="title-credit">独立制作人：杨长辉 · 版本 v1.3.20</p>
+          <p class="title-progress" id="title-progress"></p>
+        </div>
+      </div>
+    </section>
+    <section id="screen-mode" class="screen hidden">
+      <h2 class="screen-title">择 道 之 始 · 明 心 而 行</h2>
+      <p class="screen-desc">请选择本次修行的模式。剧情模式走主线故事，挑战模式以凡人视角展开试炼。</p>
+      <div class="difficulty-cards mode-cards">
+        <div class="diff-card" data-mode="story">
+          <h3>剧 情 模 式</h3>
+          <p class="prof-tag">主线 · 山海征程</p>
+          <p class="prof-desc">踏上二十国主线，问道山海，一念成神，一念成魔。</p>
+        </div>
+        <div class="diff-card" data-mode="challenge">
+          <h3>挑 战 模 式</h3>
+          <p class="prof-tag">凡人视角 · 试炼</p>
+          <p class="prof-desc">以轩辕国等普通人的视角展开冒险，完成试炼赢取命数、职业与皮肤。</p>
+        </div>
+      </div>
+    </section>
+    <section id="screen-difficulty" class="screen hidden">
+      <h2 class="screen-title">择 道 之 难 · 明 心 而 行</h2>
+      <p class="screen-desc">选择本次修行之路的难度。难度影响敌人的强弱。</p>
+      <div class="difficulty-cards">
+        <div class="diff-card" data-diff="easy">
+          <h3>闲 庭</h3>
+          <p class="prof-tag">敌人属性 -50%</p>
+          <p class="prof-desc">闲云野鹤，悠然问道。</p>
+        </div>
+        <div class="diff-card" data-diff="normal">
+          <h3>入 道</h3>
+          <p class="prof-tag">敌人属性 -20%</p>
+          <p class="prof-desc">初入道途，稳扎稳打。</p>
+        </div>
+        <div class="diff-card" data-diff="hard">
+          <h3>修 行</h3>
+          <p class="prof-tag">敌人属性不变</p>
+          <p class="prof-desc">中正平和，循道而进。</p>
+        </div>
+        <div class="diff-card" data-diff="harder">
+          <h3>逆 天</h3>
+          <p class="prof-tag">敌人属性 +50%</p>
+          <p class="prof-desc">逆水行舟，向死而生。</p>
+        </div>
+        <div class="diff-card" data-diff="hell">
+          <h3>炼 狱</h3>
+          <p class="prof-tag">敌人属性 +100%</p>
+          <p class="prof-desc">九死一生，向死而生，方证大道。</p>
+        </div>
+      </div>
+    </section>
+    <section id="screen-name" class="screen hidden">
+      <h2 class="screen-title">名 号 初 定 · 道 途 之 始</h2>
+      <p class="screen-desc">为自己取一个名号。它将伴随你行走山海、镌刻因果。</p>
+      <div class="name-input-wrap">
+        <input type="text" id="name-input" class="name-input" maxlength="8" placeholder="请输入你的名号（2~8字）" autocomplete="off" />
+        <button class="btn btn-primary" id="btn-name-go">定 名 入 道</button>
+      </div>
+      <p class="name-hint" id="name-hint">名号将显示在角色面板与战斗之中。</p>
+    </section>
+    <section id="screen-profession" class="screen hidden">
+      <h2 class="screen-title">三 教 九 流 · 万 法 归 一</h2>
+      <p class="screen-desc">选择你踏入山海的初始身份。三教并非对立，你可于途中悟得他教之法。</p>
+      <div class="profession-cards">
+        <div class="prof-card" data-prof="tao">
+          <div class="prof-img prof-img-tao"></div>
+          <h3>道 徒</h3>
+          <p class="prof-tag">中距离控场 · 符箓召唤</p>
+          <ul class="prof-stats">
+            <li>生命 <b>0.90</b> · 灵力 <b>1.20</b></li>
+            <li>攻击 <b>0.95</b> · 防御 <b>0.85</b></li>
+          </ul>
+          <p class="prof-flavor">符箓敕令·灵宠协同·元素转化。主修《黄庭经》。</p>
+        </div>
+        <div class="prof-card" data-prof="zen">
+          <div class="prof-img prof-img-zen"></div>
+          <h3>禅 人</h3>
+          <p class="prof-tag">近身肉搏 · 肉身成圣</p>
+          <ul class="prof-stats">
+            <li>生命 <b>1.15</b> · 灵力 <b>0.70</b></li>
+            <li>攻击 <b>1.10</b> · 防御 <b>1.05</b></li>
+          </ul>
+          <p class="prof-flavor">铁壁格挡·弹反·替命·低血爆发。主修《易筋经》。</p>
+        </div>
+        <div class="prof-card" data-prof="confucian">
+          <div class="prof-img prof-img-confucian"></div>
+          <h3>儒 生</h3>
+          <p class="prof-tag">远程AOE · 言灵镇邪</p>
+          <ul class="prof-stats">
+            <li>生命 <b>0.80</b> · 灵力 <b>1.30</b></li>
+            <li>攻击 <b>1.00</b> · 防御 <b>0.75</b></li>
+          </ul>
+          <p class="prof-flavor">言出法随·浩然正气·元素连锁。主修《浩然气》。</p>
+        </div>
+      </div>
+    </section>
+    <section id="screen-character" class="screen hidden">
+      <h2 class="screen-title">众 生 如 龙 · 择 一 而 行</h2>
+      <p class="screen-desc">选择你的出身。天地玄黄四阶，黄为芸芸众生，天为惊才绝艳。<br>然本作立意，不在「谁生而高贵」，而在「人人皆可如龙」。</p>
+      <div class="character-cards" id="character-cards"></div>
+      <p class="character-note" id="character-note"></p>
+    </section>
+    <section id="screen-mingshen" class="screen hidden">
+      <h2 class="screen-title">命 格 先 天 · 因 果 后 天</h2>
+      <p class="screen-desc">你的家乡被魔气吞噬，你流亡至青丘桃林。<br>请用 <b>0~500字</b> 描述你的过去：父母、家乡、奇遇、执念……<br>命运之线将自你文字中浮现，凝为五枚命格。</p>
+      <div class="ms-input-wrap">
+        <textarea id="ms-text" class="ms-input" placeholder="例：我生于边陲小镇，父母被魔修所杀，独身流浪十年，唯与一只白狐相伴……" maxlength="500"></textarea>
+        <div class="ms-count"><span id="ms-count">0</span>/500</div>
+      </div>
+      <div class="ms-buttons">
+        <button class="btn btn-primary" id="btn-mingshen-go">窥 探 天 机</button>
+        <button class="btn btn-ghost" id="btn-mingshen-skip">天 意 自 由</button>
+      </div>
+    </section>
+    <section id="screen-mingshen-result" class="screen hidden">
+      <h2 class="screen-title">五 枚 命 格 · 天 机 已 定</h2>
+      <p class="screen-desc" id="ms-desc">天道为你的过去降下了以下五枚命格：</p>
+      <div class="ms-tags" id="ms-tags"></div>
+      <div class="ms-buttons">
+        <button class="btn btn-ghost" id="btn-mingshen-reroll">不 满 · 重 抽</button>
+        <button class="btn btn-primary" id="btn-mingshen-accept">接 受 · 入 山 海</button>
+      </div>
+    </section>
+    <section id="screen-story" class="screen hidden">
+      <div class="story-frame">
+        <div class="story-title" id="story-title"></div>
+        <div class="story-text" id="story-text"></div>
+        <div class="story-options" id="story-options"></div>
+        <div class="story-ctrl">
+          <button class="ctrl-btn" id="btn-skip-type" title="跳过打字">⏭ 跳过</button>
+          <span class="ctrl-hint">↑↓ 切换 · 点击选中 · Enter 确认</span>
+        </div>
+      </div>
+    </section>
+    <section id="screen-explore" class="screen hidden">
+      <div class="explore-frame">
+        <div class="explore-topbar">
+          <span class="explore-location" id="explore-location">青丘</span>
+        </div>
+        <div class="explore-scenes" id="explore-scenes"></div>
+        <div class="explore-canvas" id="explore-canvas"></div>
+        <div class="explore-menu" id="explore-menu">
+          <button class="btn explore-back" id="explore-char" title="角色面板">👤 角色</button>
+          <button class="btn explore-back" id="explore-bag" title="背包">🎒 背包</button>
+          <button class="btn explore-back" id="explore-back" title="返回">🏠 返回家园</button>
+        </div>
+        <div class="explore-dialog" id="explore-dialog">
+          <div class="explore-dialog-portrait" id="explore-dialog-portrait"></div>
+          <div class="explore-dialog-body">
+            <div class="explore-dialog-name" id="explore-dialog-name"></div>
+            <div class="explore-dialog-text" id="explore-dialog-text"></div>
+            <div class="explore-dialog-actions" id="explore-dialog-actions"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="screen-home" class="screen hidden">
+      <div class="home-frame">
+        <div class="home-left" id="home-stats"></div>
+        <div class="home-right">
+          <div class="home-title" id="home-title"></div>
+          <div class="home-desc" id="home-desc"></div>
+          <div class="home-map" id="home-map"></div>
+          <div class="home-grid" id="home-options"></div>
+        </div>
+      </div>
+    </section>
+    <section id="screen-battle" class="screen hidden">
+      <div class="battle-frame">
+        <div class="battle-top">
+          <div class="battle-side battle-side-player">
+            <h3 id="bt-name-player">求道者</h3>
+            <div class="bar"><div class="bar-fill bar-hp" id="bt-hp-p"></div></div>
+            <div class="bar-mini"><span>灵力</span><div class="bar"><div class="bar-fill bar-mp" id="bt-mp-p"></div></div></div>
+            <div class="bar-mini energy"><span>奥义</span><div class="bar"><div class="bar-fill bar-energy" id="bt-energy-p"></div></div></div>
+            <div class="battle-buffs" id="bt-buffs-p"></div>
+          </div>
+          <div class="battle-vs">VS</div>
+          <div class="battle-side battle-side-enemy">
+            <h3 id="bt-name-enemy">敌人</h3>
+            <div class="battle-info-enemy" id="bt-info-enemy"></div>
+            <div class="bar"><div class="bar-fill bar-hp" id="bt-hp-e"></div></div>
+            <div class="bar-mini energy"><span>狂怒</span><div class="bar"><div class="bar-fill bar-energy" id="bt-energy-e"></div></div></div>
+            <div class="battle-buffs" id="bt-buffs-e"></div>
+          </div>
+        </div>
+        <div class="battle-log" id="battle-log"></div>
+        <div class="battle-actions" id="battle-actions"></div>
+      </div>
+    </section>
+    <section id="screen-toast" class="screen hidden"></section>
+  </main>
+  <footer id="log-rail" class="log-rail hidden">
+    <div class="log-rail-title">因 果 卷 轴</div>
+    <div class="log-rail-list" id="log-rail-list"></div>
+  </footer>
+  <div id="toast-layer" class="toast-layer"></div>
+  <div id="modal" class="modal hidden">
+    <div class="modal-mask"></div>
+    <div class="modal-body">
+      <div class="modal-title" id="modal-title">提示</div>
+      <div class="modal-content" id="modal-content"></div>
+      <div class="modal-actions" id="modal-actions"></div>
+    </div>
+  </div>
+  <!-- V1.3.19：全局诊断入口（右下角小齿轮，快捷键 Ctrl+Shift+D） -->
+  <button id="btn-diag" style="position:fixed;right:10px;bottom:10px;z-index:9999;width:34px;height:34px;border-radius:50%;border:1px solid rgba(201,160,80,.5);background:rgba(20,16,12,.78);color:#c8a050;font-size:15px;cursor:pointer;opacity:.55;line-height:1" title="诊断面板（Ctrl+Shift+D）">⚙</button>
+  <script src="js/core/rng.js"></script>
+  <script src="js/core/state.js"></script>
+  <script src="js/core/save.js"></script>
+  <script src="js/data/professions.js"></script>
+  <script src="js/data/pools.js"></script>
+  <script src="js/data/keywords.js"></script>
+  <script src="js/data/pets.js"></script>
+  <script src="js/data/achievements.js"></script>
+  <script src="js/data/materials.js"></script>
+  <script src="js/data/meta.js"></script>
+  <script src="js/data/characters.js"></script>
+  <script src="js/data/skins.js"></script>
+  <script src="js/data/challenges.js"></script>
+  <script src="js/data/nations/qingqiu.js"></script>
+  <script src="js/data/nations/yumin.js"></script>
+  <script src="js/data/nations/yanhuo.js"></script>
+  <script src="js/data/nations/xuanyuan.js"></script>
+  <script src="js/data/nations/xuangu.js"></script>
+  <script src="js/data/nations/index.js"></script>
+  <script src="js/core/engine.js"></script>
+  <script src="js/core/battle.js"></script>
+  <script src="js/app.js"></script>
+  <audio id="bgm-player" loop preload="auto"></audio>
+</body>
+</html>
