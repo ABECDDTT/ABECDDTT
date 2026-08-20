@@ -3069,7 +3069,8 @@ body.opt-style-gold .story-option .opt-req { color: #e0a0c0; }
   
   
   
-  <audio id="bgm-player" loop preload="auto"></audio>
+  <!-- V1.3.20：preload="none"——BGM 不随页面加载抢 3MB 带宽，首次播放时才拉取，既提速又避免慢网下 play() 未就绪被拒 -->
+  <audio id="bgm-player" loop preload="none"></audio>
 <script>/* ===== js/core/rng.js ===== */
 /* ===========================================================
  * 问道山海 · 核心随机与抽取工具
@@ -28333,20 +28334,41 @@ options: [
         const saved = localStorage.getItem(this._storageKey);
         this.muted = (saved === '1');
         const vol = parseFloat(localStorage.getItem(this._volStorageKey));
-        if (!isNaN(vol)) this.volume = Math.max(0, Math.min(1, vol));
-      } catch (e) { this.muted = false; }
+        // V1.3.20：音量 0 视为"未设置"，回退默认 0.5，避免"按钮显示🔊却永远无声"的陷阱
+        if (!isNaN(vol) && vol > 0) this.volume = Math.max(0.05, Math.min(1, vol));
+        else this.volume = 0.5;
+      } catch (e) { this.muted = false; this.volume = 0.5; }
       this.player.volume = this.muted ? 0 : this.volume;
+      // 音频就绪后自动续播（解决"点击无反应"：play() 被拒时等就绪再补播）
+      this.player.addEventListener('canplaythrough', () => { AudioMgr._autoResume(); }, { once: true });
       this.updateMuteBtn();
       // 静音按钮
       const btn = document.getElementById('btn-mute');
       if (btn) btn.onclick = () => this.toggleMute();
     },
 
-    /** 尝试开始播放（用户交互后调用，绕过浏览器自动播放限制） */
+    /** 尝试开始播放（用户交互后调用，绕过浏览器自动播放限制）。幂等：已在播则跳过。 */
     ensurePlay() {
       if (!this.player || this.muted || !this.current) return;
-      const p = this.player.play();
-      if (p && p.catch) p.catch(() => { /* 仍被阻止则静默，等待下次交互 */ });
+      if (this.player.src && !this.player.paused && !this.player.ended) return;   // 已在播放
+      const doPlay = () => {
+        const p = this.player.play();
+        if (p && p.catch) p.catch(() => { /* 仍被阻止则静默，等下次交互/就绪后再试 */ });
+      };
+      // 数据未就绪时等待 canplay 再补播（慢网络下 play() 直接拒绝的兜底）
+      if (this.player.readyState < 3) {
+        this.player.addEventListener('canplaythrough', doPlay, { once: true });
+      }
+      doPlay();
+    },
+
+    /** 音频就绪后若应播放则续播（切换曲目/慢加载完成时的自动恢复） */
+    _autoResume() {
+      if (!this.player || this.muted || !this.current) return;
+      if (this.player.paused) {
+        const p = this.player.play();
+        if (p && p.catch) p.catch(() => {});
+      }
     },
 
     /** 剧情场景一律用平和曲；紧张曲目(bgm_chapter3)仅由战斗(Battle.start)触发 */
@@ -28354,10 +28376,10 @@ options: [
       this.switch('peaceful');
     },
 
-    /** 切换曲目（若已是该曲目则保持播放状态不变） */
+    /** 切换曲目。同曲重按：确保播放中；换曲：异步加载，就绪后自动续播。 */
     switch(key) {
       if (!this.player) return;
-      if (this.current === key) return;
+      if (this.current === key) { this.ensurePlay(); return; }
       this.current = key;
       const src = key === 'dramatic'
         ? 'assets/audio/bgm_chapter3_illusion.mp3'
@@ -28365,21 +28387,28 @@ options: [
       if (this.player.getAttribute('src') !== src) {
         this.player.src = src;
         this.player.load();
+        // 换曲就绪后自动续播 + 加载失败上报诊断面板（可一键定位 BGM 缺失/路径问题）
+        this.player.addEventListener('canplaythrough', () => { AudioMgr._autoResume(); }, { once: true });
+        this.player.addEventListener('error', () => {
+          try {
+            App._diagErrors = App._diagErrors || [];
+            App._diagErrors.push({ t: Date.now(), m: 'BGM 文件加载失败：' + src, s: 'AudioMgr', l: 0, st: '', p: false });
+            if (App._diagErrors.length > 60) App._diagErrors.shift();
+          } catch (e) {}
+        }, { once: true });
       }
-      if (!this.muted) {
-        const p = this.player.play();
-        if (p && p.catch) p.catch(() => { /* 浏览器自动播放被阻止时静默，等用户交互后再响 */ });
-      }
+      if (!this.muted) this.ensurePlay();
     },
 
     toggleMute() {
       this.muted = !this.muted;
       try { localStorage.setItem(this._storageKey, this.muted ? '1' : '0'); } catch (e) { /* ignore */ }
       if (this.muted) { if (this.player) this.player.pause(); }
-      else if (this.player && this.current) {
+      else if (this.player) {
+        // 音量 0 陷阱：取消静音时若音量为 0，回退到 0.5，避免"🔊却无声"
+        if (this.volume <= 0) this.volume = 0.5;
         this.player.volume = this.volume;
-        const p = this.player.play();
-        if (p && p.catch) p.catch(() => {});
+        this.ensurePlay();
       }
       this.updateMuteBtn();
     },
@@ -28424,9 +28453,12 @@ options: [
       // 背景音乐
       AudioMgr.init();
       AudioMgr.switch('peaceful');
-      // 浏览器自动播放限制：首次用户交互（点击开始/读档等）时真正启动 BGM
-      const startBgm = () => { AudioMgr.ensurePlay(); document.removeEventListener('click', startBgm); };
-      document.addEventListener('click', startBgm);
+      // V1.3.20：浏览器自动播放限制——任意交互都尝试启动 BGM（常驻监听，
+      // 首次失败后再次点击/按键仍会重试，不再"只试一次就放弃"）
+      const unlockAudio = () => { try { AudioMgr.ensurePlay(); } catch (e) {} };
+      document.addEventListener('click', unlockAudio);
+      document.addEventListener('pointerdown', unlockAudio);
+      document.addEventListener('keydown', unlockAudio);
       // 绑定按钮（对缺失元素做空值保护，避免测试/部分页面下 TypeError）
       const bind = (id, fn) => { const el = document.getElementById(id); if (el) el.onclick = (e) => { try { Engine.sfx('click'); } catch (e) {} try { fn(); } catch (err) { console.error('btn handler error', id, err); } }; };
       bind('btn-newgame', () => App.newGame());
