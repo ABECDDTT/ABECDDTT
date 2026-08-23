@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>一字诀 · 一个字的奇幻漂流</title>
+<style>
+  :root{
+    --bg:#0d0a08; --bg2:#1a1410; --card:#221a13; --line:#3a2e1d;
+    --gold:#c8a050; --gold2:#e4c884; --ink:#e8ddc6; --ink2:#a89878;
+    --dim:#6a5a42; --spirit:#9a7fd4; --good:#8fd694; --warn:#e8a04a;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{height:100%;}
+  body{background:
+    radial-gradient(circle at 50% -10%, #2a1f12 0%, transparent 60%),
+    linear-gradient(180deg,#0d0a08,#08060a);
+    color:var(--ink);font-family:"KaiTi","STKaiti","SimSun",serif;
+    min-height:100vh;display:flex;align-items:center;justify-content:center;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;}
+  #app{width:100%;max-width:680px;padding:24px;position:relative;z-index:1;}
+  #title-screen{text-align:center;animation:fadeUp .9s ease;}
+  #title-screen h1{font-size:54px;letter-spacing:14px;margin-bottom:8px;
+    background:linear-gradient(180deg,#e4c884,#8a6a2a);-webkit-background-clip:text;background-clip:text;color:transparent;
+    text-shadow:0 0 30px rgba(200,160,80,.3);}
+  #title-screen .sub{color:var(--dim);letter-spacing:6px;font-size:15px;margin-bottom:30px;}
+  #title-screen .desc{color:var(--ink2);font-size:15px;line-height:2.1;max-width:480px;margin:0 auto 36px;
+    border:1px solid var(--line);border-radius:10px;padding:20px 24px;background:rgba(34,26,19,.5);}
+  .big-btn{background:linear-gradient(180deg,#3a2e1d,#241b10);border:1px solid var(--gold);
+    color:var(--gold2);font-family:inherit;font-size:19px;letter-spacing:6px;padding:14px 48px;
+    border-radius:8px;cursor:pointer;transition:all .3s;box-shadow:0 4px 18px rgba(0,0,0,.5);}
+  .big-btn:hover{background:linear-gradient(180deg,#5a4628,#3a2e1d);box-shadow:0 0 24px rgba(200,160,80,.4);transform:translateY(-2px);}
+  #game-screen{display:none;animation:fadeUp .6s ease;}
+  .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;color:var(--dim);font-size:13px;letter-spacing:3px;}
+  .topbar b{color:var(--gold2);font-weight:normal;}
+  .scene-card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:26px 28px;
+    box-shadow:0 6px 28px rgba(0,0,0,.5);position:relative;overflow:hidden;}
+  .scene-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
+    background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+  .scene-title{color:var(--gold2);font-size:22px;letter-spacing:4px;margin-bottom:6px;}
+  .scene-tag{color:var(--dim);font-size:12px;letter-spacing:2px;margin-bottom:18px;}
+  .scene-desc{color:var(--ink);font-size:16.5px;line-height:2;text-align:justify;min-height:120px;}
+  .scene-emoji{font-size:42px;text-align:center;margin:14px 0;opacity:.85;letter-spacing:8px;}
+  .spirit{display:flex;gap:12px;align-items:flex-start;margin:18px 0 14px;min-height:62px;}
+  .spirit-avatar{flex-shrink:0;width:42px;height:42px;border-radius:50%;
+    background:radial-gradient(circle,#6a4f9e,#3a2e5a);border:2px solid var(--spirit);
+    display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--gold2);
+    box-shadow:0 0 14px rgba(154,127,212,.4);}
+  .spirit-bubble{flex:1;background:rgba(106,79,158,.12);border:1px solid rgba(154,127,212,.35);
+    border-radius:10px;padding:10px 14px;color:var(--ink2);font-size:14px;line-height:1.8;min-height:42px;
+    display:flex;align-items:center;}
+  .spirit-bubble.perfect{border-color:var(--gold);background:rgba(200,160,80,.12);color:var(--gold2);}
+  .spirit-bubble.meme{border-color:var(--warn);background:rgba(232,160,74,.12);color:#f0c890;}
+  .spirit-bubble.special{border-color:var(--spirit);background:rgba(154,127,212,.16);color:#c8a8e8;}
+  .spirit-bubble.fail{border-color:var(--dim);color:var(--dim);font-style:italic;}
+  .input-row{display:flex;gap:10px;margin-top:6px;}
+  .word-input{flex:1;background:#0e0b07;border:1px solid var(--line);border-radius:8px;
+    padding:14px 18px;color:var(--gold2);font-family:inherit;font-size:22px;letter-spacing:6px;
+    text-align:center;outline:none;transition:all .3s;}
+  .word-input::placeholder{color:var(--dim);font-size:14px;letter-spacing:3px;}
+  .word-input:focus{border-color:var(--gold);box-shadow:0 0 18px rgba(200,160,80,.25);}
+  .submit-btn{background:linear-gradient(180deg,#3a2e1d,#241b10);border:1px solid var(--gold);
+    color:var(--gold2);font-family:inherit;font-size:15px;letter-spacing:3px;padding:0 24px;
+    border-radius:8px;cursor:pointer;transition:all .3s;}
+  .submit-btn:hover{background:#5a4628;box-shadow:0 0 14px rgba(200,160,80,.3);}
+  .input-hint{text-align:center;color:var(--dim);font-size:12px;letter-spacing:2px;margin-top:10px;min-height:16px;}
+  #end-screen{display:none;text-align:center;animation:fadeUp .9s ease;}
+  #end-screen h2{font-size:34px;color:var(--gold2);letter-spacing:8px;margin-bottom:10px;
+    text-shadow:0 0 24px rgba(200,160,80,.4);}
+  .word-chain{font-size:28px;letter-spacing:10px;color:var(--gold);margin:20px 0 12px;
+    padding:14px;border:1px dashed var(--line);border-radius:10px;background:rgba(34,26,19,.4);word-break:break-all;}
+  .verdict{color:var(--ink2);font-size:16px;line-height:2.2;max-width:480px;margin:0 auto 24px;
+    border:1px solid var(--line);border-radius:10px;padding:20px 24px;background:rgba(34,26,19,.5);text-align:left;}
+  .verdict b{color:var(--gold2);}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:none;}}
+  .result-pop{animation:pop .45s ease;}
+  @keyframes pop{0%{transform:scale(.9);opacity:0;}60%{transform:scale(1.03);}100%{transform:scale(1);opacity:1;}}
+  .float-words{position:fixed;pointer-events:none;color:rgba(200,160,80,.10);font-size:120px;z-index:0;user-select:none;}
+  @media(max-width:520px){
+    #title-screen h1{font-size:40px;letter-spacing:8px;}
+    .scene-card{padding:20px 18px;}
+    .word-chain{font-size:22px;letter-spacing:6px;}
+  }
+</style>
+</head>
+<body>
+<div class="float-words" style="top:8%;left:4%;">字</div>
+<div class="float-words" style="bottom:10%;right:6%;">诀</div>
+
+<div id="app">
+  <div id="title-screen">
+    <h1>一 字 诀</h1>
+    <div class="sub">一 个 字 的 奇 奇 幻 漂 流</div>
+    <div class="desc">
+      你是<b style="color:var(--gold2)">字灵</b>，能以一个字改写世间困境。<br>
+      山道遇虎、断桥火海、迷雾深渊……<br>
+      每一关，你只能输入<b style="color:var(--gold2)">一个汉字</b>破局。<br>
+      没有选项，唯有你的想象。<br>
+      <span style="color:var(--dim);font-size:13px;">（妙解有奇效，梗字有惊喜，哲字有玄机。通关后，你这一路的字，将组成你独有的结局）</span>
+    </div>
+    <button class="big-btn" id="start-btn">以 字 入 世</button>
+  </div>
+
+  <div id="game-screen">
+    <div class="topbar">
+      <span>第 <b id="lvl-num">1</b> 关 / 共 10 关</span>
+      <span>已书：<b id="chain-display">—</b></span>
+    </div>
+    <div class="scene-card">
+      <div class="scene-title" id="scene-title"></div>
+      <div class="scene-tag" id="scene-tag"></div>
+      <div class="scene-emoji" id="scene-emoji"></div>
+      <div class="scene-desc" id="scene-desc"></div>
+      <div class="spirit">
+        <div class="spirit-avatar">灵</div>
+        <div class="spirit-bubble" id="spirit-bubble">字灵候命。书一字，吾便应之。</div>
+      </div>
+      <div class="input-row">
+        <input class="word-input" id="word-input" maxlength="1" placeholder="以一字破之…" autocomplete="off" />
+        <button class="submit-btn" id="submit-btn">书</button>
+      </div>
+      <div class="input-hint" id="input-hint">回车提交 · 妙解有奇效，梗字有惊喜，哲字有玄机</div>
+    </div>
+  </div>
+
+  <div id="end-screen">
+    <h2>字 已 成 诀</h2>
+    <div class="word-chain" id="word-chain"></div>
+    <div class="verdict" id="verdict"></div>
+    <button class="big-btn" id="replay-btn">重 新 书 字</button>
+  </div>
+</div>
+
+<script>
+(function(){
+'use strict';
+/* ============ 关卡：每关 妙解25 + 梗字25 = 50 字（全单字） ============ */
+var LEVELS = [
+  { id:1, title:'山道拦路', emoji:'🐯', tag:'困境之一 · 虎',
+    desc:'山道转角，一只斑斓大虎横卧道中。虎目如两盏铜灯，尾尖一甩一甩，正望着你。前后无路，虎不挪身。',
+    perfect:{
+      '爹':'你唤「爹」。虎身一颤，伏下身来——它认了亲，驮你过山。',
+      '虎':'你与它对视：「同为山中王，何不让路？」虎愣了愣，侧身让开。',
+      '武':'你书「武」。虎闻武松之名，夹尾而逃。',
+      '拜':'你拜虎为山神。虎受用，让出半道。',
+      '王':'你书「王」。虎以为百兽之王亲临，俯首让路。',
+      '驯':'你书「驯」。虎低眉顺眼，乖乖侧身。',
+      '骑':'你翻身骑上虎背。虎驮你过山，威风凛凛。',
+      '佛':'你书「佛」。佛光一现，虎闻法欢喜，伏地让路。',
+      '圣':'你书「圣」。圣辉所及，虎拜服而退。',
+      '威':'你双目一睁，威压尽出。虎被镇住，夹尾退开。',
+      '降':'你书「降」。虎四足一软，伏地而降。',
+      '缚':'你书「缚」。藤索自现，缚住虎足，你从容过。',
+      '擒':'你书「擒」。虎自投罗网，任你擒过。',
+      '镇':'你书「镇」。镇山印现，虎不敢动。',
+      '制':'你书「制」。你制住虎性，虎服帖让路。',
+      '慑':'你书「慑」。虎被你气势所慑，退避三舍。',
+      '惧':'你书「惧」。虎竟生出惧意，让了。',
+      '敬':'你书「敬」。虎敬你是条汉子，让路。',
+      '畏':'你书「畏」。虎畏你三分，侧身而过。',
+      '服':'你书「服」。虎俯首称服，让你先过。',
+      '从':'你书「从」。虎随你而行，护你过山。',
+      '喵':'你书「喵」。虎闻声一怔，以为是族中小辈来唤，亲昵地让了路。',
+      '友':'你书「友」。虎认你做友，拱手让路。',
+      '伏':'你书「伏」。虎伏地而拜，让你先过。',
+      '山':'你书「山」。虎误以为山神降世，伏地让路。'
+    },
+    meme:{
+      '卷':'你卷起袖子。虎见你内卷，自愧不如，羞退。',
+      '6':'你比个6。虎看不懂，但觉得你很社会，让了。',
+      '猫':'你唤「咪」。虎想起自己也是猫科，心软让路。',
+      '鼠':'你唤「鼠」。虎一想是猫科，追鼠去了。',
+      '肉':'你扔出一块肉。虎抢肉去了，忘了拦路。',
+      '包':'你扔出肉包。虎吃撑了，忘了拦路。',
+      '外':'你喊「外卖」。虎颠颠去拿，忘了拦路。',
+      '照':'你举起手机。虎摆了个pose，忘了拦路。',
+      '帅':'你喊「帅哥」。虎不好意思，让了。',
+      '抖':'你刷抖音。虎凑过来看，忘了拦路。',
+      '哈':'你哈一声。虎被你吹得打了个喷嚏，让了。',
+      '牛':'你书「牛」。虎被你的牛气镇住，让了。',
+      '爷':'你喊「虎爷」。虎听得舒坦，放你过。',
+      '躺':'你往地上一躺。虎看看，也躺了，相安无事。',
+      '摆':'你摆烂。虎看你摆，它也跟着摆，路让开了。',
+      '刷':'你刷手机。虎好奇凑来，忘了拦。',
+      '拍':'你拍虎屁股。虎懵了，让了。',
+      '喊':'你喊「救命」。虎以为你是要救的，放你过。',
+      '喂':'你喂虎。虎吃饱，让路。',
+      '香':'你烧香。虎受香火，放你过。',
+      '乖':'你夸「虎真乖」。虎开心，让路。',
+      '萌':'你说虎萌。虎害羞，让路。',
+      '困':'你说虎困了。虎打个哈欠，走了。',
+      '饿':'你说虎饿了。虎去找吃的，让了。',
+      '哦':'你说「哦」。虎：「？」还是让了。'
+    }
+  },
+  { id:2, title:'断桥横江', emoji:'🌊', tag:'困境之二 · 桥',
+    desc:'江面宽阔，木桥断在中途，断口处江水翻涌。对岸隐约可见灯火，你若不过，便止于此。',
+    perfect:{
+      '飞':'你足尖一点，御风而起，如一片落叶飘过江面。',
+      '水':'你向江水低语。水浮起断木，搭成新桥。',
+      '虹':'你书「虹」。虹桥横江，你踏虹而过。',
+      '舟':'你召来一叶扁舟，接你过江。',
+      '渡':'你书「渡」。渡船自雾中来，接你过江。',
+      '桥':'你书「桥」。断口新桥自现，稳若磐石。',
+      '鲸':'你书「鲸」。巨鲸浮水，驮你过江。',
+      '苇':'你折苇作舟，一苇渡江，仙气飘飘。',
+      '龙':'你书「龙」。青龙现身，载你腾空过江。',
+      '鹊':'你书「鹊」。群鹊衔枝，片刻搭成鹊桥。',
+      '云':'你书「云」。一朵云托你过江。',
+      '鹏':'你书「鹏」。大鹏展翅，带你过江。',
+      '鹰':'你唤苍鹰，载你掠江而过。',
+      '鹤':'你唤白鹤，载你过江。',
+      '雁':'你唤雁阵，踏雁而过。',
+      '筏':'你扎竹筏，渡江而过。',
+      '翼':'你生出双翼，滑翔过江。',
+      '冰':'你书「冰」。江水凝冰，你踏冰而过。',
+      '雾':'你书「雾」。浓雾铺江，你踏雾而行。',
+      '光':'你书「光」。光桥横江，你踏光而过。',
+      '索':'你书「索」。索桥自架，你攀索而过。',
+      '燕':'你唤雨燕，借燕身掠过。',
+      '蛇':'你书「蛇」。巨蛇横江作桥，你踏蛇而过。',
+      '龟':'你唤玄龟，龟背为舟，渡你过江。',
+      '天':'你书「天」。一步登天，踏云渡江。'
+    },
+    meme:{
+      '6':'你比个6。江水觉得你很稳，推来断木。',
+      '躺':'你往江边一躺。水怕你泡发，送你过江。',
+      '摆':'你摆烂。水看不过去，自己退了露出河床。',
+      '跳':'你喊「跳」。水怕你跳江，把你架过去。',
+      '冲':'你喊「冲鸭」。水以为你冲浪，让道。',
+      '游':'你喊「我会游」跳下水。水怕你出事，架你过江。',
+      '漂':'你往江里一躺顺水漂。水送你到对岸。',
+      '板':'你踩木板冲浪。水都给你让路。',
+      '滑':'你踩着水滑过去。水：「？」你过了。',
+      '喝':'你喝江水。水怕你喝干，送你过。',
+      '渴':'你说渴。水感动，主动送你。',
+      '雨':'你喊「下雨」。水位涨了，你游过去。',
+      '滴':'你喊「一滴水」。水愣了愣，退开一条路。',
+      '鸭':'你唤鸭。鸭群游来，驮你过江。',
+      '蛙':'你学蛙叫。水想起青蛙，让开浅滩。',
+      '蛤':'你唤蛤蟆。蛤蟆驮你过江。',
+      '蹦':'你蹦了一下。江水被你震开一条道。',
+      '呼':'你吹了口气。水被吹开一条路。',
+      '吹':'你吹水。水退开，露出河床。',
+      '浮':'你抱木而浮。水推你到岸。',
+      '晕':'你说晕水。水不好意思，送你过。',
+      '恐':'你说恐水。水怕你晕，架你过。',
+      '高':'你说怕高。水：「桥断了你怕高？」还是送你过。',
+      '矮':'你说水矮。水涨起来，你踩着过去。',
+      '哈':'你哈了口气。江面结冰——你哈的是寒气？踏冰而过。'
+    }
+  },
+  { id:3, title:'烈焰火海', emoji:'🔥', tag:'困境之三 · 火',
+    desc:'前方山谷火光冲天，烈焰封路，热浪扑面。火势正盛，硬闯必化为灰烬。',
+    perfect:{
+      '水':'你唤来大雨，火海化作蒸气与焦土，路开。',
+      '冰':'你掌心凝霜，火海凝成冰原，你踏冰而过。',
+      '雨':'你仰天一呼，暴雨浇灭火海。',
+      '雪':'你书「雪」。六月飞雪，火势尽灭。',
+      '霜':'你书「霜」。寒霜覆地，火势骤歇。',
+      '风':'你引九天罡风，火海倒卷而灭。',
+      '海':'你书「海」。滔天海水灌入山谷，火海尽熄。',
+      '龟':'你唤玄龟，水罩护体，从容穿过。',
+      '珠':'你祭避火珠，所过之处火焰辟易。',
+      '龙':'你书「龙」。青龙吐水，浇灭大火。',
+      '云':'你书「云」。乌云聚顶，甘霖洒落。',
+      '雾':'你书「雾」。水雾漫谷，火势见弱。',
+      '露':'你书「露」。露水成泽，火被浸灭。',
+      '泉':'你书「泉」。泉眼喷涌，火海成泽。',
+      '湖':'你书「湖」。一湖清水倒扣山谷，火灭。',
+      '江':'你书「江」。江水倒灌，火海成江。',
+      '河':'你书「河」。河水横流，隔断火势。',
+      '瀑':'你书「瀑」。瀑布悬空而落，浇灭烈火。',
+      '冻':'你书「冻」。万物冻结，火被冻住。',
+      '寒':'你书「寒」。寒气漫开，火势自熄。',
+      '冷':'你书「冷」。冷气压火，烈焰低伏。',
+      '凉':'你书「凉」。凉意沁骨，火势渐弱。',
+      '曦':'你书「曦」。晨曦破晓，火畏日光而熄。',
+      '虹':'你书「虹」。雨虹挂空，火随雨歇。',
+      '霖':'你书「霖」。甘霖如注，火海尽灭。'
+    },
+    meme:{
+      '6':'你比个6。火觉得你很cool，自己灭了。',
+      '躺':'你往火海里一躺。火看你如此从容，自己灭了。',
+      '摆':'你摆烂。火摆不过你，熄了。',
+      '卷':'你卷起袖子卷火。火被你的气势卷灭。',
+      '燃':'你喊「燃！」。火以为你要更燃，吓灭。',
+      '扇':'你拿扇子扇。火越扇越旺——你把它扇进河里。',
+      '冰':'你掏冰可乐。火看了一眼，自闭了。',
+      '空':'你喊「开空调」。火自己调低了温度。',
+      '调':'你调了调温度。火：「？」被你调低了。',
+      '烤':'你说「正好烧烤」。火凑来帮忙，烧完自己灭。',
+      '蛙':'你喊「呱」。火愣住，忘了烧。',
+      '呱':'你学蛙叫。火愣了，熄了。',
+      '哈':'你哈了口气。火被你吹得打了个冷颤，熄了。',
+      '吹':'你吹火。火被你吹灭了——你肺活量惊人。',
+      '灭':'你瞪了火一眼。火：「？」自己灭了。',
+      '捂':'你捂住火。火缺氧，灭了。',
+      '躲':'你躲进水里。火：「……」无奈。',
+      '跳':'你跳进河里。火：「你赢了。」灭了。',
+      '滚':'你说「滚」。火滚远了，灭了。',
+      '淋':'你淋自己一身水。火：「你干嘛？」然后怕你，灭了。',
+      '泡':'你泡了杯茶。火看你太淡定，灭了。',
+      '洗':'你说洗澡。火尴尬，灭了。',
+      '喝':'你喝水。火：「你喝你的，别看我。」然后灭了。',
+      '烟':'你吐了口烟。火以为遇到大佬，灭了。',
+      '舞':'你跳了个舞。火被你的舞姿惊艳，忘了烧，熄了。'
+    }
+  },
+  { id:4, title:'锁门无钥', emoji:'🚪', tag:'困境之四 · 门',
+    desc:'尽头是一扇石门，门上无锁无把，唯刻一行古字：「以字启之」。你推之不动，叩之不应。',
+    perfect:{
+      '开':'你书「开」。石门轰然洞开，似等候千年。',
+      '启':'你书「启」。门闩自落，石门徐徐而开。',
+      '通':'你书「通」。门化作光幕，你穿行而过。',
+      '叩':'你轻叩三声。门应声而开，似有故人。',
+      '敲':'你叩门环。门内人应，门开。',
+      '推':'你沉肩一推。门轴松动，吱呀而开。',
+      '请':'你恭敬道「劳驾」。门愣了愣，开了。',
+      '缘':'你书「缘」。门说「有缘」，为你而开。',
+      '心':'你以心叩门。门感应诚意，应声而开。',
+      '哈':'你哈了口气。门：「你吹的？」开了。',
+      '芝':'你书「芝」。门：「芝麻开门？」芝也算了，开了。',
+      '麻':'你书「麻」。门想起芝麻开门，开了。',
+      '钥':'你虚画钥匙。门认了虚形，缓缓开启。',
+      '锁':'你书「锁」。门锁自解，门开。',
+      '枢':'你书「枢」。门枢自转，门开。',
+      '轴':'你书「轴」。门轴活络，门自开。',
+      '缝':'你书「缝」。门缝自开，你侧身而入。',
+      '隙':'你书「隙」。门隙顿开，你穿过。',
+      '震':'你书「震」。石门一颤，门闩震落。',
+      '裂':'你书「裂」。门裂一缝，你挤过。',
+      '破':'你书「破」。门应字而破，光涌入。',
+      '透':'你书「透」。门化为透明，你走过。',
+      '穿':'你书「穿」。你穿门而过，如过水幕。',
+      '唤':'你唤门内人。有人应，门开。',
+      '爹':'你唤「爹」。门内叹息「……乖」，门开。'
+    },
+    meme:{
+      '6':'你比个6。门觉得你很酷，开了。',
+      '舔':'你舔了舔门。门恶心坏了，弹开。',
+      '躺':'你往门边一躺。门等半天，自己开了。',
+      '摆':'你摆烂。门看你不走，无奈开了。',
+      '密':'你说「密码」。门以为你是黑客，吓开。',
+      '码':'你书「码」。门：「密码多少？」你还是过了。',
+      '卷':'你卷起门。门：「别卷了！」开了。',
+      '撬':'你拿出撬棍。门怕疼，自己开了。',
+      '气':'你对门吹气。门痒，开了。',
+      '奶':'你喊「喝奶」。门：「……」开了。',
+      '猜':'你猜了个谜。门被你逗笑，开了。',
+      '冲':'你喊「冲」。门吓开。',
+      '撞':'你撞门。门没坏，自己吓开了。',
+      '顶':'你用头顶门。门怕你犟，开了。',
+      '抬':'你抬门。门怕被抬走，开了。',
+      '吹':'你吹门。门被你吹开。',
+      '哈':'你哈门。门：「你吹还哈？」开了。',
+      '嗅':'你嗅了嗅门。门：「你闻啥？」开了。',
+      '爬':'你爬门。门：「……」开了。',
+      '钻':'你往门缝钻。门看不下去了，开了。',
+      '侧':'你侧身挤门。门松动了，开了。',
+      '挤':'你挤门。门：「算了。」开了。',
+      '滑':'你滑到门前。门：「你滑进来？」开了。',
+      '蹦':'你蹦起来。门被你蹦开。',
+      '跳':'你跳进门。门：「行吧。」关了又开。'
+    }
+  },
+  { id:5, title:'迷雾锁途', emoji:'🌫️', tag:'困境之五 · 雾',
+    desc:'浓雾忽起，伸手不见五指。前后左右皆白茫茫一片，辨不清去向，每一步都似踏在虚空。',
+    perfect:{
+      '心':'你闭目静心，心明如镜。雾随心散，前路自现。',
+      '灯':'你指尖亮起灵光，雾遇光而退，照出前路。',
+      '眼':'你开天眼，雾无所遁形，你寻路而出。',
+      '明':'你书「明」。心如明月，雾自散去。',
+      '镜':'你书「镜」。心镜高悬，照破迷雾。',
+      '慧':'你书「慧」。慧光一照，雾散途现。',
+      '日':'你书「日」。红日初升，雾散于朝晖。',
+      '烛':'你点亮一烛。烛光虽小，雾却步步退避。',
+      '真':'你书「真」。真眼之下，雾无所遁，路现。',
+      '清':'你书「清」。清气鼓荡，迷雾一扫而空。',
+      '光':'你书「光」。光破迷雾，前路豁然。',
+      '火':'你燃火驱雾。火光照彻，雾散。',
+      '风':'你引风来。长风卷雾，路现。',
+      '晴':'你书「晴」。雾散天青，路径分明。',
+      '散':'你书「散」。迷雾应字而散。',
+      '亮':'你书「亮」。亮光一照，雾退。',
+      '照':'你书「照」。光照十方，雾散。',
+      '灼':'你书「灼」。灼光破雾，路现。',
+      '莹':'你书「莹」。莹光流转，雾自退。',
+      '皎':'你书「皎」。皎月当空，雾散。',
+      '朗':'你书「朗」。朗光照彻，雾开。',
+      '澈':'你书「澈」。清澈见底，雾散途现。',
+      '净':'你书「净」。净光一照，雾消。',
+      '醒':'你书「醒」。你猛然惊醒，原来雾是梦，你已在路上。',
+      '破':'你书「破」。破雾而出，天地开朗。'
+    },
+    meme:{
+      '6':'你比个6。雾觉得你很迷，自己散了。',
+      '躺':'你往雾里一躺。雾以为你放弃了，无趣地散了。',
+      '摆':'你摆烂。雾摆不过你，散了。',
+      '卷':'你卷起袖子卷雾。雾被你卷成一团丢开。',
+      '瞎':'你说「瞎」。雾：「你才瞎。」气散了。',
+      '蒙':'你说「蒙」。雾蒙圈了，散了。',
+      '仙':'你说「我是仙」。雾：「失敬。」让开。',
+      '烟':'你吐了口烟。雾以为遇到同类，散了。',
+      '睡':'你在雾里睡了一觉。雾等你醒，自己散了。',
+      '雾':'你对雾说「你是雾」。雾无语，退了。',
+      '哈':'你哈了口气。雾被吹散一角。',
+      '吹':'你猛吹一口气。雾被你吹开一条路。',
+      '拨':'你拨开雾。雾：「……」让开。',
+      '扇':'你扇风。雾被你扇散。',
+      '绕':'你绕着雾走。雾：「？」你绕出去了。',
+      '转':'你原地转三圈。雾看晕了，散了。',
+      '闭':'你闭眼走。雾看你勇，让开。',
+      '躲':'你躲进雾里。雾：「你躲我干嘛？」散了。',
+      '钻':'你钻进雾里。雾看你钻，自己开道。',
+      '翻':'你翻了个跟头。雾被你的身手惊散。',
+      '叹':'你叹气。雾被你的叹息吹散。',
+      '咳':'你咳嗽。雾被你的咳嗽震散。',
+      '闻':'你闻了闻。雾：「你闻啥？」散了。',
+      '嗅':'你嗅了嗅。雾被你嗅没了。',
+      '晕':'你说晕。雾：「你晕我也晕。」散了。'
+    }
+  },
+  { id:6, title:'万丈深渊', emoji:'⛰️', tag:'困境之六 · 渊',
+    desc:'山至此尽，前方是一道万丈深渊，云雾翻涌其下，不见底。对岸近在咫尺，却隔着一道天堑。',
+    perfect:{
+      '飞':'你张臂御风，自悬崖跃出，如鹰掠过深渊。',
+      '桥':'你足下虹桥凭空而起，横跨天堑，你踏桥而过。',
+      '翼':'你背后生出双翼，借风滑翔而过。',
+      '鹤':'你召来白鹤，载你飞越深渊。',
+      '龙':'你书「龙」。金龙破渊而出，载你腾空过崖。',
+      '鹏':'你书「鹏」。大鹏展翅，扶摇而过。',
+      '虹':'你踏虹桥而行，虹自渊上架起。',
+      '天':'你书「天」。一步登天，踏云过渊。',
+      '云':'你唤来一朵云，踏云渡渊。',
+      '梯':'你书「梯」。天梯自渊中架起，你拾级而上。',
+      '鹰':'你唤苍鹰，载你掠过深渊。',
+      '燕':'你唤雨燕，借燕身掠过。',
+      '索':'你书「索」。索桥自架，你攀索而过。',
+      '绳':'你书「绳」。长绳自对岸垂来，你攀绳而过。',
+      '舟':'你书「舟」。云舟自现，渡你过渊。',
+      '苇':'你折苇作舟，一苇渡渊。',
+      '光':'你书「光」。光桥横渊，你踏光而过。',
+      '翅':'你书「翅」。翅生两肋，振翅而过。',
+      '羽':'你书「羽」。羽衣加身，飘然过渊。',
+      '禽':'你书「禽」。群禽结队，驮你而过。',
+      '鸟':'你唤巨鸟，载你飞越。',
+      '雀':'你唤群雀，踏雀而过。',
+      '鹞':'你唤鹞鹰，载你掠渊。',
+      '雕':'你唤神雕，负你过渊。',
+      '蝶':'你书「蝶」。你化作蝴蝶，飘然飞过深渊。'
+    },
+    meme:{
+      '6':'你比个6。深渊觉得你很敢，自己填平了。',
+      '躺':'你往渊边一躺。深渊怕你想不开，长出座桥。',
+      '摆':'你摆烂。深渊看你摆，给你搭桥。',
+      '跳':'你喊「跳」。深渊怕了，自己缩窄。',
+      '蹦':'你蹦了一下。深渊被你震得合拢。',
+      '板':'你踩滑板。深渊：「？」你滑过去了。',
+      '滑':'你滑翔。深渊看得呆住，让道。',
+      '碟':'你喊「碟」。一只飞碟接你过去。',
+      '冲':'你喊「冲冲冲」。渊被你气势推倒，让出平地。',
+      '吹':'你吹了口气。渊被你吹出一道烟桥。',
+      '喊':'你大喊一声。回声撞崖，渊被震得合拢一半。',
+      '跨':'你用力一跨。竟跨了过去——你腿长。',
+      '跃':'你纵身一跃。落到了对岸——你弹跳惊人。',
+      '攀':'你攀崖而下再上。虽险，却过。',
+      '荡':'你荡藤而过，如猿。',
+      '溜':'你顺藤溜过。',
+      '滚':'你团身滚过。渊：「？」你滚过去了。',
+      '爬':'你爬了过去。渊无语。',
+      '索':'你溜索。渊：「……」你过了。',
+      '险':'你说「好险」。渊觉得你很有胆，让道。',
+      '怕':'你说「好怕」。渊：「那你还来？」还是放你过。',
+      '晕':'你说晕。渊怕你摔，托你过。',
+      '恐':'你说恐高。渊给你搭桥。',
+      '高':'你说「好高」。渊：「我本来高。」但还是放你过。',
+      '矮':'你说「好矮」。渊气不过，自己变矮了。'
+    }
+  },
+  { id:7, title:'老者问道', emoji:'🧓', tag:'困境之七 · 道',
+    desc:'一白发老者盘坐道中，闭目而言：「过此路者，需答一问——何为道？」答错则留，答对则行。',
+    perfect:{
+      '道':'你答「道即是道，无可言说」。老者抚掌大笑，让路。',
+      '悟':'你答「道在悟，不在言」。老者颔首，化清风散去。',
+      '空':'你答「道本为空」。老者目开一线，含笑让路。',
+      '无':'你答「道生于无」。老者合十，身形渐淡。',
+      '心':'你答「道在心」。老者点头，让开半步。',
+      '禅':'你答「道在禅」。老者微笑，化莲台让路。',
+      '真':'你答「道求真」。老者抚须，深以为然。',
+      '自':'你答「道法自然」。老者大笑「正解」。',
+      '然':'你答「顺其然」。老者微笑让路。',
+      '一':'你答「道生一，一生万物」。老者击节赞叹。',
+      '恒':'你答「道恒久」。老者颔首让路。',
+      '静':'你答「道在静」。老者认可让路。',
+      '淡':'你答「道在淡」。老者颔首。',
+      '朴':'你答「道在朴」。老者让路。',
+      '诚':'你答「道在诚」。老者挥手放行。',
+      '修':'你答「道在修」。老者颔首让路。',
+      '行':'你答「道在行」。老者侧身许你而过。',
+      '路':'你答「道即脚下路」。老者含笑让路。',
+      '善':'你答「道在善」。老者赞许让路。',
+      '仁':'你答「道在仁」。老者颔首。',
+      '义':'你答「道在义」。老者点头。',
+      '智':'你答「道在智」。老者认可。',
+      '慧':'你答「道在慧」。老者让路。',
+      '明':'你答「道在明」。老者点头让路。',
+      '觉':'你答「道在觉」。老者睁眼赞许让路。'
+    },
+    meme:{
+      '6':'你比个6。老者觉得你很懂道，让了。',
+      '卷':'你答「卷即是道」。老者叹「无法反驳」，让路。',
+      '躺':'你答「躺平即道」。老者愣了愣，也躺下，相视而笑。',
+      '摆':'你答「摆烂即道」。老者：「……」让路。',
+      '钱':'你掏出钱。老者：「俗，但实用。」让路。',
+      '谢':'你答「谢谢」。老者：「？」被你谢得让路。',
+      '问':'你反问「你先说，道是什么」。老者愣住，让你先走。',
+      '缘':'你答「道即是缘」。老者：「有缘。」让路。',
+      '吃':'你答「道在吃」。老者：「说得对。」让路。',
+      '快':'你答「快即是道」。老者：「你赶时间？」让路。',
+      '老':'你答「道是老的」。老者：「行。」让路。',
+      '别':'你答「别问了」。老者：「……」让路。',
+      '急':'你答「急」。老者：「你急你先走。」让路。',
+      '天':'你答「道法天」。老者点头。',
+      '地':'你答「道法地」。老者微笑。',
+      '人':'你答「道法人」。老者让路。',
+      '你':'你答「道是你」。老者：「我？」让路。',
+      '我':'你答「道是我」。老者：「……」让路。',
+      '都':'你答「都对」。老者：「好！」让路。',
+      '对':'你答「对」。老者点头让路。',
+      '行':'你答「行」。老者：「也行。」让路。',
+      '好':'你答「好」。老者：「好。」让路。',
+      '烦':'你说「好烦」。老者：「……」让路。',
+      '懒':'你说「懒得答」。老者：「……」让路。',
+      '吹':'你吹牛。老者看穿，笑你，但也放你过。'
+    }
+  },
+  { id:8, title:'镜中之人', emoji:'🪞', tag:'困境之八 · 镜',
+    desc:'路尽处一面巨镜，镜中映出的"你"却并不与你同步——它歪着头，等你先动。镜挡住去路，绕无可绕。',
+    perfect:{
+      '认':'你望进镜中「我认得你」。镜中人笑了，镜碎裂散。',
+      '自':'你书「自」。镜中人渐与你合一，镜消路通。',
+      '我':'你指镜说「我」。镜中人应声而碎——它等你这句话等很久。',
+      '影':'你书「影」。影与镜合一，镜化为你的影子。',
+      '笑':'你对镜中一笑。它笑得镜面寸寸碎裂。',
+      '友':'你书「友」。镜中人伸手与你击掌，镜碎为光点。',
+      '空':'你书「空」。镜中本空，你空它亦空，镜灭。',
+      '破':'你书「破」。镜中人笑了「你终于肯打破我」。',
+      '真':'你书「真」。真实一照，虚妄自灭。',
+      '融':'你书「融」。你与镜中交融，镜化水，你淌过。',
+      '合':'你书「合」。你与镜中人合而为一，镜消。',
+      '忘':'你书「忘」。忘却自身，镜中空无，镜灭。',
+      '释':'你书「释」。释然一笑，镜中你释然，碎。',
+      '放':'你书「放」。放下执念，镜消。',
+      '散':'你书「散」。镜应字而散。',
+      '灭':'你书「灭」。镜灭于字下。',
+      '消':'你书「消」。镜渐消融。',
+      '隐':'你书「隐」。镜隐去，路现。',
+      '虚':'你书「虚」。镜中虚影自灭。',
+      '幻':'你书「幻」。幻影破，镜灭。',
+      '明':'你书「明」。明镜无尘，镜中人惭而退。',
+      '照':'你书「照」。光照镜中，镜中人无所遁形。',
+      '映':'你书「映」。你映出真我，镜自碎。',
+      '同':'你书「同」。你与镜同步而动，镜认可你，让路。',
+      '对':'你书「对」。镜中人点头，与你错身而过。'
+    },
+    meme:{
+      '6':'你比个6。镜中人也比6，然后自己碎了。',
+      '躺':'你往镜前躺。镜中人也躺，镜面化水，你淌过。',
+      '摆':'你摆烂。镜中人摆不过你，碎了。',
+      '爹':'你唤「爹」。镜中人「……爹？」碎。',
+      '亲':'你亲了一口镜面。镜中人害羞，镜碎。',
+      '跳':'你跳一下。镜中人也跳，撞碎镜面。',
+      '眨':'你眨眼。镜中人不会眨，急碎。',
+      '扮':'你扮鬼脸。镜中人学不来，气碎。',
+      '酷':'你说「我很酷」。镜中人膨胀自碎。',
+      '烦':'你说「你好烦」。镜中人碎了。',
+      '哈':'你哈气。镜面雾了，镜中人看不清，碎了。',
+      '笑':'你大笑。镜中人也笑，笑碎了。',
+      '哭':'你假哭。镜中人：「？」碎了。',
+      '怒':'你瞪眼。镜中人心虚，碎了。',
+      '怕':'你说怕。镜中人：「我比你怕。」碎。',
+      '闪':'你闪开。镜中人闪不了，碎。',
+      '躲':'你躲到镜后。镜：「……」碎。',
+      '翻':'你翻白眼。镜中人翻不了，碎。',
+      '锤':'你挥拳。镜中人吓碎。',
+      '踢':'你踢镜。镜中人：「？」碎。',
+      '指':'你指着镜中人。它：「我？」碎。',
+      '瞪':'你瞪它。它心虚，碎。',
+      '丑':'你说「你真丑」。镜中人气碎。',
+      '萌':'你说「你真萌」。镜中人害羞，碎。',
+      '歪':'你歪头。镜中人歪不了，急碎。'
+    }
+  },
+  { id:9, title:'倾盆暴雨', emoji:'🌧️', tag:'困境之九 · 雨',
+    desc:'天色骤变，暴雨如注，顷刻间山道成河。无遮无避，雨水冰冷，前路模糊。',
+    perfect:{
+      '晴':'你书「晴」。乌云裂开，日光倾下，雨歇。',
+      '伞':'你书「伞」。伞凭空出现，撑你而行。',
+      '光':'你书「光」。光束破云而下，雨遇光而止。',
+      '止':'你书「止」。雨竟停了，云散天清。',
+      '虹':'雨霁天青，你书「虹」。彩虹为桥，你拾虹而行。',
+      '龙':'你书「龙」。青龙现身，吸尽暴雨。',
+      '曦':'你书「曦」。晨曦破云，雨散日出。',
+      '笠':'你书「笠」。斗笠蓑衣齐备，你悠然雨中行。',
+      '驱':'你书「驱」。乌云被你驱散，雨止。',
+      '云':'你书「云」。云散雨收，天青如洗。',
+      '散':'你书「散」。雨云四散，雨止。',
+      '霁':'你书「霁」。雨霁云开，天光乍现。',
+      '日':'你书「日」。红日破云，雨止。',
+      '月':'你书「月」。云散月明，雨停。',
+      '星':'你书「星」。星辉洒落，雨竟止。',
+      '晨':'你书「晨」。晨光破晓，雨歇。',
+      '霞':'你书「霞」。晚霞满天，雨止。',
+      '暖':'你书「暖」。暖意升腾，云散雨停。',
+      '燥':'你书「燥」。燥气蒸云，雨歇。',
+      '蒸':'你书「蒸」。热气蒸腾，雨云散尽。',
+      '烘':'你书「烘」。暖烘烘的，雨被你烘干了。',
+      '燃':'你书「燃」。烈火焚云，雨止。',
+      '火':'你书「火」。火气冲天，雨云烤散。',
+      '炉':'你书「炉」。炉火暖身，雨不敢下。',
+      '烛':'你书「烛」。烛火通明，雨畏光而歇。'
+    },
+    meme:{
+      '6':'你比个6。雨觉得你很chill，停了。',
+      '躺':'你躺在雨里。雨被感动，小了。',
+      '摆':'你摆烂。雨摆不过你，停了。',
+      '澡':'你说「正好洗澡」。雨尴尬地停了。',
+      '卷':'你卷起雨。雨被卷成球，丢回天上。',
+      '哭':'你喊「我太难了」。雨：「……」停了。',
+      '跳':'你说「我要跳伞」。雨怕你出事，停了。',
+      '仰':'你仰天张嘴。雨：「？」被你吸干了。',
+      '喝':'你喝雨水。雨怕被喝干，停了。',
+      '湿':'你喊「湿了」。雨：「你湿你的。」但停了。',
+      '淋':'你喊「淋雨」。雨：「……」停了。',
+      '跑':'你冒雨狂奔。雨追不上你。',
+      '躲':'你躲进山洞。雨：「……」气得不下了。',
+      '藏':'你藏起来。雨找不着你，停了。',
+      '挡':'你举手挡雨。雨：「？」停了。',
+      '遮':'你拿叶子遮头。雨觉得你可爱，停了。',
+      '急':'你说「急」。雨让你先走，停了。',
+      '紧':'你紧了紧衣。雨：「……」停了。',
+      '巾':'你拿巾遮头。雨：「？」停了。',
+      '蓑':'你披蓑。雨看你装备齐，停了。',
+      '檐':'你躲屋檐。雨：「……」停了。',
+      '屋':'你进屋。雨：「你赢了。」停了。',
+      '洞':'你钻山洞。雨气坏了，停了。',
+      '哼':'你哼一声。雨：「？」被你哼停了。',
+      '叫':'你大喊。雨被你喊停了。'
+    }
+  },
+  { id:10, title:'终点之门', emoji:'🌅', tag:'困境之十 · 终',
+    desc:'路的尽头，一扇光门矗立。门上无字，却似在问：「你这一路，以何字至此？」这是最后一关，也是你这一生的注脚。',
+    perfect:{
+      '心':'你书「心」。门光一盛，化为你心之所向——你已抵达。',
+      '开':'你书「开」。光门大开，万丈金光中是归途。',
+      '归':'你书「归」。门内是你出发的山道，你终于归来。',
+      '我':'你书「我」。门认了你——你即是门，门即是你。',
+      '终':'你书「终」。门含笑而开：你已走完全程。',
+      '道':'你书「道」。门内有道，你迈步其中，得证大道。',
+      '始':'你书「始」。门内是起点亦是终点——你回到最初。',
+      '悟':'你书「悟」。门光一照，你悟了，门为你而开。',
+      '一':'你书「一」。一生万，万归一，门应声而开。',
+      '走':'你书「走」。门说「你终于肯走了」，为你大开。',
+      '空':'你书「空」。门中皆空，你空而过，门开。',
+      '无':'你书「无」。无门无碍，你过。',
+      '静':'你书「静」。静极生慧，门应而开。',
+      '明':'你书「明」。明心见性，门为你而开。',
+      '觉':'你书「觉」。觉者，门自开。',
+      '知':'你书「知」。知此一生，门开。',
+      '了':'你书「了」。了此一程，门开。',
+      '结':'你书「结」。结此因果，门开。',
+      '完':'你书「完」。完此一途，门开。',
+      '成':'你书「成」。成此修行，门开。',
+      '毕':'你书「毕」。毕其功，门开。',
+      '就':'你书「就」。就此而入，门开。',
+      '达':'你书「达」。通达而入，门开。',
+      '通':'你书「通」。通此一路，门开。',
+      '返':'你书「返」。返璞归真，门为你开。'
+    },
+    meme:{
+      '6':'你比个6。门觉得你配得上，开了。',
+      '躺':'你往门前一躺。门：「行吧。」自动收你进去。',
+      '摆':'你摆烂。门：「……」把你卷进去。',
+      '爹':'你唤「爹」。门内传来「回来啦」，门开。',
+      '累':'你说「好累」。门：「辛苦了。」开了。',
+      '哇':'你「哇」一声。门觉得你有童真，开了。',
+      '到':'你说「到了」。门：「你自己说的啊。」开了。',
+      '谢':'你说「谢谢」。门被你谢得不好意思，开了。',
+      '又':'你说「又来」。门：「？」还是开了。',
+      '门':'你对门说「你是门」。门：「我是门，那我开。」',
+      '哈':'你哈一声。门被你吹开。',
+      '关':'你说「关门」。门：「你让我关？」又开了。',
+      '咦':'你「咦」一声。门：「？」开了。',
+      '呀':'你「呀」一声。门吓开。',
+      '诶':'你「诶」一声。门：「？」开了。',
+      '拜':'你拜门。门受你一拜，开了。',
+      '回':'你说「回家」。门：「回吧。」开了。',
+      '冲':'你喊「冲」。门：「……」开了。',
+      '停':'你说「停」。门停了，然后开了。',
+      '溜':'你想溜。门：「别溜。」把你请进去。',
+      '闪':'你闪身。门：「？」还是开了。',
+      '歇':'你说「歇会」。门：「行。」开了。',
+      '梦':'你说「做梦」。门：「那你也进来做梦。」开了。',
+      '叫':'你喊「开门」。门：「……」开了。',
+      '急':'你说「急」。门：「别急，开。」开了。'
+    }
+  }
+];
+
+/* ============ 全局梗字（单字，跨关通用） ============ */
+var GLOBAL_MEME = {
+  '6':'你比了个6。{t}看不懂，但觉得你很社会，让了。',
+  '哈':'你哈了一声。{t}被你这口气吹散了。',
+  '牛':'你书「牛」。{t}被你的牛气镇住，让了。'
+};
+
+/* ============ 哲学彩蛋字（单字，玄机） ============ */
+var SPECIAL = {
+  '死':{type:'fail',text:'字灵摇头：「求生之境，不容死字。再思。」'},
+  '生':{type:'special',text:'你书「生」。生机一线，困境松动，你寻隙而过。'},
+  '爱':{type:'special',text:'你书「爱」。此境坚硬，爱未必能破——但心软了一瞬，路竟自开。'},
+  '梦':{type:'special',text:'你书「梦」。入梦，梦中已过此境——醒来，竟真的过了。'},
+  '光':{type:'special',text:'你书「光」。一束光破开困境，你循光而过。'},
+  '暗':{type:'special',text:'你书「暗」。困境随暗而来，又随暗而寂——你于暗中摸过了。'},
+  '我':{type:'special',text:'你书「我」。「我」字一出，境随心动，你过了。'},
+  '你':{type:'special',text:'你书「你」。困境反问「你？」你一愣，竟也因此过了。'},
+  '仙':{type:'special',text:'你书「仙」。仙气一升，此境自降，你飘然而过。'},
+  '魔':{type:'special',text:'你书「魔」。魔气一压，困境被你震碎，你踏碎而过。'},
+  '一':{type:'special',text:'你书「一」。一即一切，此字通天，境随字开。'},
+  '无':{type:'special',text:'你书「无」。此境归于无，你过了——因无，而过。'},
+  '灭':{type:'special',text:'你书「灭」。困境寂灭，你穿过余烬而过。'},
+  '空':{type:'special',text:'你书「空」。此境本空，你看破了，便过了。'},
+  '道':{type:'special',text:'你书「道」。道在何处？道在此字。境随道开。'},
+  '心':{type:'special',text:'你书「心」。心到境开，你过了。'},
+  '佛':{type:'special',text:'你书「佛」。佛光一现，困境退避，你合十而过。'},
+  '鬼':{type:'special',text:'你书「鬼」。鬼气森森，困境被你唬退，你飘过。'},
+  '天':{type:'special',text:'你书「天」。天意如此，路自开。'},
+  '命':{type:'special',text:'你书「命」。认命而过——却也过了。'}
+};
+
+/* ============ 语义簇 fallback ============ */
+var CLUSTERS = [
+  { name:'water', chars:'水江河湖海雨雪流浪漫洗清深浅波涛泪泉溪潭渊潮津渡洁湿润没沉浮添淋洒泼渴饮滴泡汁沸洲岛湾涉游涡涟漪渺茫汪沧浪潮滂沛淼', res:'你借「{w}」之意，唤来一股水势，化解了眼前困境。' },
+  { name:'fire', chars:'火炎焰焚烧灼烤灯明亮照晖炯煌焕烨煜烁烂烛焰熙煦热煮煎熬烘炉炭烬烽灿熠炜', res:'你借「{w}」之焰，一团火光升起，劈开前路。' },
+  { name:'hand', chars:'手扌打拍推拉捉拿抓握抚持拳掌指拨摸搀挽挥搂挎拄拈捏拧挑按捺搓揉掐', res:'你以「{w}」动手，凭一身手劲，硬生生闯过。' },
+  { name:'wood', chars:'木林森树枝根叶花草荣茂蓬勃芽苗梗柴栋梁杉松柏杨柳椿桂楠枫桦榆榕桐桔橘橙柚橡樟', res:'你借「{w}」之木意，草木为你让路，藤蔓织成通路。' },
+  { name:'earth', chars:'土石地山岩崖壁坡坎坑坟城垣垒块尘泥沙砾砖瓦塔堆墩壤址境域', res:'你借「{w}」之土意，脚下石阶自现，安稳而过。' },
+  { name:'heart', chars:'心忄意思想念情忧愁悦愉欢喜怒悲恐惊惧慎忘忆悟悔怔怯怜惜恩爱慕悼惘惆怅', res:'你以「{w}」之心境，定神凝气，困境于心境中自解。' },
+  { name:'mouth', chars:'口嘴唇舌言语说讲话唱呼喊叫嚷啼哭叹咏吟叨喃嘟', res:'你以「{w}」之口，朗声一语，竟说破眼前之困。' },
+  { name:'walk', chars:'辶走跑步行奔越逾过进出退返逃追避躲遁登降迈徒巡逛', res:'你以「{w}」之行意，举步之间，已过困境。' },
+  { name:'metal', chars:'金钅银铁铜钱钟锁钥锋锐刃剑刀戈矛戟铭铸镀镇针钉', res:'你借「{w}」之金锐，一刃破开阻碍。' },
+  { name:'light', chars:'日日月明星光晖照晨曦昭阳旦旭晶昊辉耀煜', res:'你借「{w}」之光，前路豁然开朗。' },
+  { name:'person', chars:'亻人他她众伯仲叔兄弟子孙母娘爷奶仙佛神鬼僧', res:'你以「{w}」之人意，得遇一位相助者，引你过困。' }
+];
+var GENERIC_PASS = [
+  '字灵沉吟：「{w}……」此字虽奇，却也通了一丝气机，前路微开。',
+  '字灵点头：「{w}，倒也合此境之意。」困境松动，你过了。',
+  '字灵笑道：「{w}？妙在似与不似之间。」路竟就此开了。',
+  '字灵低语：「{w}，吾懂你之意。」雾散一角，你寻路而过。',
+  '字灵颔首：「{w}——字随心走，境随心开。」你过了。'
+];
+
+/* ============ 状态 ============ */
+var lvl = 0, chain = [];
+var titleScreen=document.getElementById('title-screen');
+var gameScreen=document.getElementById('game-screen');
+var endScreen=document.getElementById('end-screen');
+var startBtn=document.getElementById('start-btn');
+var replayBtn=document.getElementById('replay-btn');
+var lvlNum=document.getElementById('lvl-num');
+var chainDisplay=document.getElementById('chain-display');
+var sceneTitle=document.getElementById('scene-title');
+var sceneTag=document.getElementById('scene-tag');
+var sceneEmoji=document.getElementById('scene-emoji');
+var sceneDesc=document.getElementById('scene-desc');
+var spiritBubble=document.getElementById('spirit-bubble');
+var wordInput=document.getElementById('word-input');
+var submitBtn=document.getElementById('submit-btn');
+var inputHint=document.getElementById('input-hint');
+
+function showGame(){
+  titleScreen.style.display='none'; endScreen.style.display='none'; gameScreen.style.display='block';
+  lvl=0; chain=[]; renderLevel();
+}
+function renderLevel(){
+  var L=LEVELS[lvl];
+  lvlNum.textContent=lvl+1;
+  sceneTitle.textContent=L.title; sceneTag.textContent=L.tag;
+  sceneEmoji.textContent=L.emoji; sceneDesc.textContent=L.desc;
+  spiritBubble.className='spirit-bubble';
+  spiritBubble.textContent='字灵候命。书一字，吾便应之。';
+  wordInput.value=''; wordInput.placeholder='以一字破之…';
+  inputHint.textContent='回车提交 · 妙解有奇效，梗字有惊喜，哲字有玄机';
+  updateChain();
+  setTimeout(function(){ try{wordInput.focus();}catch(e){} },120);
+}
+function updateChain(){ chainDisplay.textContent = chain.length ? chain.join(' · ') : '—'; }
+
+function match(raw){
+  var L=LEVELS[lvl];
+  var w=raw;
+  if(L.perfect[w]) return {type:'perfect', text:L.perfect[w]};
+  if(L.meme[w]) return {type:'meme', text:L.meme[w]};
+  if(GLOBAL_MEME[w]) return {type:'meme', text:GLOBAL_MEME[w].replace('{t}',L.title)};
+  if(SPECIAL[w]) return SPECIAL[w];
+  for(var i=0;i<CLUSTERS.length;i++){
+    if(CLUSTERS[i].chars.indexOf(w)>=0){
+      return {type:'good', text:CLUSTERS[i].res.replace('{w}',w)};
+    }
+  }
+  var g=GENERIC_PASS[Math.floor(Math.random()*GENERIC_PASS.length)];
+  return {type:'good', text:g.replace('{w}',w)};
+}
+
+function submit(){
+  var raw=(wordInput.value||'').trim();
+  if(!raw){ inputHint.textContent='请书一字。'; return; }
+  /* 一字诀：只收单字 */
+  if(Array.from(raw).length>1){
+    spiritBubble.className='spirit-bubble fail';
+    spiritBubble.textContent='字灵摇头：「一字诀——只书一字。」';
+    wordInput.value=''; return;
+  }
+  /* 元叙事彩蛋 */
+  if(raw==='字'||raw==='灵'){
+    spiritBubble.className='spirit-bubble special';
+    spiritBubble.textContent='字灵一笑：「你唤我作甚？此字不通——但你既知此乃诀，便已通了一半。换一字试试。」';
+    wordInput.value=''; return;
+  }
+  if(raw==='问'||raw==='疑'||raw==='？'){
+    spiritBubble.className='spirit-bubble';
+    spiritBubble.textContent='字灵低语：「此境无定解，随心而书即是。试与困境相干之字，或大胆一些——哲字、梗字，皆可通。」';
+    wordInput.value=''; return;
+  }
+  if(chain.indexOf(raw)>=0){
+    spiritBubble.className='spirit-bubble fail';
+    spiritBubble.textContent='字灵侧目：「'+raw+'？你方才不是已书过么？换一字试试，字字不同，境境不同。」';
+    wordInput.value=''; return;
+  }
+  var r=match(raw);
+  if(r.type==='fail'){
+    spiritBubble.className='spirit-bubble fail';
+    spiritBubble.textContent=r.text;
+    wordInput.value=''; return;
+  }
+  spiritBubble.className='spirit-bubble '+r.type;
+  spiritBubble.textContent=r.text;
+  spiritBubble.classList.add('result-pop');
+  setTimeout(function(){spiritBubble.classList.remove('result-pop');},460);
+  chain.push(raw);
+  updateChain();
+  wordInput.value='';
+  inputHint.textContent = r.type==='perfect' ? '✦ 妙解！字灵喝彩。' :
+                           r.type==='meme' ? '※ 梗字！字灵憋笑。' :
+                           r.type==='special' ? '※ 哲字！字灵颔首。' : '· 通解。前路已开。';
+  setTimeout(function(){
+    if(lvl < LEVELS.length-1){ lvl++; renderLevel(); }
+    else { showEnd(); }
+  }, 1900);
+}
+
+function showEnd(){
+  gameScreen.style.display='none';
+  endScreen.style.display='block';
+  document.getElementById('word-chain').textContent = chain.join('  ');
+  document.getElementById('verdict').innerHTML = verdict();
+}
+
+function verdict(){
+  var perfect=0, meme=0, special=0, cluster={};
+  chain.forEach(function(w,i){
+    var L=LEVELS[i];
+    if(L.perfect[w]){perfect++;return;}
+    if(L.meme[w]){meme++;return;}
+    if(GLOBAL_MEME[w]){meme++;return;}
+    if(SPECIAL[w]&&SPECIAL[w].type!=='fail'){special++;return;}
+    for(var k=0;k<CLUSTERS.length;k++){ if(CLUSTERS[k].chars.indexOf(w)>=0){ cluster[CLUSTERS[k].name]=(cluster[CLUSTERS[k].name]||0)+1; return; } }
+  });
+  var lines=[];
+  if(perfect===10) lines.push('<b>「字灵本灵」</b>——十关皆妙解，你不是字灵的传人，<b>你就是字灵本身</b>。');
+  else if(perfect>=7) lines.push('<b>「字灵转世」</b>——'+perfect+'次妙解，你是带着字灵记忆来到此世的人。');
+  else if(perfect>=4) lines.push('<b>「字灵钟爱」</b>——'+perfect+'次妙解，天地偏爱的奇才。');
+  else if(perfect>=2) lines.push('你偶得'+perfect+'次妙解，是心中有灵光之人。');
+  else if(perfect===0) lines.push('你这一路无妙解，却字字踏实——是<b>凡人中的凡人</b>，亦是最真。');
+  var mg=meme;
+  if(mg===10) lines.push('<b>「梗王」</b>——十关皆梗，你是这世间最不正经的仙人，玩世不恭至极。');
+  else if(mg>=6) lines.push('<b>「玩世不恭」</b>——'+mg+'次梗字，看透一切的顽仙。');
+  else if(mg>=3) lines.push('<b>「嬉笑人间」</b>——'+mg+'次梗字，藏不住的顽心。');
+  else if(mg>=1) lines.push('你'+mg+'次书了梗字，藏不住几分顽心。');
+  if(special>=4) lines.push('<b>「悟道者」</b>——'+special+'次哲字，你以玄机破境，是心向大道之人。');
+  else if(special>=2) lines.push('你'+special+'次书了哲字，心中有几分玄思。');
+  var dom=null,domN=0;
+  for(var c in cluster){ if(cluster[c]>domN){domN=cluster[c];dom=c;} }
+  if(dom && domN>=3){
+    var map={water:'上善若水',fire:'烈火烹油',hand:'一双手闯天下',wood:'草木皆可为友',earth:'脚踏实地',heart:'以心观世',mouth:'一言成谶',walk:'步步生莲',metal:'锋芒毕露',light:'心向光明',person:'众缘相助'};
+    lines.push('你这一路多与「<b>'+(map[dom]||dom)+'</b>」相系，是其道的修行者。');
+  }
+  if(chain.length>=2 && chain[0]===chain[chain.length-1])
+    lines.push('<b>「首尾回环」</b>——你以「'+chain[0]+'」始，以「'+chain[0]+'」终，是首尾相扣的圆满。');
+  if(chain.indexOf('道')>=0) lines.push('你书过「道」字，是<b>问道</b>之人。');
+  if(chain.indexOf('心')>=0) lines.push('你书过「心」字，是<b>修心</b>之人。');
+  if(chain.indexOf('我')>=0) lines.push('你书过「我」字，是<b>认得自己</b>的人。');
+  if(chain.indexOf('无')>=0) lines.push('你书过「无」字，是<b>看破</b>之人。');
+  lines.push('<br>你的字诀为：<b style="color:var(--gold)">'+chain.join('')+'</b>。');
+  lines.push('此诀只属于你这一程。再来一次，未必相同——字随心走，心随境转。');
+  return lines.join('<br>');
+}
+
+startBtn.addEventListener('click', showGame);
+replayBtn.addEventListener('click', showGame);
+submitBtn.addEventListener('click', submit);
+wordInput.addEventListener('keydown', function(e){
+  if(e.key==='Enter'){ e.preventDefault(); submit(); }
+});
+})();
+</script>
+</body>
+</html>
