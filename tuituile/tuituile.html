@@ -50,6 +50,7 @@
   // ===================== 响应式布局变量（随屏幕计算）=====================
   let DPR = 1, VW = 0, VH = 0;
   let CELL = 3, boardX = 0, boardY = 0, boardW = 0, boardH = 0, FRAME = 8, hudH = 96;
+  let fx = 0, fy = 0, fw = 0, fh = 0; // 木质画框外矩形（四周留缝隙）
   let hardBtn = null, menuBtn = null, nextBox = null, progBar = null, restartBtn = null, coverBtn2 = null;
   let titlePos = null, scorePos = null, countSwatches = [];
 
@@ -67,6 +68,16 @@
   const FLAME = ["#fff27a", "#ffd23f", "#ff9e3d", "#ff5a3d"];
 
   // ===================== 布局（棋盘铺满整屏：列固定 100，行数随屏幕自适应）=====================
+  // 读取刘海屏安全区（env(safe-area-inset-*)），保证玩法区不被遮挡
+  function safeInsets() {
+    const d = document.createElement("div");
+    d.style.cssText = "position:fixed;left:0;top:0;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)";
+    document.body.appendChild(d);
+    const cs = getComputedStyle(d);
+    const p = [cs.paddingTop, cs.paddingRight, cs.paddingBottom, cs.paddingLeft].map(x => parseInt(x, 10) || 0);
+    document.body.removeChild(d);
+    return { top: p[0], right: p[1], bottom: p[2], left: p[3] };
+  }
   function layout() {
     VW = Math.max(280, window.innerWidth);
     VH = Math.max(420, window.innerHeight);
@@ -76,30 +87,37 @@
     cv.style.width = VW + "px";
     cv.style.height = VH + "px";
 
-    // 关键：单格 = 屏宽/100，行数 = 屏高/单格 → 棋盘宽=屏宽、高=屏高，铺满整屏，无空白
-    let cell = Math.max(2, Math.floor(VW / COLS));
+    const S = safeInsets();
+    // 四周留缝隙（外边距）：随屏幕缩放，桌面/手机都留一点边，不霸占整屏
+    const M = Math.round(Math.max(10, Math.min(22, Math.min(VW, VH) * 0.03)));
+    fx = M + S.left; fy = M + S.top; fw = VW - M * 2 - S.left - S.right; fh = VH - M * 2 - S.top - S.bottom;
+    FRAME = Math.max(4, Math.round(Math.min(VW, VH) * 0.012)); // 木框厚度
+
+    // 沙床填满框内：列固定 100，单格 = (框内宽-2框)/100，行数随之自适应
+    let cell = Math.max(2, Math.floor((fw - FRAME * 2) / COLS));
     CELL = cell;
-    let rows = Math.floor(VH / CELL);
+    let rows = Math.floor((fh - FRAME * 2) / CELL);
     rows = Math.max(40, Math.min(MAXROWS, rows));
     if (rows !== ROWS) {
       if (rows > ROWS) grid.fill(0, ROWS * COLS, rows * COLS); // 清掉新露出的行，防旧沙重现
       ROWS = rows;
       if (piece) piece.col0 = Math.max(0, Math.min(COLS - shapeWidth(piece.cells), piece.col0));
     }
-    boardX = 0; boardY = 0;
-    boardW = COLS * CELL; boardH = ROWS * CELL;
-    FRAME = Math.max(3, Math.round(CELL * 0.4));
+    const innerW = COLS * CELL, innerH = ROWS * CELL;
+    boardX = fx + FRAME + Math.floor((fw - FRAME * 2 - innerW) / 2);
+    boardY = fy + FRAME + Math.floor((fh - FRAME * 2 - innerH) / 2);
+    boardW = innerW; boardH = innerH;
 
-    // HUD 全部悬浮在棋盘之上，不占额外空间
-    titlePos = { x: 8, y: 18 };
-    scorePos = { x: VW / 2, y: 18 };
-    menuBtn = { x: VW - 54, y: 6, w: 48, h: 20 };
-    // 颜色累计：悬浮在棋盘左下角
+    // HUD：悬浮在框内（沙床之上），不占额外空间
+    titlePos = { x: boardX + 8, y: boardY + 18 };
+    scorePos = { x: boardX + boardW / 2, y: boardY + 18 };
+    menuBtn = { x: fx + fw - 54, y: fy + 6, w: 48, h: 20 };
+    // 颜色累计：悬浮在沙床左下角
     countSwatches = [];
-    const cw = 12, cgap = 6, cY = VH - 22;
-    for (let i = 0; i < 4; i++) countSwatches.push({ x: 8 + i * (cw + cgap), y: cY, w: cw, h: cw });
-    progBar = { x: 0, y: 0, w: VW, h: 3 };
-    hardBtn = { x: Math.round(VW / 2 - 100), y: VH - 32, w: 200, h: 26 };
+    const cw = 12, cgap = 6, cY = boardY + boardH - 22;
+    for (let i = 0; i < 4; i++) countSwatches.push({ x: boardX + 8 + i * (cw + cgap), y: cY, w: cw, h: cw });
+    progBar = { x: boardX, y: boardY, w: boardW, h: 3 };
+    hardBtn = { x: Math.round(boardX + boardW / 2 - 100), y: boardY + boardH - 32, w: 200, h: 26 };
     restartBtn = { x: VW / 2 - 80, y: Math.round(VH * 0.62), w: 160, h: 48 };
     coverBtn2 = { x: VW / 2 - 80, y: Math.round(VH * 0.62) + 58, w: 160, h: 42 };
   }
@@ -680,21 +698,29 @@
   function drawGrain(x, y, color) { drawPixelCell(x, y, color, 0, 0); }
 
   function drawWoodFrame() {
-    // 整屏木框底
-    ctx.fillStyle = "#5C3A1E"; ctx.fillRect(0, 0, VW, VH);
-    ctx.fillStyle = "rgba(0,0,0,.15)";
+    // 整屏缝隙底色（深色木桌，桌面感，让画框四周留白）
+    ctx.fillStyle = "#241608"; ctx.fillRect(0, 0, VW, VH);
+    ctx.fillStyle = "rgba(0,0,0,.22)";
     for (let i = 0; i < VW; i += 14) ctx.fillRect(i, 0, 2, VH);
+    // 外部木框
+    ctx.fillStyle = "#5C3A1E"; ctx.fillRect(fx, fy, fw, fh);
+    ctx.fillStyle = "rgba(0,0,0,.15)";
+    for (let i = fx; i < fx + fw; i += 14) ctx.fillRect(i, fy, 2, fh);
     ctx.fillStyle = "rgba(255,255,255,.05)";
-    for (let i = 7; i < VW; i += 14) ctx.fillRect(i, 0, 1, VH);
-    // 整屏沙床（铺满可视区，无空白）
-    const g = ctx.createLinearGradient(0, 0, 0, VH);
+    for (let i = fx + 7; i < fx + fw; i += 14) ctx.fillRect(i, fy, 1, fh);
+    // 框内沙床（铺满框内区域）
+    const g = ctx.createLinearGradient(0, boardY, 0, boardY + boardH);
     g.addColorStop(0, "#e8d9b8");
     g.addColorStop(1, "#d4c09a");
-    ctx.fillStyle = g; ctx.fillRect(0, 0, VW, VH);
+    ctx.fillStyle = g; ctx.fillRect(boardX, boardY, boardW, boardH);
     ctx.fillStyle = "rgba(160,120,70,.06)";
-    for (let i = 0; i < VH; i += 8 * CELL) ctx.fillRect(0, i, VW, 1);
+    for (let i = 0; i < boardH; i += 8 * CELL) ctx.fillRect(boardX, boardY + i, boardW, 1);
+    // 外框描边
     ctx.strokeStyle = "rgba(0,0,0,.5)"; ctx.lineWidth = 2;
-    ctx.strokeRect(1, 1, VW - 2, VH - 2);
+    ctx.strokeRect(fx + 1, fy + 1, fw - 2, fh - 2);
+    // 沙床与木框交界描边
+    ctx.strokeStyle = "rgba(0,0,0,.35)"; ctx.lineWidth = 1;
+    ctx.strokeRect(boardX - 1, boardY - 1, boardW + 2, boardH + 2);
   }
   function drawGrid() {
     for (let r = 0; r < ROWS; r++) {
@@ -757,7 +783,7 @@
     if (n === 0) return;
     const pw = Math.min(150, VW * 0.52);
     const ph = Math.min(104, VH * 0.26);
-    const px = VW - pw - 6, py = 30; // 屏幕右上角（菜单按钮下方）
+    const px = fx + fw - pw - 6, py = fy + 28; // 画框右上角（菜单按钮下方，框内）
     ctx.fillStyle = "rgba(20,10,4,.72)";
     roundRect(px, py, pw, ph, 8); ctx.fill();
     ctx.strokeStyle = "rgba(202,164,106,.6)"; ctx.lineWidth = 1; ctx.stroke();
