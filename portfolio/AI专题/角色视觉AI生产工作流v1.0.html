@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>角色视觉AI生产工作流v1.0 · 杨长辉作品集</title>
+<style>
+*{box-sizing:border-box}
+body{font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;line-height:1.85;color:#26303f;margin:0;background:#f6f8fc;font-size:15.5px}
+.wrap{max-width:900px;margin:0 auto;padding:26px 22px 80px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px;font-size:13px}
+.crumb{color:#7c8aa3;word-break:break-all}
+.crumb b{color:#1d4ed8}
+.back{white-space:nowrap;padding:6px 13px;border-radius:8px;background:#1d4ed8;color:#fff;text-decoration:none;font-size:13px}
+h1{font-size:25px;margin:0 0 4px;letter-spacing:.5px;line-height:1.4}
+.meta{color:#8a97ab;font-size:13px;margin:0 0 20px}
+.doc{background:#fff;border-radius:14px;padding:30px 34px 40px;box-shadow:0 2px 14px rgba(30,50,90,.06)}
+.doc h1,.doc h2,.doc h3,.doc h4{color:#12306e;line-height:1.5}
+.doc h1{font-size:22px;margin:26px 0 12px;padding-bottom:8px;border-bottom:2px solid #e5ecfa}
+.doc h2{font-size:19px;margin:24px 0 10px;padding-left:11px;border-left:4px solid #1d4ed8}
+.doc h3{font-size:16.5px;margin:20px 0 8px;color:#1d4ed8}
+.doc h4{font-size:15px;margin:16px 0 6px;color:#38507f}
+.doc p{margin:0 0 13px;text-align:justify}
+.doc strong{color:#12306e}
+.doc ul{padding-left:22px;margin:0 0 13px}
+.doc li{margin:4px 0}
+.doc pre{background:#0f2035;color:#d7e3f7;padding:15px 17px;border-radius:10px;overflow-x:auto;font-size:13.5px;line-height:1.65;font-family:ui-monospace,Menlo,Consolas,monospace}
+.doc code{background:#eef2fa;padding:1px 5px;border-radius:4px;font-size:13.5px;color:#12306e}
+.doc pre code{background:none;color:inherit;padding:0}
+.doc blockquote{margin:0 0 14px;padding:11px 16px;background:#f3f6fd;border-left:4px solid #9db4e8;border-radius:0 8px 8px 0;color:#3c4b64}
+.doc hr{border:0;border-top:1px solid #e5ecfa;margin:24px 0}
+.tw{overflow-x:auto;margin:0 0 16px;border-radius:9px;border:1px solid #e5ecfa}
+.doc table{border-collapse:collapse;width:100%;font-size:13.5px}
+.doc th{background:#eef3fc;color:#12306e;font-weight:600}
+.doc th,.doc td{border:1px solid #e0e8f6;padding:7px 10px;text-align:left;white-space:nowrap}
+.doc tbody tr:nth-child(even){background:#fafbfe}
+.doc .ms{margin:0 0 20px;border:1px solid #e5ecfa;border-radius:11px;overflow:hidden;background:#fbfcfe}
+.doc .ms img{display:block;width:100%;height:auto}
+.doc .ms figcaption{font-size:12.5px;color:#93a0b4;text-align:center;padding:8px 10px;background:#f6f8fc;border-top:1px solid #eef2fa}
+.doc .poem{margin:0 0 3px;line-height:2.15;font-size:16.5px;color:#1f2b3d;letter-spacing:.8px}
+.doc .psrc{margin:10px 0 0;font-size:12.5px;color:#a3aebb;text-align:right}
+.doc .ocrnote{margin:0 0 18px;padding:10px 15px;background:#f3f6fd;border-left:4px solid #9db4e8;border-radius:0 8px 8px 0;color:#5a6a80;font-size:13px}
+@media(max-width:640px){.wrap{padding:16px 12px 50px}.doc{padding:20px 16px 30px}h1{font-size:20px}}
+</style></head><body>
+<div class="wrap">
+<div class="topbar"><div class="crumb">AI专题 / <b>角色视觉AI生产工作流v1.0</b></div>
+<a class="back" href="../index.html">← 返回目录</a></div>
+<h1>角色视觉AI生产工作流v1.0</h1>
+<p class="meta">约 938 字 · 原件 <a href="%E8%A7%92%E8%89%B2%E8%A7%86%E8%A7%89AI%E7%94%9F%E4%BA%A7%E5%B7%A5%E4%BD%9C%E6%B5%81v1.0.docx">角色视觉AI生产工作流v1.0.docx</a></p>
+<div class="doc">
+<p>角色视觉 AI 生产工作流 v1.0</p>
+<p>适用：AI 陪伴类产品角色 / 场景 / 演出素材探索　｜　工具：LiblibAI / Stable Diffusion　｜　设计：杨长辉</p>
+<p>「用 AI 出图」不是目的，「出的图能直接用、跨端一致、情绪可被 0.3 秒读对」才是目的。本工作流把角色视觉从一次性抽卡，变成可复用、可交接、可验收的生产线。</p>
+<p>流程：性格参数 + 情绪态 → ① 视觉映射 → ② Prompt 模板 → ③ 一致性控制 → ④ 筛选验收 → ⑤ 结构化反馈 → 归档复用</p>
+<p>① 视觉映射：把性格翻译成视觉语言</p>
+<p>风格基线：圆润 Q 版，贴合 IP 原作，三端一致；表情系统 8 种基础表情 + 情绪态（开心 / 委屈 / 傲娇 / 困）。微动作原则——低幅度、高频率、随机化：幅度太大像抽搐，频率太低等于没有，完全固定会被识破为循环动画。</p>
+<p>② Prompt 模板（六段式，可复用）</p>
+<p>结构 = [风格锚点] + [角色主体] + [表情情绪] + [姿态微动作] + [光影氛围] + [画质参数]</p>
+<p>示例（火花·低落态）：圆润Q版宠物角色设计，小火龙形态，橙色体表+火焰尾，表情委屈（眉毛下垂、嘴角抿起、眼睛半阖），坐在地上尾巴无力垂落、微微低头，暖色柔光、角落光晕、浅景深，干净白底、三视图对齐、高细节、8k</p>
+<p>负向约束（通用）：写实、恐怖、多人、文字水印、肢体畸形、过度锐化、复杂背景、低分辨率、表情模糊、动作夸张</p>
+<p>③ 一致性控制（保证「同一只宠物」）</p>
+<p>固定种子：同一角色固定 seed，仅微调情绪与姿态描述词</p>
+<p>参考图锁定：以 IP 原作或已定稿三视图作参考图，用 IP-Adapter / 图生图控制形象</p>
+<p>风格 LoRA：整套角色统一风格 LoRA，保证跨角色、跨批次风格不漂移</p>
+<p>三视图定稿：先出正 / 侧 / 背三视图定稿，再派生表情与微动作</p>
+<p>跨端统一：同一角色在游戏 / 桌宠 / 机械宠的轮廓、配色、标志性特征辨识度必须一致</p>
+<p>④ 筛选验收（人工定稿前的强制检查）</p>
+<p>□ 情绪可读：抽 10 人快速测试，须在 0.3 秒内读对情绪</p>
+<p>□ 跨端一致：三端缩略图并列，辨识度统一</p>
+<p>□ 表情—情绪映射无歧义：8 种基础表情不串味</p>
+<p>□ 微动作幅度：低幅度、不抽搐、无循环感</p>
+<p>□ 无畸形 / 无水印 / 无风格漂移</p>
+<p>⑤ 结构化反馈模板（给美术与技术，必须可直接执行）</p>
+<p>反馈 = 问题（现象）→ 目标（体验标准）→ 方案（具体改法）→ 验证（怎么算改好）</p>
+<p>视觉样例｜问题：桌宠在夜间模式下过暗，看不清表情。→ 目标：月光模式下仍需 0.3 秒内读对情绪。→ 方案：为月光模式单独调一套表情亮度曲线，仅提亮五官区域，保持整体低亮度。→ 验证：夜间模式下情绪识别正确率 ≥ 90%，用户主观「不刺眼」评分 ≥ 4.0 / 5。</p>
+<p>⑥ 生产纪律</p>
+<p>AI 出探索，人做定稿：AI 负责「给可能」，人负责「选哪个、为什么」</p>
+<p>所有 AI 生成内容先过安全护栏，再进产品或社区</p>
+<p>沉淀即资产：每次定稿回填 Prompt 与「已验证模板库」，避免重复抽卡</p>
+<p>立场说明：本工作流中的阈值（0.3 秒、90%、4.0/5 等）为可讨论的设计目标值，非承诺指标，落地需以实测与业务实际为准。</p>
+<div class="tw"><table><thead><tr><th>性格 / 情绪</th><th>视觉表达</th></tr></thead><tbody><tr><td>高外向</td><td>主动姿态、肢体靠近、动作幅度大</td></tr><tr><td>高傲娇</td><td>眼神偏开、口是心非的微表情（嘴硬但身体靠近）</td></tr><tr><td>高粘人</td><td>贴身、依偎、视线跟随用户</td></tr><tr><td>高情绪性</td><td>表情幅度大、情绪转换明显</td></tr><tr><td>低落态</td><td>低垂、蜷缩、动作减少但保持在场</td></tr></tbody></table></div>
+</div></div></body></html>

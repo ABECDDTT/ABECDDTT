@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>05-1_全局跨系统联动逻辑 · 杨长辉作品集</title>
+<style>
+*{box-sizing:border-box}
+body{font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;line-height:1.85;color:#26303f;margin:0;background:#f6f8fc;font-size:15.5px}
+.wrap{max-width:900px;margin:0 auto;padding:26px 22px 80px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px;font-size:13px}
+.crumb{color:#7c8aa3;word-break:break-all}
+.crumb b{color:#1d4ed8}
+.back{white-space:nowrap;padding:6px 13px;border-radius:8px;background:#1d4ed8;color:#fff;text-decoration:none;font-size:13px}
+h1{font-size:25px;margin:0 0 4px;letter-spacing:.5px;line-height:1.4}
+.meta{color:#8a97ab;font-size:13px;margin:0 0 20px}
+.doc{background:#fff;border-radius:14px;padding:30px 34px 40px;box-shadow:0 2px 14px rgba(30,50,90,.06)}
+.doc h1,.doc h2,.doc h3,.doc h4{color:#12306e;line-height:1.5}
+.doc h1{font-size:22px;margin:26px 0 12px;padding-bottom:8px;border-bottom:2px solid #e5ecfa}
+.doc h2{font-size:19px;margin:24px 0 10px;padding-left:11px;border-left:4px solid #1d4ed8}
+.doc h3{font-size:16.5px;margin:20px 0 8px;color:#1d4ed8}
+.doc h4{font-size:15px;margin:16px 0 6px;color:#38507f}
+.doc p{margin:0 0 13px;text-align:justify}
+.doc strong{color:#12306e}
+.doc ul{padding-left:22px;margin:0 0 13px}
+.doc li{margin:4px 0}
+.doc pre{background:#0f2035;color:#d7e3f7;padding:15px 17px;border-radius:10px;overflow-x:auto;font-size:13.5px;line-height:1.65;font-family:ui-monospace,Menlo,Consolas,monospace}
+.doc code{background:#eef2fa;padding:1px 5px;border-radius:4px;font-size:13.5px;color:#12306e}
+.doc pre code{background:none;color:inherit;padding:0}
+.doc blockquote{margin:0 0 14px;padding:11px 16px;background:#f3f6fd;border-left:4px solid #9db4e8;border-radius:0 8px 8px 0;color:#3c4b64}
+.doc hr{border:0;border-top:1px solid #e5ecfa;margin:24px 0}
+.tw{overflow-x:auto;margin:0 0 16px;border-radius:9px;border:1px solid #e5ecfa}
+.doc table{border-collapse:collapse;width:100%;font-size:13.5px}
+.doc th{background:#eef3fc;color:#12306e;font-weight:600}
+.doc th,.doc td{border:1px solid #e0e8f6;padding:7px 10px;text-align:left;white-space:nowrap}
+.doc tbody tr:nth-child(even){background:#fafbfe}
+.doc .ms{margin:0 0 20px;border:1px solid #e5ecfa;border-radius:11px;overflow:hidden;background:#fbfcfe}
+.doc .ms img{display:block;width:100%;height:auto}
+.doc .ms figcaption{font-size:12.5px;color:#93a0b4;text-align:center;padding:8px 10px;background:#f6f8fc;border-top:1px solid #eef2fa}
+.doc .poem{margin:0 0 3px;line-height:2.15;font-size:16.5px;color:#1f2b3d;letter-spacing:.8px}
+.doc .psrc{margin:10px 0 0;font-size:12.5px;color:#a3aebb;text-align:right}
+.doc .ocrnote{margin:0 0 18px;padding:10px 15px;background:#f3f6fd;border-left:4px solid #9db4e8;border-radius:0 8px 8px 0;color:#5a6a80;font-size:13px}
+@media(max-width:640px){.wrap{padding:16px 12px 50px}.doc{padding:20px 16px 30px}h1{font-size:20px}}
+</style></head><body>
+<div class="wrap">
+<div class="topbar"><div class="crumb">游戏策划专题 / 02-山海师：灵契 / 05_技术资源与执行设计 / <b>05-1_全局跨系统联动逻辑</b></div>
+<a class="back" href="../../../index.html">← 返回目录</a></div>
+<h1>05-1_全局跨系统联动逻辑</h1>
+<p class="meta">约 1,864 字 · 原件 <a href="05-1_%E5%85%A8%E5%B1%80%E8%B7%A8%E7%B3%BB%E7%BB%9F%E8%81%94%E5%8A%A8%E9%80%BB%E8%BE%91.md.md">05-1_全局跨系统联动逻辑.md.md</a></p>
+<div class="doc">
+<h1>一、全局变量总表（禁止子系统私自定义同名变量）</h1>
+<div class="tw"><table><thead><tr><th>变量名</th><th>数据类型</th><th>初始值</th><th>说明</th><th>读写权限</th><th>持久化</th></tr></thead><tbody><tr><td>GLOBAL_EVIL_01</td><td>int</td><td>0</td><td>青丘国恶念值</td><td>全系统可读，剧情系统写</td><td>是</td></tr><tr><td>GLOBAL_EVIL_02</td><td>int</td><td>0</td><td>厌火国恶念值</td><td>全系统可读，剧情系统写</td><td>是</td></tr><tr><td>GLOBAL_EVIL_03</td><td>int</td><td>0</td><td>大人国恶念值</td><td>全系统可读，剧情系统写</td><td>是</td></tr><tr><td>GLOBAL_EVIL_04</td><td>int</td><td>0</td><td>小人国恶念值</td><td>全系统可读，剧情系统写</td><td>是</td></tr><tr><td>GLOBAL_EVIL_05</td><td>int</td><td>0</td><td>羽民国恶念值</td><td>全系统可读，剧情系统写</td><td>是</td></tr><tr><td>GLOBAL_EVIL_06</td><td>int</td><td>0</td><td>巫咸国恶念值</td><td>全系统可读，剧情系统写</td><td>是</td></tr><tr><td>GLOBAL_EVIL_07</td><td>int</td><td>0</td><td>黑齿国恶念值</td><td>全系统可读，剧情系统写</td><td>是</td></tr><tr><td>GLOBAL_EVIL_08</td><td>int</td><td>0</td><td>女子国恶念值</td><td>全系统可读，剧情系统写</td><td>是</td></tr><tr><td>GLOBAL_EVIL_09</td><td>int</td><td>0</td><td>轩辕国恶念值</td><td>全系统可读，剧情系统写</td><td>是</td></tr><tr><td>GLOBAL_EVIL_10</td><td>int</td><td>0</td><td>长臂国恶念值</td><td>全系统可读，剧情系统写</td><td>是</td></tr><tr><td>GLOBAL_EVIL_11</td><td>int</td><td>0</td><td>交胫国恶念值</td><td>全系统可读，剧情系统写</td><td>是</td></tr><tr><td>GLOBAL_EVIL_12</td><td>int</td><td>0</td><td>三首国恶念值</td><td>全系统可读，剧情系统写</td><td>是</td></tr><tr><td>GLOBAL_EVIL_13</td><td>int</td><td>0</td><td>毛民国恶念值</td><td>全系统可读，剧情系统写</td><td>是</td></tr><tr><td>GLOBAL_EVIL_14</td><td>int</td><td>0</td><td>劳民国恶念值</td><td>全系统可读，剧情系统写</td><td>是</td></tr><tr><td>GLOBAL_EVIL_15</td><td>int</td><td>0</td><td>白民国恶念值</td><td>全系统可读，剧情系统写</td><td>是</td></tr><tr><td>GLOBAL_EVIL_16</td><td>int</td><td>0</td><td>肃慎国恶念值</td><td>全系统可读，剧情系统写</td><td>是</td></tr><tr><td>GLOBAL_EVIL_17</td><td>int</td><td>0</td><td>无肠国恶念值</td><td>全系统可读，剧情系统写</td><td>是</td></tr><tr><td>GLOBAL_EVIL_18</td><td>int</td><td>0</td><td>玄股国恶念值</td><td>全系统可读，剧情系统写</td><td>是</td></tr><tr><td>GLOBAL_EVIL_19</td><td>int</td><td>0</td><td>一目国恶念值</td><td>全系统可读，剧情系统写</td><td>是</td></tr><tr><td>GLOBAL_EVIL_20</td><td>int</td><td>0</td><td>结胸国恶念值</td><td>全系统可读，剧情系统写</td><td>是</td></tr><tr><td>GLOBAL_BEAST_WAKE</td><td>float</td><td>0.0</td><td>四凶兽复苏进度（0-100）</td><td>剧情系统写，战斗系统读</td><td>是</td></tr><tr><td>GLOBAL_PLAYER_LV</td><td>int</td><td>1</td><td>玩家当前等级</td><td>战斗/剧情系统写</td><td>是</td></tr><tr><td>GLOBAL_OATH_BREAK</td><td>int</td><td>0</td><td>累计强行解除本命次数</td><td>契约系统写</td><td>是</td></tr><tr><td>GLOBAL_NATION_OPEN</td><td>uint32</td><td>0</td><td>20国开放状态位掩码（bit0=青丘...bit19=结胸）</td><td>剧情系统读写</td><td>是</td></tr><tr><td>GLOBAL_MARKET_MOD</td><td>float</td><td>1.0</td><td>全局商店价格倍率（交胫国任务影响）</td><td>剧情系统写，经济系统读</td><td>是</td></tr><tr><td>GLOBAL_WATER_PURITY</td><td>int</td><td>0</td><td>水脉净化度（-100~+100）</td><td>长臂/玄股/轩辕剧情写</td><td>是</td></tr><tr><td>GLOBAL_MIST_STATE</td><td>string</td><td>"normal"</td><td>青丘迷障状态（normal/magic/dissipated）</td><td>青丘剧情写，环境系统读</td><td>是</td></tr></tbody></table></div>
+<h1>二、跨国联动规则库（具体变量判断逻辑）</h1>
+<div class="tw"><table><thead><tr><th>规则ID</th><th>规则名称</th><th>触发条件（IF）</th><th>执行结果（THEN）</th><th>关联04文档</th></tr></thead><tbody><tr><td>LINK_01</td><td>青丘魔气外溢</td><td>GLOBAL_EVIL_01 &gt; 30</td><td>① 羽民国风灵通道状态 = "魔气喷发"；② 羽民国进入时附加状态"魔气侵蚀"（全属性-10%，持续30秒）；③ 羽民国风灵通道移动成功率 = 80%（原100%）</td><td>04-1, 04-5</td></tr><tr><td>LINK_02</td><td>厌火破棺连锁</td><td>厌火国路线 == "破棺"</td><td>① GLOBAL_BEAST_WAKE += 5.0；② 轩辕国封魔台裂缝扩大，封魔台修复需求+1个镇石；③ 大人国地下竞技场出现"旱魃余烬"采集点</td><td>04-2, 04-9</td></tr><tr><td>LINK_03</td><td>大人碎山者碾压</td><td>GLOBAL_EVIL_03 &gt; 40 且 路线 == "支持碎山者"</td><td>① 小人国边境关闭（GLOBAL_NATION_OPEN bit3 = 0）；② 毛民国边境摩擦事件触发；③ 小人国缩形草黑市价格×3</td><td>04-3, 04-4, 04-13</td></tr><tr><td>LINK_04</td><td>小人国迁离羽民</td><td>小人国路线 == "协助迁离"</td><td>① 羽民国云巢新增"云下居民"区域；② 羽民国风灵通道维护费-20%；③ 大人国微观裂缝崩溃，大人国部分区域不可进入</td><td>04-4, 04-5</td></tr><tr><td>LINK_05</td><td>羽民国国主揭露</td><td>羽民国路线 == "揭露国主"</td><td>① 肃慎国世仇任务链更新（停战）；② 青丘国风灵通道直连魔气源，青丘国恶念值增长速度+20%；③ 交胫国商会密卷新增"穷奇残魂线索"</td><td>04-5, 04-16, 04-11</td></tr><tr><td>LINK_06</td><td>巫咸轮回镜碎</td><td>巫咸国路线 == "击碎轮回镜"</td><td>① 三首国三世镜同步碎裂（若未碎则进入"共振龟裂"状态）；② 一目国独目失明概率+30%；③ 灵魂结晶类灵材全局掉落率+50%</td><td>04-6, 04-12, 04-19</td></tr><tr><td>LINK_07</td><td>黑齿毒龙净化</td><td>黑齿国路线 == "净化合作"</td><td>① 巫咸国与黑齿国外交恢复，净魂池水可在黑齿国正常使用；② 无肠国失去毒材处理厂，无肠国恶念值+10；③ 青丘国影狐诅咒解除（若未解除则自动-20恶念）</td><td>04-7, 04-6, 04-17</td></tr><tr><td>LINK_08</td><td>女子国恶胎隔离</td><td>女子国路线 == "隔离自保"</td><td>① 游戏内时间3年后（现实约1周），女子国毁灭，GLOBAL_NATION_OPEN bit7 = 0；② 白民国乘黄之血需求激增，乘黄之血黑市价格×2</td><td>04-8, 04-15</td></tr><tr><td>LINK_09</td><td>轩辕血祭加固</td><td>轩辕国路线 == "血祭加固"</td><td>① 玩家永久虚弱-20%（全属性）；② 跳过十国镇石收集，直接进入伪结局；③ 所有国家恶念值锁定不再变化</td><td>04-9</td></tr><tr><td>LINK_10</td><td>长臂归墟净化</td><td>长臂国路线 == "净化源头"</td><td>① 玄股国水脉恢复，玄股国深海巨兽遭遇率-50%；② GLOBAL_WATER_PURITY += 30；③ 女子国子母河黑水污染-20（若存在）</td><td>04-10, 04-18</td></tr><tr><td>LINK_11</td><td>交胫商会垄断</td><td>GLOBAL_EVIL_11 &gt; 30 且 路线 == "支持商会"</td><td>① GLOBAL_MARKET_MOD = 1.3；② 羽民国风灵通道地面中转费+50%；③ 肃慎国楛矢石砮价格+30%</td><td>04-11</td></tr><tr><td>LINK_12</td><td>三首轮回修正</td><td>三首国路线 == "修正轮回"</td><td>① 巫咸国进入"时间乱流"（NPC对话随机显示过去/未来内容）；② 四凶兽无法转世，BOSS战死亡后不再刷新（真死亡）；③ 亡灵类灵兽签约成功率-50%</td><td>04-12, 04-6</td></tr><tr><td>LINK_13</td><td>毛民国梼杌觉醒</td><td>毛民国路线 == "血脉觉醒"</td><td>① 全图土属性区域（大人国、毛民国、部分轩辕国）恶念值+15；② 梼杌幼崽可签约；③ 大人国碎山者获得"梼杌之力"BUFF（攻击+20%）</td><td>04-13, 04-3</td></tr><tr><td>LINK_14</td><td>劳民国诅咒解除</td><td>劳民国路线 == "解除诅咒"</td><td>① 轩辕国封魔台自动修复5%（GLOBAL_BEAST_WAKE -= 5）；② 时间蠕虫出现可签约；③ 永动核心停止产出</td><td>04-14, 04-9</td></tr><tr><td>LINK_15</td><td>白民国负寿元吞噬</td><td>白民国路线 == "吞噬负寿元"</td><td>① 全图延寿类道具失效；② 无肠国饕餮胃囊共鸣加速（GLOBAL_BEAST_WAKE += 3）；③ 饕餮分身·寿可签约</td><td>04-15, 04-17</td></tr><tr><td>LINK_16</td><td>肃慎落日箭拔取</td><td>肃慎国路线 == "拔箭封天"</td><td>① 轩辕国封魔台修复+10%；② 肃慎国雪原出现"雪魔"精英怪（冰属性）；③ 羽民国趁空袭，羽民国部分区域进入"空袭警报"状态</td><td>04-16, 04-9, 04-5</td></tr><tr><td>LINK_17</td><td>无肠暴食入侵</td><td>无肠国路线 == "暴食军团"</td><td>① 大人国遭遇入侵事件（额外战斗关卡）；② 玩家获得"暴食"BUFF（击杀回血20%，持续掉理智）；③ 理智值&lt;30时，灵兽有概率叛逃</td><td>04-17, 04-3</td></tr><tr><td>LINK_18</td><td>玄股水脉抽离</td><td>玄股国路线 == "抽离水脉"</td><td>① 轩辕国封魔台不再受水脉污染；② 玄股国30%区域沙漠化，不可进入；③ 长臂国归墟之眼黑水停止但渔业衰退</td><td>04-18, 04-10</td></tr><tr><td>LINK_19</td><td>一目天眼合成</td><td>一目国路线 == "合成天眼"</td><td>① 四凶兽本体位置直接标记于地图；② 所有BOSS战难度+30%（BOSS血量×1.3，攻击×1.2）；③ 四凶兽提前感知玩家，随机遭遇率+50%</td><td>04-19</td></tr><tr><td>LINK_20</td><td>结胸气井反转</td><td>结胸国路线 == "气井反转"</td><td>① 轩辕国封魔台修复+15%；② 结胸国国民全属性-10%（NPC商店价格+20%，任务奖励-10%）；③ 玩家获得"供气者"标签</td><td>04-20, 04-9</td></tr></tbody></table></div>
+<h1>三、联动规则执行优先级</h1>
+<div class="tw"><table><thead><tr><th>优先级</th><th>规则类型</th><th>执行顺序</th></tr></thead><tbody><tr><td>P0</td><td>国家毁灭/关闭</td><td>最先执行（修改GLOBAL_NATION_OPEN）</td></tr><tr><td>P1</td><td>四凶兽复苏进度</td><td>其次执行（修改GLOBAL_BEAST_WAKE）</td></tr><tr><td>P2</td><td>全局属性/BUFF</td><td>再次执行（修改玩家状态）</td></tr><tr><td>P3</td><td>经济/价格变动</td><td>最后执行（修改GLOBAL_MARKET_MOD等）</td></tr></tbody></table></div>
+<h1>四、事件广播机制</h1>
+<div class="tw"><table><thead><tr><th>事件名</th><th>广播时机</th><th>订阅系统</th><th>处理逻辑</th></tr></thead><tbody><tr><td>EVIL_CHANGED</td><td>任意国家恶念值变动</td><td>战斗系统、环境系统、UI系统</td><td>重新计算该区域怪物攻击性与环境效果</td></tr><tr><td>NATION_CLOSED</td><td>GLOBAL_NATION_OPEN位变化</td><td>地图系统、任务系统</td><td>关闭对应国家入口，更新任务指引</td></tr><tr><td>BEAST_WAKE_UP</td><td>GLOBAL_BEAST_WAKE达到25/50/75/100</td><td>剧情系统、战斗系统</td><td>触发四凶兽阶段性剧情/解锁新BOSS</td></tr><tr><td>MARKET_UPDATED</td><td>GLOBAL_MARKET_MOD变化</td><td>商店系统、UI系统</td><td>全局刷新所有商店价格显示</td></tr></tbody></table></div>
+<h1>【未定/待研究补充区】</h1>
+<ul><li>[ ] 多周目时GLOBAL_EVIL初始值是否继承上周目最终值？（待剧情组确认）</li><li>[ ] 20国同时发生联动时是否存在死锁风险？（需技术组评估事件队列）</li><li>[ ] 此处留白：_________________________</li></ul>
+</div></div></body></html>

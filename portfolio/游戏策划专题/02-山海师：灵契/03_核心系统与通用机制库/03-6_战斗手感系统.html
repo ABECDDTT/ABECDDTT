@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>03-6_战斗手感系统 · 杨长辉作品集</title>
+<style>
+*{box-sizing:border-box}
+body{font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;line-height:1.85;color:#26303f;margin:0;background:#f6f8fc;font-size:15.5px}
+.wrap{max-width:900px;margin:0 auto;padding:26px 22px 80px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px;font-size:13px}
+.crumb{color:#7c8aa3;word-break:break-all}
+.crumb b{color:#1d4ed8}
+.back{white-space:nowrap;padding:6px 13px;border-radius:8px;background:#1d4ed8;color:#fff;text-decoration:none;font-size:13px}
+h1{font-size:25px;margin:0 0 4px;letter-spacing:.5px;line-height:1.4}
+.meta{color:#8a97ab;font-size:13px;margin:0 0 20px}
+.doc{background:#fff;border-radius:14px;padding:30px 34px 40px;box-shadow:0 2px 14px rgba(30,50,90,.06)}
+.doc h1,.doc h2,.doc h3,.doc h4{color:#12306e;line-height:1.5}
+.doc h1{font-size:22px;margin:26px 0 12px;padding-bottom:8px;border-bottom:2px solid #e5ecfa}
+.doc h2{font-size:19px;margin:24px 0 10px;padding-left:11px;border-left:4px solid #1d4ed8}
+.doc h3{font-size:16.5px;margin:20px 0 8px;color:#1d4ed8}
+.doc h4{font-size:15px;margin:16px 0 6px;color:#38507f}
+.doc p{margin:0 0 13px;text-align:justify}
+.doc strong{color:#12306e}
+.doc ul{padding-left:22px;margin:0 0 13px}
+.doc li{margin:4px 0}
+.doc pre{background:#0f2035;color:#d7e3f7;padding:15px 17px;border-radius:10px;overflow-x:auto;font-size:13.5px;line-height:1.65;font-family:ui-monospace,Menlo,Consolas,monospace}
+.doc code{background:#eef2fa;padding:1px 5px;border-radius:4px;font-size:13.5px;color:#12306e}
+.doc pre code{background:none;color:inherit;padding:0}
+.doc blockquote{margin:0 0 14px;padding:11px 16px;background:#f3f6fd;border-left:4px solid #9db4e8;border-radius:0 8px 8px 0;color:#3c4b64}
+.doc hr{border:0;border-top:1px solid #e5ecfa;margin:24px 0}
+.tw{overflow-x:auto;margin:0 0 16px;border-radius:9px;border:1px solid #e5ecfa}
+.doc table{border-collapse:collapse;width:100%;font-size:13.5px}
+.doc th{background:#eef3fc;color:#12306e;font-weight:600}
+.doc th,.doc td{border:1px solid #e0e8f6;padding:7px 10px;text-align:left;white-space:nowrap}
+.doc tbody tr:nth-child(even){background:#fafbfe}
+.doc .ms{margin:0 0 20px;border:1px solid #e5ecfa;border-radius:11px;overflow:hidden;background:#fbfcfe}
+.doc .ms img{display:block;width:100%;height:auto}
+.doc .ms figcaption{font-size:12.5px;color:#93a0b4;text-align:center;padding:8px 10px;background:#f6f8fc;border-top:1px solid #eef2fa}
+.doc .poem{margin:0 0 3px;line-height:2.15;font-size:16.5px;color:#1f2b3d;letter-spacing:.8px}
+.doc .psrc{margin:10px 0 0;font-size:12.5px;color:#a3aebb;text-align:right}
+.doc .ocrnote{margin:0 0 18px;padding:10px 15px;background:#f3f6fd;border-left:4px solid #9db4e8;border-radius:0 8px 8px 0;color:#5a6a80;font-size:13px}
+@media(max-width:640px){.wrap{padding:16px 12px 50px}.doc{padding:20px 16px 30px}h1{font-size:20px}}
+</style></head><body>
+<div class="wrap">
+<div class="topbar"><div class="crumb">游戏策划专题 / 02-山海师：灵契 / 03_核心系统与通用机制库 / <b>03-6_战斗手感系统</b></div>
+<a class="back" href="../../../index.html">← 返回目录</a></div>
+<h1>03-6_战斗手感系统</h1>
+<p class="meta">约 2,920 字 · 原件 <a href="03-6_%E6%88%98%E6%96%97%E6%89%8B%E6%84%9F%E7%B3%BB%E7%BB%9F.md">03-6_战斗手感系统.md</a></p>
+<div class="doc">
+<h1>《山海师：灵契·战斗手感参数表》（v0.1）</h1>
+<blockquote><strong>文档定位</strong>：本表与 <code>02-1_人物基础数值库</code> 完全平行，专管帧数、速度、加速度、无敌帧、硬直等"手感"参数，用于后续 <code>PlayerActor.gd</code> 的 <code>export</code> 变量调参。   <strong>引用宪法</strong>：v0.3（全局核心参数总表：重力 980、耐力上限 100、恢复 20/s）   <strong>关联文档</strong>：02-1_人物基础数值库、02-2_职业技能库、02-3_隐藏职业库   <strong>状态</strong>：初稿 | 待审：空中坠落伤害阈值、多段跳/壁粘参数</blockquote>
+<hr>
+<h2>零、参数命名规范（GDScript 映射参考）</h2>
+<blockquote>以下命名供 <code>PlayerActor.gd</code> 直接引用，所有 <code>export</code> 变量均以 <code>FEEL_</code> 前缀区分于数值库。</blockquote>
+<div class="tw"><table><thead><tr><th>参数类别</th><th>命名前缀</th><th>示例</th></tr></thead><tbody><tr><td>物理环境</td><td><code>FEEL_PHY_</code></td><td><code>FEEL_PHY_GRAVITY</code></td></tr><tr><td>攻击帧</td><td><code>FEEL_ATK_</code></td><td><code>FEEL_ATK_G1_STARTUP</code></td></tr><tr><td>闪避/格挡</td><td><code>FEEL_DOD_</code> / <code>FEEL_BLK_</code></td><td><code>FEEL_DOD_IFRAME</code></td></tr><tr><td>打击反馈</td><td><code>FEEL_HIT_</code></td><td><code>FEEL_HIT_STOP_LIGHT</code></td></tr><tr><td>取消/缓冲</td><td><code>FEEL_CAN_</code> / <code>FEEL_BUF_</code></td><td><code>FEEL_BUF_WINDOW</code></td></tr><tr><td>职业修正</td><td><code>FEEL_MOD_</code></td><td><code>FEEL_MOD_WARRIOR_ATK_SPD</code></td></tr></tbody></table></div>
+<hr>
+<h2>一、全局物理环境参数</h2>
+<blockquote><strong>基准声明</strong>：以下参数为全职业共享的物理地基，与宪法重力 980 严格一致。</blockquote>
+<div class="tw"><table><thead><tr><th>参数名</th><th>初始建议值</th><th>秒数换算（60FPS）</th><th>引用/来源</th><th>说明</th></tr></thead><tbody><tr><td>重力加速度</td><td>980 px/s²</td><td>—</td><td>宪法 6.6</td><td>不可改，全局唯一真相源</td></tr><tr><td>地面水平加速度</td><td>2400 px/s²</td><td>—</td><td>手感初设</td><td>起步柔滑度，0→满速约 0.13s</td></tr><tr><td>地面摩擦减速度</td><td>1800 px/s²</td><td>—</td><td>手感初设</td><td>松键后滑行距离约 28px</td></tr><tr><td>空中水平加速度</td><td>1200 px/s²</td><td>—</td><td>手感初设</td><td>空中变向灵敏度为地面的 50%</td></tr><tr><td>最大水平速度</td><td>320 px/s</td><td>—</td><td>宪法 speed 参考</td><td>全职业共享速度硬上限</td></tr><tr><td>终端下落速度</td><td>800 px/s</td><td>—</td><td>手感初设</td><td>防止高速穿地，落地前自然限速</td></tr><tr><td>跳跃初速度</td><td>-380 px/s</td><td>—</td><td>宪法 -400 附近微调</td><td>轻点/长按通过可变高度系数区分</td></tr><tr><td>可变高度系数</td><td>0.65</td><td>—</td><td>手感初设</td><td>轻点跳跃高度 = 满蓄力 × 0.65</td></tr><tr><td>跳跃蓄力满额时间</td><td>0.15 秒</td><td>9 帧</td><td>手感初设</td><td>超过此时间视为满蓄力</td></tr><tr><td>落地硬直速度阈值</td><td>600 px/s</td><td>—</td><td>手感初设</td><td>下落速度&gt;600 时触发落地硬直</td></tr><tr><td>坠落伤害启动速度</td><td>750 px/s</td><td>—</td><td>待验证</td><td>超过此速度落地触发坠落伤害（% 生命）</td></tr></tbody></table></div>
+<hr>
+<h2>二、基础动作帧参数</h2>
+<blockquote><strong>统一约定</strong>：以下帧数均以 <strong>60FPS</strong> 为基准，格式为 <code>帧数(秒数)</code>。   <strong>三段基准</strong>：先给出全职业统一基准，职业差异在第五章以"±帧"修正。</blockquote>
+<h3>2.1 地面普攻三段（基准模板）</h3>
+<div class="tw"><table><thead><tr><th>段数</th><th>启动帧</th><th>持续帧（判定）</th><th>总帧</th><th>取消窗口</th><th>硬直帧</th><th>备注</th></tr></thead><tbody><tr><td>第 1 段</td><td>6 帧(0.10s)</td><td>4 帧(0.07s)</td><td>20 帧(0.33s)</td><td>第 14 帧起</td><td>0</td><td>可取消后摇</td></tr><tr><td>第 2 段</td><td>5 帧(0.08s)</td><td>5 帧(0.08s)</td><td>22 帧(0.37s)</td><td>第 15 帧起</td><td>0</td><td>微提速，节奏递进</td></tr><tr><td>第 3 段（终结）</td><td>7 帧(0.12s)</td><td>6 帧(0.10s)</td><td>30 帧(0.50s)</td><td>第 20 帧起</td><td>8 帧(0.13s)</td><td>高伤但硬直大，不可闪避取消</td></tr></tbody></table></div>
+<blockquote><strong>攻击判定框</strong>：持续帧期间武器/弹道具备伤害判定；启动帧仅允许预输入缓冲，无判定。</blockquote>
+<h3>2.2 空中普攻（基准模板）</h3>
+<div class="tw"><table><thead><tr><th>参数</th><th>数值</th><th>说明</th></tr></thead><tbody><tr><td>启动帧</td><td>6 帧(0.10s)</td><td>与地面第 1 段相同，保持节奏一致性</td></tr><tr><td>持续帧</td><td>6 帧(0.10s)</td><td>判定存在时间略长（滞空补偿）</td></tr><tr><td>总帧</td><td>24 帧(0.40s)</td><td>整体慢于地面，强调滞空风险</td></tr><tr><td>取消窗口</td><td>第 16 帧起</td><td>仅可被闪避/跳跃取消，不可衔接下一段</td></tr><tr><td>落地打断</td><td>是</td><td>落地瞬间强制结束空中普攻，进入落地硬直</td></tr></tbody></table></div>
+<h3>2.3 闪避帧参数</h3>
+<div class="tw"><table><thead><tr><th>参数</th><th>地面闪避</th><th>空中闪避</th><th>引用/来源</th></tr></thead><tbody><tr><td>无敌帧</td><td>18 帧(0.30s)</td><td>15 帧(0.25s)</td><td>宪法 6.6 / 02-2 键位总表</td></tr><tr><td>总帧（含后摇）</td><td>22 帧(0.37s)</td><td>20 帧(0.33s)</td><td>手感初设</td></tr><tr><td>后摇可取消帧</td><td>后 4 帧</td><td>后 3 帧</td><td>手感初设</td></tr><tr><td>耐力消耗</td><td>25 点</td><td>25 点</td><td>宪法 6.6</td></tr><tr><td>连续惩罚</td><td>第 3 次 50 点</td><td>第 3 次 50 点</td><td>宪法 6.6</td></tr><tr><td>疲劳状态</td><td>3 秒无法闪避</td><td>3 秒无法闪避</td><td>宪法 6.6</td></tr><tr><td>位移距离</td><td>96 px</td><td>80 px</td><td>手感初设（约为移速×0.3s）</td></tr><tr><td>位移曲线</td><td>前 3 帧急加速</td><td>匀速</td><td>手感初设</td></tr></tbody></table></div>
+<h3>2.4 跳跃与落地硬直</h3>
+<div class="tw"><table><thead><tr><th>参数</th><th>数值</th><th>说明</th></tr></thead><tbody><tr><td>起跳启动帧</td><td>3 帧(0.05s)</td><td>几乎无延迟，响应按键</td></tr><tr><td>起跳后离地帧</td><td>第 4 帧</td><td>此时开始受重力影响</td></tr><tr><td>落地硬直（轻）</td><td>4 帧(0.07s)</td><td>下落速度 ≤ 600 px/s</td></tr><tr><td>落地硬直（重）</td><td>10 帧(0.17s)</td><td>下落速度 &gt; 600 px/s</td></tr><tr><td>落地硬直（可取消）</td><td>第 3 帧起</td><td>轻硬直可被闪避取消；重硬直不可取消</td></tr><tr><td>二段跳</td><td>无</td><td>当前版本无多段跳，需通过空格职业位移实现</td></tr></tbody></table></div>
+<h3>2.5 空格职业特色启动帧</h3>
+<blockquote><strong>键位绑定</strong>：空格为职业差异化核心键，三大基础职业机制完全不同。</blockquote>
+<div class="tw"><table><thead><tr><th>职业</th><th>空格机制</th><th>启动帧</th><th>判定窗口</th><th>总帧</th><th>无敌帧</th><th>耐力/生命消耗</th></tr></thead><tbody><tr><td>灵战士</td><td>铁壁格挡</td><td>0 帧（即时）</td><td>精准：前 12 帧(0.20s)</td><td>按住持续</td><td>精准时 0 帧</td><td>10 点/秒</td></tr><tr><td>驭灵师</td><td>灵兽瞬闪</td><td>2 帧(0.03s)</td><td>—</td><td>20 帧(0.33s)</td><td>18 帧(0.30s)</td><td>25 点</td></tr><tr><td>灵术师</td><td>元素遁</td><td>2 帧(0.03s)</td><td>—</td><td>20 帧(0.33s)</td><td>18 帧(0.30s)</td><td>25 点</td></tr><tr><td>战狂（隐藏）</td><td>血战格挡</td><td>0 帧（即时）</td><td>精准：前 12 帧(0.20s)</td><td>按住持续</td><td>精准时 0 帧</td><td>1%生命/秒</td></tr><tr><td>兽魂行者（隐藏）</td><td>兽魂铁壁</td><td>0 帧（即时）</td><td>精准：前 12 帧(0.20s)</td><td>按住持续</td><td>精准时 0 帧</td><td>10 点/秒</td></tr><tr><td>先知（隐藏）</td><td>预知闪</td><td>2 帧(0.03s)</td><td>—</td><td>22 帧(0.37s)</td><td>21 帧(0.35s)</td><td>25 点</td></tr></tbody></table></div>
+<blockquote><strong>格挡机制补充</strong>： - 普通格挡：减伤 50%（03-4），无额外硬直。 - 精准格挡：在判定窗口内受击，触发"灵契反击"，灵兽立即释放免费协击（02-2）。 - 格挡按住期间：灵战士/兽魂行者每秒耗耐 10 点；战狂每秒扣 1% 当前生命（02-1）。 - 格挡松开：无后摇，可立即接任何动作。</blockquote>
+<hr>
+<h2>三、打击反馈参数</h2>
+<blockquote><strong>设计意图</strong>：通过"停帧（Hitstop）+ 震屏 + 粒子"三重反馈，区分攻击权重，强化水墨打击感。</blockquote>
+<h3>3.1 停帧（Hitstop）参数</h3>
+<div class="tw"><table><thead><tr><th>攻击类型</th><th>攻击者停帧</th><th>受击者停帧</th><th>说明</th></tr></thead><tbody><tr><td>普攻轻击（第 1/2 段）</td><td>3 帧(0.05s)</td><td>5 帧(0.08s)</td><td>轻快连击，节奏不中断</td></tr><tr><td>普攻终结（第 3 段）</td><td>5 帧(0.08s)</td><td>8 帧(0.13s)</td><td>中幅凝滞，强调终结感</td></tr><tr><td>人技（Q/E）</td><td>6 帧(0.10s)</td><td>10 帧(0.17s)</td><td>强反馈，技能命中确认</td></tr><tr><td>奥义（R）</td><td>10 帧(0.17s)</td><td>15 帧(0.25s)</td><td>全屏凝滞，水墨爆发前奏</td></tr><tr><td>灵兽技（F/G）</td><td>4 帧(0.07s)</td><td>6 帧(0.10s)</td><td>协击不停顿主角节奏</td></tr><tr><td>精准格挡反击</td><td>8 帧(0.13s)</td><td>12 帧(0.20s)</td><td>弹反专属高反馈</td></tr><tr><td>属性克制命中</td><td>额外 +2 帧</td><td>额外 +3 帧</td><td>宪法 6.4 克制触发时附加</td></tr></tbody></table></div>
+<h3>3.2 屏幕震动参数</h3>
+<div class="tw"><table><thead><tr><th>攻击类型</th><th>震动强度</th><th>震动时长</th><th>衰减曲线</th></tr></thead><tbody><tr><td>普攻轻击</td><td>1.5 px</td><td>3 帧</td><td>线性衰减</td></tr><tr><td>普攻终结</td><td>4.0 px</td><td>8 帧</td><td>正弦衰减</td></tr><tr><td>人技命中</td><td>5.0 px</td><td>10 帧</td><td>正弦衰减</td></tr><tr><td>奥义释放</td><td>10.0 px</td><td>20 帧</td><td>冲击+余震两段</td></tr><tr><td>精准格挡弹反</td><td>6.0 px</td><td>12 帧</td><td>正弦衰减</td></tr><tr><td>受击（主角）</td><td>3.0 px</td><td>6 帧</td><td>线性衰减</td></tr><tr><td>暴击命中</td><td>基础值 × 1.5</td><td>基础时长 + 3 帧</td><td>—</td></tr></tbody></table></div>
+<h3>3.3 墨痕与粒子倍数</h3>
+<blockquote><strong>注</strong>：粒子倍数指水墨溅射特效的生成量/扩散范围倍率。</blockquote>
+<div class="tw"><table><thead><tr><th>攻击类型</th><th>墨痕倍数</th><th>粒子扩散</th><th>特殊效果</th></tr></thead><tbody><tr><td>普攻轻击</td><td>1.0×</td><td>小范围</td><td>基础墨点</td></tr><tr><td>普攻终结</td><td>1.8×</td><td>中范围</td><td>墨痕飞溅，地面留痕 1 秒</td></tr><tr><td>人技（Q/E）</td><td>2.0×</td><td>大范围</td><td>技能属性对应水墨颜色</td></tr><tr><td>奥义（R）</td><td>3.5×</td><td>全屏</td><td>宣纸晕染效果，持续 3 秒</td></tr><tr><td>驭灵师普攻</td><td>1.3×</td><td>中范围</td><td>墨韵被动：命中留痕，可叠层</td></tr><tr><td>灵战士普攻</td><td>0.8×</td><td>小范围</td><td>裂空爪：爪痕特效替代墨痕</td></tr><tr><td>灵术师普攻</td><td>1.0×</td><td>中范围</td><td>元素弹：属性色水墨拖尾</td></tr><tr><td>精准格挡反击</td><td>2.5×</td><td>大范围</td><td>灵兽协击：墨爆/元素爆</td></tr></tbody></table></div>
+<hr>
+<h2>四、取消优先级与输入缓冲</h2>
+<h3>4.1 取消优先级表（从高到低）</h3>
+<div class="tw"><table><thead><tr><th>优先级</th><th>动作</th><th>可取消的目标动作</th><th>说明</th></tr></thead><tbody><tr><td>1（最高）</td><td>闪避（右键）</td><td>所有动作：攻击后摇、技能前摇/后摇、落地硬直（轻）、格挡松开瞬间</td><td>紧急避险，最高权限</td></tr><tr><td>2</td><td>跳跃</td><td>仅攻击后摇（普攻 1~3 段、空中普攻）；<strong>不可取消技能前摇</strong></td><td>防止脸滚键盘，保留技能风险</td></tr><tr><td>3</td><td>空格职业特色</td><td>仅攻击后摇；格挡为即时切换，无取消概念</td><td>瞬闪/元素遁可在普攻后摇中无缝衔接</td></tr><tr><td>4</td><td>普攻连段</td><td>仅前一段普攻的后摇</td><td>必须在取消窗口内输入</td></tr><tr><td>5（最低）</td><td>技能（Q/E/R）</td><td>不可取消任何动作，必须等当前动作结束或进入缓冲窗口</td><td>技能释放为硬承诺</td></tr></tbody></table></div>
+<h3>4.2 输入缓冲窗口</h3>
+<div class="tw"><table><thead><tr><th>参数</th><th>数值</th><th>说明</th></tr></thead><tbody><tr><td>全局缓冲窗口</td><td>8 帧(0.13s)</td><td>当前动作最后 8 帧内输入的下个动作，在动作结束后立即执行</td></tr><tr><td>普攻连段缓冲</td><td>10 帧(0.17s)</td><td>连段间容错略宽，便于连招节奏</td></tr><tr><td>闪避预输入</td><td>5 帧(0.08s)</td><td>即使当前不可闪避，5 帧内输入的闪避在可闪避瞬间触发</td></tr><tr><td>格挡预输入</td><td>3 帧(0.05s)</td><td>极短，要求玩家精准预判</td></tr><tr><td>跳跃预输入（落地）</td><td>5 帧(0.08s)</td><td>落地前 5 帧输入跳跃，落地瞬间立即起跳（取消落地硬直）</td></tr></tbody></table></div>
+<h3>4.3 硬直与无法取消状态</h3>
+<div class="tw"><table><thead><tr><th>状态</th><th>持续时间</th><th>能否被闪避取消</th><th>能否被跳跃取消</th></tr></thead><tbody><tr><td>普攻第 3 段硬直</td><td>8 帧</td><td>❌</td><td>❌</td></tr><tr><td>技能前摇</td><td>依技能</td><td>❌</td><td>❌</td></tr><tr><td>技能后摇</td><td>依技能</td><td>✅</td><td>❌</td></tr><tr><td>落地硬直（重）</td><td>10 帧</td><td>❌</td><td>❌</td></tr><tr><td>受击硬直（轻）</td><td>6 帧</td><td>❌</td><td>❌</td></tr><tr><td>受击硬直（重）</td><td>15 帧</td><td>❌</td><td>❌</td></tr><tr><td>疲劳状态</td><td>3 秒</td><td>❌</td><td>❌</td></tr></tbody></table></div>
+<hr>
+<h2>五、职业差异化修正系数</h2>
+<blockquote><strong>计算方式</strong>：实际帧数 = 基准帧数 × (1 + 修正系数)，向下取整。   正值 = 变慢/变长，负值 = 变快/变短。</blockquote>
+<h3>5.1 基础三职业修正</h3>
+<div class="tw"><table><thead><tr><th>职业</th><th>攻击启动帧</th><th>攻击总帧</th><th>闪避无敌帧</th><th>闪避总帧</th><th>空格特色</th><th>停帧倍率</th><th>定位说明</th></tr></thead><tbody><tr><td><strong>驭灵师</strong></td><td>基准</td><td>基准</td><td>基准 18 帧</td><td>基准 22 帧</td><td>瞬闪</td><td>1.1×</td><td>中距离控场，手感柔滑</td></tr><tr><td><strong>灵战士</strong></td><td>-1 帧</td><td>+2 帧</td><td>基准 18 帧</td><td>基准 22 帧</td><td>格挡</td><td>1.2×</td><td>近战重击，启动更快但后摇略长</td></tr><tr><td><strong>灵术师</strong></td><td>基准</td><td>-2 帧</td><td>基准 18 帧</td><td>-2 帧</td><td>元素遁</td><td>0.9×</td><td>远程轻快，整体更灵活</td></tr></tbody></table></div>
+<blockquote><strong>详细修正</strong>： - 灵战士：第 1 段启动 6→5 帧，第 3 段总帧 30→32 帧（硬直 8→10 帧），终结停帧倍率 1.2×。 - 灵术师：空中普攻总帧 24→22 帧，地面普攻第 3 段总帧 30→28 帧，闪避总帧 22→20 帧。 - 驭灵师：墨痕粒子倍率 1.3×（常驻），其余保持基准。</blockquote>
+<h3>5.2 隐藏职业修正（空格与核心动作）</h3>
+<div class="tw"><table><thead><tr><th>隐藏职业</th><th>攻击启动</th><th>闪避/空格无敌帧</th><th>硬直修正</th><th>特殊手感机制</th></tr></thead><tbody><tr><td><strong>封灵师</strong></td><td>基准</td><td>空格 18→20 帧</td><td>基准</td><td>瞬闪落点留下封印阵，落点后摇 +2 帧</td></tr><tr><td><strong>兽魂行者</strong></td><td>-2 帧（兽化爪击）</td><td>格挡精准窗口 12→14 帧</td><td>-20%</td><td>兽化期间攻速 +15%，攻击总帧 ×0.85</td></tr><tr><td><strong>墨家传人</strong></td><td>基准</td><td>机关跃无敌 6→8 帧</td><td>基准</td><td>后撤位移距离 +30%，后摇 -2 帧</td></tr><tr><td><strong>背誓者</strong></td><td>基准</td><td>背誓之跃 18 帧</td><td>基准</td><td>跳跃取消权限提升至"可取消技能后摇"</td></tr><tr><td><strong>山海绘卷师</strong></td><td>基准</td><td>绘卷遁 18→20 帧</td><td>基准</td><td>位移后 30% 概率协击，协击停帧 +2 帧</td></tr><tr><td><strong>守墓人</strong></td><td>基准</td><td>幽冥步 18 帧</td><td>基准</td><td>穿过敌人时恐惧 0.5s（30 帧），恐惧不可取消</td></tr><tr><td><strong>血法师</strong></td><td>+1 帧（血刃沉重）</td><td>血遁 18→20 帧</td><td>+10%</td><td>所有动作消耗生命，手感带"滞涩感"</td></tr><tr><td><strong>先知</strong></td><td>基准</td><td>预知闪 18→21 帧</td><td>基准</td><td>全职业最长无敌帧；闪避成功自动反击（不耗额外帧）</td></tr><tr><td><strong>战狂</strong></td><td>-1 帧</td><td>血战格挡无无敌</td><td>+15%</td><td>格挡以血代耐；半血以下攻击启动再 -1 帧</td></tr><tr><td><strong>毒龙使</strong></td><td>基准</td><td>蛇行 18→20 帧</td><td>基准</td><td>位移路径留下剧毒领域，路径判定持续 3 秒</td></tr></tbody></table></div>
+<hr>
+<h2>六、受击与硬直参数</h2>
+<div class="tw"><table><thead><tr><th>参数</th><th>数值</th><th>说明</th></tr></thead><tbody><tr><td>轻受击硬直</td><td>6 帧(0.10s)</td><td>被小怪普攻命中</td></tr><tr><td>中受击硬直</td><td>10 帧(0.17s)</td><td>被精英怪/人技命中</td></tr><tr><td>重受击硬直</td><td>15 帧(0.25s)</td><td>被奥义/BOSS 重击命中</td></tr><tr><td>击飞触发阈值</td><td>攻击倍率 ≥ 150%</td><td>达到此倍率触发击飞（如终结技、灵兽投射）</td></tr><tr><td>击飞初速度</td><td>200 px/s（水平）+ 150 px/s（垂直）</td><td>受击者被击飞的起始速度</td></tr><tr><td>击飞衰减</td><td>水平衰减 800 px/s²</td><td>空中受控状态，不可操作</td></tr><tr><td>倒地保护时间</td><td>1.5 秒</td><td>连续受击触发倒地后，1.5 秒内不再被击飞</td></tr><tr><td>受击无敌（起身）</td><td>30 帧(0.50s)</td><td>倒地起身后短暂无敌，防止连招致死</td></tr></tbody></table></div>
+<hr>
+<h2>【未定/待研究补充区】</h2>
+<ul><li>[ ] 空中战斗坠落伤害具体数值（% 生命 / 坠落速度曲线）</li><li>[ ] 羽民国/小人国是否需要独立的"空中物理包"（如滑翔、壁粘）</li><li>[ ] 多段跳参数（当前版本无，后续是否追加）</li><li>[ ] 连续闪避的"疲劳"状态是否应加入视觉/手感反馈（如屏幕变灰、按键延迟）</li><li>[ ] 地狱档 BOSS 攻击对玩家造成的硬直是否需额外延长（当前统一标准）</li><li>[ ] 手柄震动参数与 PC 键位震动差异化</li><li>[ ] 此处留白：_________________________</li></ul>
+</div></div></body></html>

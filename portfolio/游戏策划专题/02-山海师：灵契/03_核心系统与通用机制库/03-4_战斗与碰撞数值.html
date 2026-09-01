@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>03-4_战斗与碰撞数值 · 杨长辉作品集</title>
+<style>
+*{box-sizing:border-box}
+body{font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;line-height:1.85;color:#26303f;margin:0;background:#f6f8fc;font-size:15.5px}
+.wrap{max-width:900px;margin:0 auto;padding:26px 22px 80px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px;font-size:13px}
+.crumb{color:#7c8aa3;word-break:break-all}
+.crumb b{color:#1d4ed8}
+.back{white-space:nowrap;padding:6px 13px;border-radius:8px;background:#1d4ed8;color:#fff;text-decoration:none;font-size:13px}
+h1{font-size:25px;margin:0 0 4px;letter-spacing:.5px;line-height:1.4}
+.meta{color:#8a97ab;font-size:13px;margin:0 0 20px}
+.doc{background:#fff;border-radius:14px;padding:30px 34px 40px;box-shadow:0 2px 14px rgba(30,50,90,.06)}
+.doc h1,.doc h2,.doc h3,.doc h4{color:#12306e;line-height:1.5}
+.doc h1{font-size:22px;margin:26px 0 12px;padding-bottom:8px;border-bottom:2px solid #e5ecfa}
+.doc h2{font-size:19px;margin:24px 0 10px;padding-left:11px;border-left:4px solid #1d4ed8}
+.doc h3{font-size:16.5px;margin:20px 0 8px;color:#1d4ed8}
+.doc h4{font-size:15px;margin:16px 0 6px;color:#38507f}
+.doc p{margin:0 0 13px;text-align:justify}
+.doc strong{color:#12306e}
+.doc ul{padding-left:22px;margin:0 0 13px}
+.doc li{margin:4px 0}
+.doc pre{background:#0f2035;color:#d7e3f7;padding:15px 17px;border-radius:10px;overflow-x:auto;font-size:13.5px;line-height:1.65;font-family:ui-monospace,Menlo,Consolas,monospace}
+.doc code{background:#eef2fa;padding:1px 5px;border-radius:4px;font-size:13.5px;color:#12306e}
+.doc pre code{background:none;color:inherit;padding:0}
+.doc blockquote{margin:0 0 14px;padding:11px 16px;background:#f3f6fd;border-left:4px solid #9db4e8;border-radius:0 8px 8px 0;color:#3c4b64}
+.doc hr{border:0;border-top:1px solid #e5ecfa;margin:24px 0}
+.tw{overflow-x:auto;margin:0 0 16px;border-radius:9px;border:1px solid #e5ecfa}
+.doc table{border-collapse:collapse;width:100%;font-size:13.5px}
+.doc th{background:#eef3fc;color:#12306e;font-weight:600}
+.doc th,.doc td{border:1px solid #e0e8f6;padding:7px 10px;text-align:left;white-space:nowrap}
+.doc tbody tr:nth-child(even){background:#fafbfe}
+.doc .ms{margin:0 0 20px;border:1px solid #e5ecfa;border-radius:11px;overflow:hidden;background:#fbfcfe}
+.doc .ms img{display:block;width:100%;height:auto}
+.doc .ms figcaption{font-size:12.5px;color:#93a0b4;text-align:center;padding:8px 10px;background:#f6f8fc;border-top:1px solid #eef2fa}
+.doc .poem{margin:0 0 3px;line-height:2.15;font-size:16.5px;color:#1f2b3d;letter-spacing:.8px}
+.doc .psrc{margin:10px 0 0;font-size:12.5px;color:#a3aebb;text-align:right}
+.doc .ocrnote{margin:0 0 18px;padding:10px 15px;background:#f3f6fd;border-left:4px solid #9db4e8;border-radius:0 8px 8px 0;color:#5a6a80;font-size:13px}
+@media(max-width:640px){.wrap{padding:16px 12px 50px}.doc{padding:20px 16px 30px}h1{font-size:20px}}
+</style></head><body>
+<div class="wrap">
+<div class="topbar"><div class="crumb">游戏策划专题 / 02-山海师：灵契 / 03_核心系统与通用机制库 / <b>03-4_战斗与碰撞数值</b></div>
+<a class="back" href="../../../index.html">← 返回目录</a></div>
+<h1>03-4_战斗与碰撞数值</h1>
+<p class="meta">约 3,219 字 · 原件 <a href="03-4_%E6%88%98%E6%96%97%E4%B8%8E%E7%A2%B0%E6%92%9E%E6%95%B0%E5%80%BC.md.md">03-4_战斗与碰撞数值.md.md</a></p>
+<div class="doc">
+<h1>03-4_战斗与碰撞数值</h1>
+<h1>引用宪法：v0.2（全局核心参数总表）</h1>
+<h1>关联文档：02-1（等级成长）、02-2（职业技能）、02-4（灵兽数据库）、03-2（契约继承）</h1>
+<h1>状态：已重构 | 待审：空中战斗/坠落伤害参数、多BOSS同场修正</h1>
+<hr>
+<h2>一、伤害计算公式（最终版·v0.2）</h2>
+<blockquote><strong>引用宪法 v0.2 第六章 6.3</strong>。以下公式为全项目唯一标准，02-1/02-2/02-3/02-4/03-4 必须严格使用，禁止私自改写。</blockquote>
+<pre><code>实际伤害 = [ (攻击方基准攻击力 × 技能系数) + (灵兽攻击 × 灵兽技能系数) ]
+           × 属性克制系数
+           × 100 / (100 + 目标防御力)
+
+保底伤害：若实际伤害 &lt; 1，则强制为 1
+攻击方基准攻击力：指玩家裸身属性经职业修正后的攻击力（02-1 第三节），不包含战斗内临时 BUFF（如狂战+10%、兽血沸腾+30% 攻速等）。临时 BUFF 仅影响玩家端输出，不影响 BOSS 模板生成。
+灵兽攻击：玩家裸身属性 × 契约继承系数 × 职业灵兽加成（驭灵师 1.05 / 灵战士 0.95 / 灵术师 1.00）。</code></pre>
+<h3>1.1 属性克制系数</h3>
+<blockquote><strong>引用宪法 v0.2 第六章 6.4</strong>。全项目唯一真相源，03-4 原独立克制表废止。</blockquote>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>攻击\目标</th><th>金</th><th>木</th><th>水</th><th>火</th><th>土</th><th>光</th><th>暗</th><th>冰</th><th>风</th><th>毒</th><th>幻</th><th>吞噬</th><th>空间</th></tr></thead><tbody><tr><td>金</td><td>1.0</td><td>1.25</td><td>1.0</td><td>0.75</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td></tr><tr><td>木</td><td>0.75</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.25</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td></tr><tr><td>水</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.25</td><td>0.75</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td></tr><tr><td>火</td><td>1.25</td><td>0.75</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td></tr><tr><td>土</td><td>1.0</td><td>1.0</td><td>1.25</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td></tr><tr><td>光</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.25</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td></tr><tr><td>暗</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.25</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td></tr><tr><td>冰</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.2</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.2</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td></tr><tr><td>风</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.2</td><td>1.0</td><td>1.0</td><td>0.8</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td></tr><tr><td>毒</td><td>1.0</td><td>1.15</td><td>1.15</td><td>0.85</td><td>1.0</td><td>0.85</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td></tr><tr><td>幻</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.15</td><td>1.15</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td></tr><tr><td>吞噬</td><td>1.1</td><td>1.1</td><td>1.1</td><td>1.1</td><td>1.1</td><td>1.1</td><td>1.1</td><td>1.1</td><td>1.1</td><td>1.1</td><td>1.1</td><td>1.0</td><td>1.1</td></tr><tr><td>空间</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td><td>1.0</td></tr></tbody></table></div>
+<blockquote><strong>双属性计算</strong>：若灵兽为双属性（如水/风），取最高克制系数，但不叠加。   <strong>示例</strong>：水/风属性攻击火属性敌人，水克火(1.25) &gt; 风克土(无关)，取1.25。</blockquote>
+<hr>
+<h2>二、耐力系统参数（不变）</h2>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>项目</th><th>数值</th><th>说明</th></tr></thead><tbody><tr><td>耐力上限</td><td>100</td><td>固定</td></tr><tr><td>自然恢复</td><td>每秒20点</td><td>固定</td></tr><tr><td>闪避消耗</td><td>每次25点</td><td>固定</td></tr><tr><td>连续闪避</td><td>第3次消耗翻倍（50点）</td><td>进入疲劳</td></tr><tr><td>疲劳状态</td><td>3秒内无法闪避，恢复降至每秒5点</td><td>固定</td></tr><tr><td>格挡消耗</td><td>每秒10点（按住空格）</td><td>固定</td></tr></tbody></table></div>
+<hr>
+<h2>三、闪避与格挡判定（不变）</h2>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>操作</th><th>无敌帧/判定窗口</th><th>效果</th></tr></thead><tbody><tr><td>闪避（右键）</td><td>0.3秒无敌帧</td><td>可穿越敌人身体</td></tr><tr><td>精准格挡（灵战士等职业右键）</td><td>受击前0.2秒</td><td>触发"灵契反击"，灵兽立即释放一次免费协击</td></tr><tr><td>普通格挡</td><td>减伤50%</td><td>不触发反击</td></tr></tbody></table></div>
+<hr>
+<h2>四、BOSS数值模板细化（四档恶念值）</h2>
+<h3>4.1 基础公式（修正版）</h3>
+<p>plain</p>
+<pre><code>BOSS基础血量 = 玩家当前等级 × 1000 + 已解除本命次数 × 500
+BOSS基础攻击 = 玩家基准攻击力 × 1.2
+BOSS基础防御 = 玩家基准防御力 × 0.8</code></pre>
+<blockquote><strong>关键修正</strong>：BOSS 攻击/防御采用玩家<strong>基准属性</strong>（裸身+职业修正），不随玩家战斗内 BUFF 浮动。确保养成有明确正反馈，避免"开 BUFF 反而 BOSS 变强"的负体验。 <strong>基准属性定义</strong>：指宪法 6.1 公式计算出的裸身值，经职业修正系数后的面板值。不含：临时技能 BUFF（如狂战+10%攻击）、战斗内道具加成、命格触发的即时加成等。</blockquote>
+<h3>4.2 恶念值档位修正系数</h3>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>档位</th><th>恶念值范围</th><th>血量修正</th><th>攻击修正</th><th>防御修正</th><th>环境标签</th><th>掉落加成</th></tr></thead><tbody><tr><td>普通</td><td>-50 ~ 0</td><td>×1.00</td><td>×1.00</td><td>×1.00</td><td>祥和/正常</td><td>基准-10%~基准</td></tr><tr><td>困难</td><td>1 ~ 30</td><td>×1.20</td><td>×1.15</td><td>×1.00</td><td>躁动</td><td>基准+15%</td></tr><tr><td>噩梦</td><td>31 ~ 60</td><td>×1.50</td><td>×1.35</td><td>×1.15</td><td>高危</td><td>基准+30%</td></tr><tr><td>地狱</td><td>61 ~ 100</td><td>×2.00</td><td>×1.60</td><td>×1.30</td><td>灾变</td><td>基准+50%</td></tr></tbody></table></div>
+<h3>4.3 50级玩家（0次解约）四档BOSS具体数值</h3>
+<blockquote><strong>玩家基准</strong>：生命940 / 攻击178 / 防御93</blockquote>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>档位</th><th>BOSS血量</th><th>BOSS攻击</th><th>BOSS防御</th><th>预估战斗时长（本命200%）</th><th>预估战斗时长（平等100%）</th></tr></thead><tbody><tr><td>普通</td><td>50,000</td><td>214</td><td>74</td><td>~90秒</td><td>~150秒</td></tr><tr><td>困难</td><td>60,000</td><td>246</td><td>74</td><td>~110秒</td><td>~180秒</td></tr><tr><td>噩梦</td><td>75,000</td><td>285</td><td>85</td><td>~140秒</td><td>~230秒</td></tr><tr><td>地狱</td><td>100,000</td><td>342</td><td>96</td><td>~200秒</td><td>~320秒</td></tr></tbody></table></div>
+<blockquote><strong>战斗时长说明</strong>：假设玩家操作熟练，合理使用技能循环。地狱档需消耗道具/灵材。</blockquote>
+<h3>4.4 全等级节点BOSS数值速查表（普通档）</h3>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>玩家等级</th><th>BOSS血量</th><th>BOSS攻击</th><th>BOSS防御</th><th>备注</th></tr></thead><tbody><tr><td>Lv5</td><td>5,000</td><td>52</td><td>21</td><td>新手首BOSS</td></tr><tr><td>Lv10</td><td>10,000</td><td>67</td><td>27</td><td>一阶进化门槛</td></tr><tr><td>Lv15</td><td>15,000</td><td>82</td><td>33</td><td>区域BOSS</td></tr><tr><td>Lv20</td><td>20,000</td><td>97</td><td>39</td><td>一阶进化门槛</td></tr><tr><td>Lv25</td><td>25,000</td><td>112</td><td>45</td><td>中期BOSS</td></tr><tr><td>Lv30</td><td>30,000</td><td>127</td><td>51</td><td>—</td></tr><tr><td>Lv35</td><td>35,000</td><td>142</td><td>57</td><td>终极进化门槛</td></tr><tr><td>Lv40</td><td>40,000</td><td>157</td><td>63</td><td>终极进化门槛</td></tr><tr><td>Lv45</td><td>45,000</td><td>172</td><td>69</td><td>—</td></tr><tr><td>Lv50</td><td>50,000</td><td>187</td><td>75</td><td>版本上限</td></tr></tbody></table></div>
+<blockquote><strong>攻击/防御计算说明</strong>：BOSS攻击 = 玩家<strong>基准攻击</strong> × 1.2，随玩家基础属性浮动；上表以"基准攻击"（无战斗 BUFF）计算。若玩家触发狂战+10%攻击，BOSS攻击<strong>不随之上升</strong>，仍保持214（Lv50基准攻击178×1.2）。</blockquote>
+<hr>
+<h2>五、20国BOSS环境修正系数</h2>
+<blockquote><strong>设计意图</strong>：同档位BOSS在不同国家有独特机制修正，不改变基础攻防，但增加特殊抗性/机制。</blockquote>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>国家</th><th>国家ID</th><th>BOSS环境修正</th><th>影响属性</th><th>应对方式</th></tr></thead><tbody><tr><td>青丘国</td><td>NAT_01</td><td>迷障中BOSS每15秒隐身2秒</td><td>等效血量+15%</td><td>妖瞳命格/真视泉水</td></tr><tr><td>厌火国</td><td>NAT_02</td><td>BOSS火抗+50%，水抗-30%</td><td>火系伤害×0.5</td><td>携带水系灵兽</td></tr><tr><td>大人国</td><td>NAT_03</td><td>BOSS体型巨大，近战范围+50%</td><td>近战风险提升</td><td>远程/机动灵兽</td></tr><tr><td>小人国</td><td>NAT_04</td><td>BOSS微观化，玩家需缩形后攻击</td><td>等效防御+20%</td><td>缩形草/微观龙</td></tr><tr><td>羽民国</td><td>NAT_05</td><td>空中BOSS，非飞行单位伤害-30%</td><td>地面伤害×0.7</td><td>飞行灵兽/云雀</td></tr><tr><td>巫咸国</td><td>NAT_06</td><td>BOSS死亡后3秒内复活一次（30%血）</td><td>等效血量+30%</td><td>净魂池水封印</td></tr><tr><td>黑齿国</td><td>NAT_07</td><td>BOSS毒雾光环，近战每秒中毒×2%</td><td>持久战惩罚</td><td>毒抗/远程</td></tr><tr><td>女子国</td><td>NAT_08</td><td>BOSS阴阳转换，每30秒切换属性</td><td>属性克制失效一半</td><td>双属性灵兽</td></tr><tr><td>轩辕国</td><td>NAT_09</td><td>BOSS魔气护甲，非封魔台碎片破甲-50%</td><td>等效防御+50%</td><td>封魔台碎片</td></tr><tr><td>长臂国</td><td>NAT_10</td><td>水战BOSS，非水下呼吸单位攻速-20%</td><td>等效攻速惩罚</td><td>水下呼吸丹</td></tr><tr><td>交胫国</td><td>NAT_11</td><td>BOSS高速移动，闪避率+25%</td><td>命中惩罚</td><td>独目石/必中技能</td></tr><tr><td>三首国</td><td>NAT_12</td><td>BOSS三世同存，需同时击杀3个分身</td><td>等效血量×2</td><td>范围AOE/控制</td></tr><tr><td>毛民国</td><td>NAT_13</td><td>BOSS狂暴化，生命&lt;30%时攻速+50%</td><td>斩杀期高压</td><td>控制/爆发留技能</td></tr><tr><td>劳民国</td><td>NAT_14</td><td>BOSS永动修复，每10秒恢复5%生命</td><td>等效血量+25%</td><td>爆发/禁疗</td></tr><tr><td>白民国</td><td>NAT_15</td><td>BOSS寿元反噬，击杀后玩家生命-10%</td><td>战后惩罚</td><td>延寿丹/乘黄之血</td></tr><tr><td>肃慎国</td><td>NAT_16</td><td>BOSS冰风双属性，冻结概率+15%</td><td>控制风险</td><td>冰抗/火灵兽</td></tr><tr><td>无肠国</td><td>NAT_17</td><td>BOSS暴食吞噬，每30秒吞噬玩家1个BUFF</td><td>BUFF流失</td><td>净胃石/速战</td></tr><tr><td>玄股国</td><td>NAT_18</td><td>深水压，非深海单位灵力消耗+50%</td><td>技能频率下降</td><td>玄股鱼人/共工鳞</td></tr><tr><td>一目国</td><td>NAT_19</td><td>BOSS真视，玩家闪避率-20%</td><td>生存压力</td><td>控制/护盾硬抗</td></tr><tr><td>结胸国</td><td>NAT_20</td><td>BOSS气海充盈，技能CD-30%</td><td>频率压制</td><td>控制/打断</td></tr></tbody></table></div>
+<hr>
+<h2>六、野生异兽遭遇强度表</h2>
+<blockquote><strong>设计原则</strong>：野生异兽强度与BOSS模板脱钩，采用独立等级池。   遭遇强度 = 推荐挑战等级，非强制限制。越级挑战时参考03-2签约概率的等级差系数。</blockquote>
+<h3>6.1 青丘国（NAT_01）</h3>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>恶念值区间</th><th>推荐等级</th><th>野生异兽等级</th><th>遭遇特征</th><th>掉落加成</th></tr></thead><tbody><tr><td>-50 ~ -20</td><td>Lv1-5</td><td>Lv1-3</td><td>祥和灵兽可签约，不主动攻击</td><td>-10%</td></tr><tr><td>-19 ~ 0</td><td>Lv3-8</td><td>Lv3-6</td><td>仅受击反击</td><td>基准</td></tr><tr><td>1 ~ 30</td><td>Lv8-15</td><td>Lv8-12</td><td>视野内主动追击，影狐出没</td><td>+15%</td></tr><tr><td>31 ~ 60</td><td>Lv12-20</td><td>Lv12-18</td><td>全图追杀，虚月幻象干扰</td><td>+30%</td></tr><tr><td>61 ~ 100</td><td>Lv18-25</td><td>Lv18-25</td><td>普通怪BOSS化，堕影狐王巡逻</td><td>+50%</td></tr></tbody></table></div>
+<h3>6.2 厌火国（NAT_02）</h3>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>恶念值区间</th><th>推荐等级</th><th>野生异兽等级</th><th>遭遇特征</th><th>掉落加成</th></tr></thead><tbody><tr><td>-50 ~ -20</td><td>Lv5-10</td><td>Lv5-8</td><td>火晶树洞安全区大</td><td>-10%</td></tr><tr><td>-19 ~ 0</td><td>Lv8-12</td><td>Lv8-10</td><td>热浪伤害低</td><td>基准</td></tr><tr><td>1 ~ 30</td><td>Lv12-18</td><td>Lv12-15</td><td>岩浆河喷发频繁</td><td>+15%</td></tr><tr><td>31 ~ 60</td><td>Lv18-25</td><td>Lv18-22</td><td>安全区缩小，旱魃余烬怪出没</td><td>+30%</td></tr><tr><td>61 ~ 100</td><td>Lv25-35</td><td>Lv25-32</td><td>火晶树洞枯萎，全图热浪致死</td><td>+50%</td></tr></tbody></table></div>
+<h3>6.3 大人国（NAT_03）</h3>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>恶念值区间</th><th>推荐等级</th><th>野生异兽等级</th><th>遭遇特征</th><th>掉落加成</th></tr></thead><tbody><tr><td>-50 ~ -20</td><td>Lv10-15</td><td>Lv10-12</td><td>碎山者中立，可交易</td><td>-10%</td></tr><tr><td>-19 ~ 0</td><td>Lv12-18</td><td>Lv12-15</td><td>竞技场开放</td><td>基准</td></tr><tr><td>1 ~ 30</td><td>Lv18-25</td><td>Lv18-22</td><td>碎山者敌对，震地波干扰</td><td>+15%</td></tr><tr><td>31 ~ 60</td><td>Lv25-32</td><td>Lv25-30</td><td>梼杌残魂污染，巨型怪出没</td><td>+30%</td></tr><tr><td>61 ~ 100</td><td>Lv32-40</td><td>Lv32-40</td><td>不周竞技场关闭，全图巨兽</td><td>+50%</td></tr></tbody></table></div>
+<h3>6.4 小人国（NAT_04）</h3>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>恶念值区间</th><th>推荐等级</th><th>野生异兽等级</th><th>遭遇特征</th><th>掉落加成</th></tr></thead><tbody><tr><td>-50 ~ -20</td><td>Lv8-12</td><td>Lv8-10</td><td>微观世界稳定</td><td>-10%</td></tr><tr><td>-19 ~ 0</td><td>Lv10-15</td><td>Lv10-12</td><td>需缩形草进入核心</td><td>基准</td></tr><tr><td>1 ~ 30</td><td>Lv15-20</td><td>Lv15-18</td><td>微观裂缝扩大，饕餮分身出没</td><td>+15%</td></tr><tr><td>31 ~ 60</td><td>Lv20-28</td><td>Lv20-25</td><td>迁离派/修复派战斗波及</td><td>+30%</td></tr><tr><td>61 ~ 100</td><td>Lv28-35</td><td>Lv28-35</td><td>微观世界崩塌，亚微观深渊开启</td><td>+50%</td></tr></tbody></table></div>
+<h3>6.5 羽民国（NAT_05）</h3>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>恶念值区间</th><th>推荐等级</th><th>野生异兽等级</th><th>遭遇特征</th><th>掉落加成</th></tr></thead><tbody><tr><td>-50 ~ -20</td><td>Lv12-18</td><td>Lv12-15</td><td>风灵通道稳定</td><td>-10%</td></tr><tr><td>-19 ~ 0</td><td>Lv15-20</td><td>Lv15-18</td><td>罡风层外安全</td><td>基准</td></tr><tr><td>1 ~ 30</td><td>Lv20-28</td><td>Lv20-25</td><td>通道不稳定，虚空乱流</td><td>+15%</td></tr><tr><td>31 ~ 60</td><td>Lv28-35</td><td>Lv28-32</td><td>国主穷奇化，金翅大鹏敌对</td><td>+30%</td></tr><tr><td>61 ~ 100</td><td>Lv35-45</td><td>Lv35-42</td><td>风灵通道崩溃，全图罡风撕裂</td><td>+50%</td></tr></tbody></table></div>
+<h3>6.6 巫咸国（NAT_06）</h3>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>恶念值区间</th><th>推荐等级</th><th>野生异兽等级</th><th>遭遇特征</th><th>掉落加成</th></tr></thead><tbody><tr><td>-50 ~ -20</td><td>Lv15-20</td><td>Lv15-18</td><td>轮回镜清晰，可预知</td><td>-10%</td></tr><tr><td>-19 ~ 0</td><td>Lv18-25</td><td>Lv18-22</td><td>魂火稳定</td><td>基准</td></tr><tr><td>1 ~ 30</td><td>Lv25-32</td><td>Lv25-30</td><td>大巫师团敌对，献祭事件</td><td>+15%</td></tr><tr><td>31 ~ 60</td><td>Lv32-40</td><td>Lv32-38</td><td>轮回镜龟裂，混沌残魂寄生</td><td>+30%</td></tr><tr><td>61 ~ 100</td><td>Lv40-50</td><td>Lv40-48</td><td>时间乱流，NPC随机攻击</td><td>+50%</td></tr></tbody></table></div>
+<h3>6.7 黑齿国（NAT_07）</h3>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>恶念值区间</th><th>推荐等级</th><th>野生异兽等级</th><th>遭遇特征</th><th>掉落加成</th></tr></thead><tbody><tr><td>-50 ~ -20</td><td>Lv18-25</td><td>Lv18-22</td><td>毒龙潭平静</td><td>-10%</td></tr><tr><td>-19 ~ 0</td><td>Lv22-28</td><td>Lv22-25</td><td>瘴气层可控</td><td>基准</td></tr><tr><td>1 ~ 30</td><td>Lv28-35</td><td>Lv28-32</td><td>毒龙尸体蠕动，毒雾扩散</td><td>+15%</td></tr><tr><td>31 ~ 60</td><td>Lv35-42</td><td>Lv35-40</td><td>毒龙真魂觉醒，全图毒沼</td><td>+30%</td></tr><tr><td>61 ~ 100</td><td>Lv42-50</td><td>Lv42-50</td><td>九幽噬魂散弥漫，装备腐蚀</td><td>+50%</td></tr></tbody></table></div>
+<h3>6.8 女子国（NAT_08）</h3>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>恶念值区间</th><th>推荐等级</th><th>野生异兽等级</th><th>遭遇特征</th><th>掉落加成</th></tr></thead><tbody><tr><td>-50 ~ -20</td><td>Lv20-25</td><td>Lv20-22</td><td>子母河纯净</td><td>-10%</td></tr><tr><td>-19 ~ 0</td><td>Lv22-28</td><td>Lv22-25</td><td>恶胎极少</td><td>基准</td></tr><tr><td>1 ~ 30</td><td>Lv28-35</td><td>Lv28-32</td><td>恶胎增多，混沌侵蚀</td><td>+15%</td></tr><tr><td>31 ~ 60</td><td>Lv35-42</td><td>Lv35-40</td><td>恶胎魔物化，国师敌对</td><td>+30%</td></tr><tr><td>61 ~ 100</td><td>Lv42-50</td><td>Lv42-50</td><td>子母河黑化，全图恶胎BOSS</td><td>+50%</td></tr></tbody></table></div>
+<h3>6.9 轩辕国（NAT_09）</h3>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>恶念值区间</th><th>推荐等级</th><th>野生异兽等级</th><th>遭遇特征</th><th>掉落加成</th></tr></thead><tbody><tr><td>-50 ~ -20</td><td>Lv25-32</td><td>Lv25-28</td><td>封魔台稳定</td><td>-10%</td></tr><tr><td>-19 ~ 0</td><td>Lv28-35</td><td>Lv28-32</td><td>机关造物巡逻</td><td>基准</td></tr><tr><td>1 ~ 30</td><td>Lv35-42</td><td>Lv35-40</td><td>魔气泄漏，精英怪增多</td><td>+15%</td></tr><tr><td>31 ~ 60</td><td>Lv42-50</td><td>Lv42-48</td><td>封魔台裂缝扩大，四凶兽残魂出没</td><td>+30%</td></tr><tr><td>61 ~ 100</td><td>Lv50</td><td>Lv50</td><td>灭世线，四凶兽本体降临</td><td>+50%</td></tr></tbody></table></div>
+<h3>6.10 长臂国（NAT_10）</h3>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>恶念值区间</th><th>推荐等级</th><th>野生异兽等级</th><th>遭遇特征</th><th>掉落加成</th></tr></thead><tbody><tr><td>-50 ~ -20</td><td>Lv20-25</td><td>Lv20-22</td><td>归墟之眼平静</td><td>-10%</td></tr><tr><td>-19 ~ 0</td><td>Lv22-28</td><td>Lv22-25</td><td>黑水少量</td><td>基准</td></tr><tr><td>1 ~ 30</td><td>Lv28-35</td><td>Lv28-32</td><td>黑水喷发，变异灵鱼</td><td>+15%</td></tr><tr><td>31 ~ 60</td><td>Lv35-42</td><td>Lv35-40</td><td>归墟之眼扩大，深海巨兽上浮</td><td>+30%</td></tr><tr><td>61 ~ 100</td><td>Lv42-50</td><td>Lv42-50</td><td>归墟吞噬，全图漩涡</td><td>+50%</td></tr></tbody></table></div>
+<h3>6.11 交胫国（NAT_11）</h3>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>恶念值区间</th><th>推荐等级</th><th>野生异兽等级</th><th>遭遇特征</th><th>掉落加成</th></tr></thead><tbody><tr><td>-50 ~ -20</td><td>Lv15-20</td><td>Lv15-18</td><td>商会中立，黑市开放</td><td>-10%</td></tr><tr><td>-19 ~ 0</td><td>Lv18-25</td><td>Lv18-22</td><td>疾风腿与商会摩擦</td><td>基准</td></tr><tr><td>1 ~ 30</td><td>Lv25-32</td><td>Lv25-30</td><td>商会垄断，刺客出没</td><td>+15%</td></tr><tr><td>31 ~ 60</td><td>Lv32-40</td><td>Lv32-38</td><td>会长穷奇化，全图通缉</td><td>+30%</td></tr><tr><td>61 ~ 100</td><td>Lv40-50</td><td>Lv40-48</td><td>黑市崩溃，全图混乱</td><td>+50%</td></tr></tbody></table></div>
+<h3>6.12 三首国（NAT_12）</h3>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>恶念值区间</th><th>推荐等级</th><th>野生异兽等级</th><th>遭遇特征</th><th>掉落加成</th></tr></thead><tbody><tr><td>-50 ~ -20</td><td>Lv22-28</td><td>Lv22-25</td><td>三世镜稳定</td><td>-10%</td></tr><tr><td>-19 ~ 0</td><td>Lv25-32</td><td>Lv25-30</td><td>回声壁可控</td><td>基准</td></tr><tr><td>1 ~ 30</td><td>Lv32-38</td><td>Lv32-35</td><td>三世幻境干扰</td><td>+15%</td></tr><tr><td>31 ~ 60</td><td>Lv38-45</td><td>Lv38-42</td><td>轮回修正，时间碎片</td><td>+30%</td></tr><tr><td>61 ~ 100</td><td>Lv45-50</td><td>Lv45-50</td><td>三世同崩，因果乱流</td><td>+50%</td></tr></tbody></table></div>
+<h3>6.13 毛民国（NAT_13）</h3>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>恶念值区间</th><th>推荐等级</th><th>野生异兽等级</th><th>遭遇特征</th><th>掉落加成</th></tr></thead><tbody><tr><td>-50 ~ -20</td><td>Lv18-25</td><td>Lv18-22</td><td>兽语者友好</td><td>-10%</td></tr><tr><td>-19 ~ 0</td><td>Lv22-28</td><td>Lv22-25</td><td>灵气狂暴可控</td><td>基准</td></tr><tr><td>1 ~ 30</td><td>Lv28-35</td><td>Lv28-32</td><td>兽化冲突，梼杌共鸣</td><td>+15%</td></tr><tr><td>31 ~ 60</td><td>Lv35-42</td><td>Lv35-40</td><td>兽魂行者暴走，全图兽化</td><td>+30%</td></tr><tr><td>61 ~ 100</td><td>Lv42-50</td><td>Lv42-50</td><td>梼杌幼崽觉醒，土属性灾变</td><td>+50%</td></tr></tbody></table></div>
+<h3>6.14 劳民国（NAT_14）</h3>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>恶念值区间</th><th>推荐等级</th><th>野生异兽等级</th><th>遭遇特征</th><th>掉落加成</th></tr></thead><tbody><tr><td>-50 ~ -20</td><td>Lv25-32</td><td>Lv25-28</td><td>永动稳定</td><td>-10%</td></tr><tr><td>-19 ~ 0</td><td>Lv28-35</td><td>Lv28-32</td><td>解脱派潜伏</td><td>基准</td></tr><tr><td>1 ~ 30</td><td>Lv35-42</td><td>Lv35-40</td><td>永动齿轮伤人，无休NPC冲撞</td><td>+15%</td></tr><tr><td>31 ~ 60</td><td>Lv42-50</td><td>Lv42-48</td><td>诅咒加剧，时间蠕虫逃逸</td><td>+30%</td></tr><tr><td>61 ~ 100</td><td>Lv50</td><td>Lv50</td><td>死国，全图机关暴走</td><td>+50%</td></tr></tbody></table></div>
+<h3>6.15 白民国（NAT_15）</h3>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>恶念值区间</th><th>推荐等级</th><th>野生异兽等级</th><th>遭遇特征</th><th>掉落加成</th></tr></thead><tbody><tr><td>-50 ~ -20</td><td>Lv22-28</td><td>Lv22-25</td><td>乘黄安宁</td><td>-10%</td></tr><tr><td>-19 ~ 0</td><td>Lv25-32</td><td>Lv25-30</td><td>寿桃林正常</td><td>基准</td></tr><tr><td>1 ~ 30</td><td>Lv32-38</td><td>Lv32-35</td><td>乘黄绝育，负寿元积累</td><td>+15%</td></tr><tr><td>31 ~ 60</td><td>Lv38-45</td><td>Lv38-42</td><td>负寿元怪物化，饕餮分身孕育</td><td>+30%</td></tr><tr><td>61 ~ 100</td><td>Lv45-50</td><td>Lv45-50</td><td>寿元反噬，全图衰老诅咒</td><td>+50%</td></tr></tbody></table></div>
+<h3>6.16 肃慎国（NAT_16）</h3>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>恶念值区间</th><th>推荐等级</th><th>野生异兽等级</th><th>遭遇特征</th><th>掉落加成</th></tr></thead><tbody><tr><td>-50 ~ -20</td><td>Lv20-25</td><td>Lv20-22</td><td>射日台稳定</td><td>-10%</td></tr><tr><td>-19 ~ 0</td><td>Lv22-28</td><td>Lv22-25</td><td>雪原可控</td><td>基准</td></tr><tr><td>1 ~ 30</td><td>Lv28-35</td><td>Lv28-32</td><td>落日箭震动，雪怪出没</td><td>+15%</td></tr><tr><td>31 ~ 60</td><td>Lv35-42</td><td>Lv35-40</td><td>雪魔精英化，羽民国空袭</td><td>+30%</td></tr><tr><td>61 ~ 100</td><td>Lv42-50</td><td>Lv42-50</td><td>天伤扩大，全图冰封</td><td>+50%</td></tr></tbody></table></div>
+<h3>6.17 无肠国（NAT_17）</h3>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>恶念值区间</th><th>推荐等级</th><th>野生异兽等级</th><th>遭遇特征</th><th>掉落加成</th></tr></thead><tbody><tr><td>-50 ~ -20</td><td>Lv25-32</td><td>Lv25-28</td><td>万宴正常</td><td>-10%</td></tr><tr><td>-19 ~ 0</td><td>Lv28-35</td><td>Lv28-32</td><td>饥饿感可控</td><td>基准</td></tr><tr><td>1 ~ 30</td><td>Lv35-42</td><td>Lv35-40</td><td>暴食军团组建，理智侵蚀</td><td>+15%</td></tr><tr><td>31 ~ 60</td><td>Lv42-50</td><td>Lv42-48</td><td>饕餮胃囊开启，全图吞噬</td><td>+30%</td></tr><tr><td>61 ~ 100</td><td>Lv50</td><td>Lv50</td><td>暴食灭世，理智归零即死</td><td>+50%</td></tr></tbody></table></div>
+<h3>6.18 玄股国（NAT_18）</h3>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>恶念值区间</th><th>推荐等级</th><th>野生异兽等级</th><th>遭遇特征</th><th>掉落加成</th></tr></thead><tbody><tr><td>-50 ~ -20</td><td>Lv28-35</td><td>Lv28-32</td><td>水神封印稳定</td><td>-10%</td></tr><tr><td>-19 ~ 0</td><td>Lv32-38</td><td>Lv32-35</td><td>深海巨兽沉睡</td><td>基准</td></tr><tr><td>1 ~ 30</td><td>Lv38-45</td><td>Lv38-42</td><td>水压增大，共工鳞异动</td><td>+15%</td></tr><tr><td>31 ~ 60</td><td>Lv45-50</td><td>Lv45-48</td><td>水神封印龟裂，相柳出没</td><td>+30%</td></tr><tr><td>61 ~ 100</td><td>Lv50</td><td>Lv50</td><td>共工复苏，全图淹没</td><td>+50%</td></tr></tbody></table></div>
+<h3>6.19 一目国（NAT_19）</h3>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>恶念值区间</th><th>推荐等级</th><th>野生异兽等级</th><th>遭遇特征</th><th>掉落加成</th></tr></thead><tbody><tr><td>-50 ~ -20</td><td>Lv22-28</td><td>Lv22-25</td><td>独目清晰</td><td>-10%</td></tr><tr><td>-19 ~ 0</td><td>Lv25-32</td><td>Lv25-30</td><td>真视泉正常</td><td>基准</td></tr><tr><td>1 ~ 30</td><td>Lv32-38</td><td>Lv32-35</td><td>独目失明事件频发</td><td>+15%</td></tr><tr><td>31 ~ 60</td><td>Lv38-45</td><td>Lv38-42</td><td>真视泉污染，幻象实体化</td><td>+30%</td></tr><tr><td>61 ~ 100</td><td>Lv45-50</td><td>Lv45-50</td><td>混沌遮蔽，全图盲目</td><td>+50%</td></tr></tbody></table></div>
+<h3>6.20 结胸国（NAT_20）</h3>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>恶念值区间</th><th>推荐等级</th><th>野生异兽等级</th><th>遭遇特征</th><th>掉落加成</th></tr></thead><tbody><tr><td>-50 ~ -20</td><td>Lv25-32</td><td>Lv25-28</td><td>气井稳定</td><td>-10%</td></tr><tr><td>-19 ~ 0</td><td>Lv28-35</td><td>Lv28-32</td><td>灵气充裕</td><td>基准</td></tr><tr><td>1 ~ 30</td><td>Lv35-42</td><td>Lv35-40</td><td>气井枯竭，胸结萎缩</td><td>+15%</td></tr><tr><td>31 ~ 60</td><td>Lv42-50</td><td>Lv42-48</td><td>跨国灵气抽取，空间裂缝</td><td>+30%</td></tr><tr><td>61 ~ 100</td><td>Lv50</td><td>Lv50</td><td>气井爆炸，全图灵气真空</td><td>+50%</td></tr></tbody></table></div>
+<hr>
+<h2>七、多BOSS同场修正（机制细化）</h2>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>同场BOSS数量</th><th>血量修正</th><th>攻击修正</th><th>机制变化</th></tr></thead><tbody><tr><td>2只</td><td>×0.85</td><td>×0.90</td><td>共享"联动槽"，受击/攻击充能，满时释放合体技</td></tr><tr><td>3只</td><td>×0.70</td><td>×0.85</td><td>需按特定顺序击杀，否则复活（见 20 国剧情文档）</td></tr><tr><td>4只（四凶兽）</td><td>×0.60</td><td>×0.80</td><td>每只对应一种元素，需同时压制</td></tr></tbody></table></div>
+<h3>联动槽充能逻辑（新增占位）</h3>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>项目</th><th>规则</th></tr></thead><tbody><tr><td>充能条件</td><td>任意 BOSS 受击 +5%，任意 BOSS 释放技能 +10%，玩家受击 +3%</td></tr><tr><td>联动槽满 100%</td><td>随机一只 BOSS 释放"合体技"（全屏高伤+控制），释放后槽归零</td></tr><tr><td>设计意图</td><td>逼迫玩家均衡压血，不能单独秒杀一只</td></tr></tbody></table></div>
+<hr>
+<h2>【未定/待研究补充区】</h2>
+<ul><li>[ ] 空中战斗/坠落伤害参数（羽民国、小人国）</li></ul>
+<ul><li>[ ] 水下战斗参数（玄股国、长臂国）：是否独立设计"水压耐力"？</li></ul>
+<ul><li>[ ] 多BOSS联动槽充能逻辑：已补充基础规则，待战斗原型验证</li></ul>
+<ul><li>[ ] 地狱档（61-100）是否允许低于推荐等级的玩家通过"机制杀"通关？</li></ul>
+<ul><li>[ ] 此处留白：_________________________</li></ul>
+</div></div></body></html>

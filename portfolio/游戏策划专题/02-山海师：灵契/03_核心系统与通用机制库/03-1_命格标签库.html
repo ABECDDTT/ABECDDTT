@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>03-1_命格标签库 · 杨长辉作品集</title>
+<style>
+*{box-sizing:border-box}
+body{font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;line-height:1.85;color:#26303f;margin:0;background:#f6f8fc;font-size:15.5px}
+.wrap{max-width:900px;margin:0 auto;padding:26px 22px 80px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px;font-size:13px}
+.crumb{color:#7c8aa3;word-break:break-all}
+.crumb b{color:#1d4ed8}
+.back{white-space:nowrap;padding:6px 13px;border-radius:8px;background:#1d4ed8;color:#fff;text-decoration:none;font-size:13px}
+h1{font-size:25px;margin:0 0 4px;letter-spacing:.5px;line-height:1.4}
+.meta{color:#8a97ab;font-size:13px;margin:0 0 20px}
+.doc{background:#fff;border-radius:14px;padding:30px 34px 40px;box-shadow:0 2px 14px rgba(30,50,90,.06)}
+.doc h1,.doc h2,.doc h3,.doc h4{color:#12306e;line-height:1.5}
+.doc h1{font-size:22px;margin:26px 0 12px;padding-bottom:8px;border-bottom:2px solid #e5ecfa}
+.doc h2{font-size:19px;margin:24px 0 10px;padding-left:11px;border-left:4px solid #1d4ed8}
+.doc h3{font-size:16.5px;margin:20px 0 8px;color:#1d4ed8}
+.doc h4{font-size:15px;margin:16px 0 6px;color:#38507f}
+.doc p{margin:0 0 13px;text-align:justify}
+.doc strong{color:#12306e}
+.doc ul{padding-left:22px;margin:0 0 13px}
+.doc li{margin:4px 0}
+.doc pre{background:#0f2035;color:#d7e3f7;padding:15px 17px;border-radius:10px;overflow-x:auto;font-size:13.5px;line-height:1.65;font-family:ui-monospace,Menlo,Consolas,monospace}
+.doc code{background:#eef2fa;padding:1px 5px;border-radius:4px;font-size:13.5px;color:#12306e}
+.doc pre code{background:none;color:inherit;padding:0}
+.doc blockquote{margin:0 0 14px;padding:11px 16px;background:#f3f6fd;border-left:4px solid #9db4e8;border-radius:0 8px 8px 0;color:#3c4b64}
+.doc hr{border:0;border-top:1px solid #e5ecfa;margin:24px 0}
+.tw{overflow-x:auto;margin:0 0 16px;border-radius:9px;border:1px solid #e5ecfa}
+.doc table{border-collapse:collapse;width:100%;font-size:13.5px}
+.doc th{background:#eef3fc;color:#12306e;font-weight:600}
+.doc th,.doc td{border:1px solid #e0e8f6;padding:7px 10px;text-align:left;white-space:nowrap}
+.doc tbody tr:nth-child(even){background:#fafbfe}
+.doc .ms{margin:0 0 20px;border:1px solid #e5ecfa;border-radius:11px;overflow:hidden;background:#fbfcfe}
+.doc .ms img{display:block;width:100%;height:auto}
+.doc .ms figcaption{font-size:12.5px;color:#93a0b4;text-align:center;padding:8px 10px;background:#f6f8fc;border-top:1px solid #eef2fa}
+.doc .poem{margin:0 0 3px;line-height:2.15;font-size:16.5px;color:#1f2b3d;letter-spacing:.8px}
+.doc .psrc{margin:10px 0 0;font-size:12.5px;color:#a3aebb;text-align:right}
+.doc .ocrnote{margin:0 0 18px;padding:10px 15px;background:#f3f6fd;border-left:4px solid #9db4e8;border-radius:0 8px 8px 0;color:#5a6a80;font-size:13px}
+@media(max-width:640px){.wrap{padding:16px 12px 50px}.doc{padding:20px 16px 30px}h1{font-size:20px}}
+</style></head><body>
+<div class="wrap">
+<div class="topbar"><div class="crumb">游戏策划专题 / 02-山海师：灵契 / 03_核心系统与通用机制库 / <b>03-1_命格标签库</b></div>
+<a class="back" href="../../../index.html">← 返回目录</a></div>
+<h1>03-1_命格标签库</h1>
+<p class="meta">约 5,297 字 · 原件 <a href="03-1_%E5%91%BD%E6%A0%BC%E6%A0%87%E7%AD%BE%E5%BA%93.md.md">03-1_命格标签库.md.md</a></p>
+<div class="doc">
+<h1>03-1_命格标签库大全（重构版 v0.3）</h1>
+<h1>引用宪法：v0.2（全局核心参数总表）</h1>
+<h1>关联文档：02-3_隐藏职业库、03-2_契约与属性继承、03-5_山海素材总库、04-x_二十国剧情线</h1>
+<h1>状态：已重构（第3轮） | 已修复：A-06 背誓者矛盾组合、B-05 溢出转化硬上限统一</h1>
+<hr>
+<h2>一、命格体系总览</h2>
+<p>&amp;gt; <strong>核心规则</strong>：玩家开局输入 0~500 字背景描述，系统提取关键词后，从五大方向池中定向抽取 0~3 个标签，再从全库随机补足至 5 个。5 个标签互不相同，共同构成玩家的"天命烙印"。</p>
+<div class="tw"><table><thead><tr><th>方向池</th><th>标签数量</th><th>核心影响维度</th><th>典型加成区间</th></tr></thead><tbody><tr><td>命格星宿</td><td>7</td><td>战斗风格与灵兽性格</td><td>+8% ~ +15%</td></tr><tr><td>五行灵根</td><td>7</td><td>元素亲和与属性专精</td><td>+8% ~ +15%</td></tr><tr><td>血脉体质</td><td>7</td><td>种族签约权限与体质特性</td><td>+0% ~ +12%</td></tr><tr><td>因果经历</td><td>6</td><td>剧情选项与隐藏路线</td><td>+0% ~ +10%</td></tr><tr><td>道心倾向</td><td>7</td><td>职业技能适配与流派</td><td>+5% ~ +10%</td></tr><tr><td>通用标签</td><td>5</td><td>生活玩法与特殊机制</td><td>+0% ~ +8%</td></tr><tr><td><strong>合计</strong></td><td><strong>39</strong></td><td>—</td><td>—</td></tr></tbody></table></div>
+<hr>
+<h2>二、五大方向标签详解</h2>
+<h3>2.1 方向一：命格星宿（战斗风格池）</h3>
+<p>&amp;gt; <strong>关键词特征</strong>：星辰、孤高、杀伐、帝王、辅助、贪婪、财富。</p>
+<div class="tw"><table><thead><tr><th>标签</th><th>契合灵兽类型</th><th>契合度加成</th><th>战斗风格加成</th><th>剧情/探索加成</th><th>推荐关键词示例</th></tr></thead><tbody><tr><td><strong>孤星</strong></td><td>独行类灵兽（无群体技能）</td><td>+12%</td><td>单人作战时主角攻击+5%</td><td>无特定剧情，但解锁"独狼共鸣"彩蛋前置</td><td>孤独、独行、无依、漂泊、唯一</td></tr><tr><td><strong>破军</strong></td><td>战斗型灵兽（攻击技能≥2个）</td><td>+10%</td><td>破甲效率+10%</td><td>大人国竞技场伤害+5%</td><td>破军、冲锋、陷阵、破敌、先锋</td></tr><tr><td><strong>贪狼</strong></td><td>暗属性灵兽</td><td>+10%</td><td>主角与灵兽吸血+3%</td><td>黑齿国毒龙潭探索时生命恢复+10%</td><td>贪婪、暗夜、吞噬、掠夺、暗影</td></tr><tr><td><strong>紫微</strong></td><td>瑞兽/神兽（SSR及以上）</td><td>+15%</td><td>签约成功率+5%（独立乘区）</td><td>轩辕国封魔台周边机关造物初始好感中立</td><td>帝星、尊贵、天命、紫气、祥瑞</td></tr><tr><td><strong>天相</strong></td><td>辅助型灵兽（治疗/护盾/增益）</td><td>+10%</td><td>治疗量+10%</td><td>解锁隐藏治疗技能"回春诀"前置（需配合医仙）</td><td>慈悲、守护、辅佐、治愈、庇护</td></tr><tr><td><strong>七杀</strong></td><td>凶兽/猛兽（攻击欲望极高）</td><td>+10%</td><td>暴击率+5%</td><td>毛民国兽化冲突剧情中威慑判定+20</td><td>杀伐、凶煞、嗜血、战意、暴烈</td></tr><tr><td><strong>禄存</strong></td><td>资源收集型灵兽</td><td>+8%</td><td>灵材掉落+5%</td><td>归墟集市初始好感+10，解锁隐藏商路信息</td><td>财富、囤积、寻宝、聚宝、丰饶</td></tr></tbody></table></div>
+<hr>
+<h3>2.2 方向二：五行灵根（元素专精池）</h3>
+<p>&amp;gt; <strong>关键词特征</strong>：金木水火土、混沌、阴阳、自然、元素。</p>
+<div class="tw"><table><thead><tr><th>标签</th><th>契合灵兽类型</th><th>契合度加成</th><th>战斗风格加成</th><th>剧情/探索加成</th><th>推荐关键词示例</th></tr></thead><tbody><tr><td><strong>金灵</strong></td><td>金属性灵兽</td><td>+15%</td><td>金系技能伤害+10%</td><td>大人国泰坦精钢采集效率+20%</td><td>金刚、锐利、肃杀、剑、铁</td></tr><tr><td><strong>木灵</strong></td><td>木属性灵兽</td><td>+15%</td><td>回复效果+10%</td><td>青丘国桃林采集点额外产出+1</td><td>生机、草木、治愈、森林、藤</td></tr><tr><td><strong>水灵</strong></td><td>水属性灵兽</td><td>+15%</td><td>控制时长+10%</td><td>玄股国/长臂国水下移速惩罚-50%</td><td>柔和、深渊、寒冰、流动、渊</td></tr><tr><td><strong>火灵</strong></td><td>火属性灵兽</td><td>+15%</td><td>灼烧伤害+10%</td><td>厌火国热浪基础伤害-30%（非免疫）</td><td>烈焰、暴烈、赤炎、熔岩、阳</td></tr><tr><td><strong>土灵</strong></td><td>土属性灵兽</td><td>+15%</td><td>护盾值+10%</td><td>小人国震地波伤害-30%</td><td>厚重、山岳、大地、岩、尘</td></tr><tr><td><strong>混元</strong></td><td>全属性灵兽（双属性及以上）</td><td>+8%</td><td>全属性+2%</td><td>无特定剧情，但适配多属性进化路线</td><td>混沌、无极、包容、万象、元</td></tr><tr><td><strong>阴阳</strong></td><td>光属性或暗属性灵兽</td><td>+12%</td><td>异常状态抵抗+10%</td><td>女子国阴阳判定系统中排斥效果-50%</td><td>太极、两仪、平衡、日月、冥</td></tr></tbody></table></div>
+<hr>
+<h3>2.3 方向三：血脉体质（种族权限池）</h3>
+<p>&amp;gt; <strong>关键词特征</strong>：龙、凤、巫、妖、骨、凡、魂、血、瞳。</p>
+<div class="tw"><table><thead><tr><th>标签</th><th>契合灵兽类型</th><th>契合度加成</th><th>战斗风格加成</th><th>剧情/探索加成</th><th>推荐关键词示例</th></tr></thead><tbody><tr><td><strong>龙血</strong></td><td>龙裔/蛇类灵兽</td><td>+12%</td><td>龙系进化材料需求-10%</td><td>玄股国共工宫殿剧情特殊选项；厌火国旱魃残魂对话额外分支</td><td>龙、蛇、蛟、鳞、血脉、古老</td></tr><tr><td><strong>凤裔</strong></td><td>鸟类/瑞兽类灵兽</td><td>+12%</td><td>飞行类灵兽移速+10%</td><td>羽民国风灵通道初始通行权限；云巢区域无坠落惩罚</td><td>凤、鸟、飞、羽、翔、天</td></tr><tr><td><strong>巫族</strong></td><td>亡灵系/古兽类灵兽</td><td>+12%</td><td>巫咸国全剧情判定+10（隐藏对话）</td><td>巫咸国大巫师团初始态度缓和；可进入骨塔深渊</td><td>巫、蛊、祭、亡、古老、咒</td></tr><tr><td><strong>妖瞳</strong></td><td>幻系/狐族灵兽</td><td>+10%</td><td>可看破青丘国迷障（等效迷障披风）</td><td>青丘国悬空木阁下层直接进入；一目国真视泉效果+30%</td><td>瞳、眼、幻、狐、看破、迷</td></tr><tr><td><strong>灵骨</strong></td><td>全系灵兽</td><td>+5%</td><td>灵力上限+10%</td><td>结胸国胸结玉储存灵气上限+20%</td><td>骨、灵、髓、清、透、慧</td></tr><tr><td><strong>凡体</strong></td><td>全系灵兽</td><td>+0%</td><td>进化材料-20%，进化后全属性+5%</td><td>解锁"逆袭天命"彩蛋；轩辕国守陵氏特殊对话（凡人亦可登天）</td><td>凡、俗、庶、草根、无才、拙</td></tr><tr><td><strong>魂异</strong></td><td>灵魂体灵兽</td><td>+12%</td><td>灵魂结晶掉落+5%</td><td>巫咸国魂火区域伤害-50%；可签约引魂灯/竞技场幽魂无惩罚</td><td>魂、灵、鬼、异、魄、冥</td></tr></tbody></table></div>
+<hr>
+<h3>2.4 方向四：因果经历（剧情权限池）</h3>
+<p>&amp;gt; <strong>关键词特征</strong>：轮回、背叛、守护、流浪、亡国、药、毒、医。</p>
+<div class="tw"><table><thead><tr><th>标签</th><th>契合灵兽类型</th><th>契合度加成</th><th>战斗风格加成</th><th>剧情/探索加成</th><th>推荐关键词示例</th></tr></thead><tbody><tr><td><strong>轮回者</strong></td><td>全系灵兽</td><td>+5%</td><td>死亡经验损失-50%</td><td>三首国三世镜剧情额外选项；巫咸国轮回镜预知准确率+10%</td><td>轮回、转世、重生、循环、宿命</td></tr><tr><td><strong>背誓者</strong></td><td>全系灵兽</td><td>+0%</td><td>心魔BOSS血量-20%；强行解约惩罚时间延长</td><td>解锁隐藏职业"背誓者"前置；心魔试炼副本入口特殊对话</td><td>背叛、毁约、负心、罪、赎</td></tr><tr><td><strong>守墓人</strong></td><td>亡灵系灵兽</td><td>+10%</td><td>解锁隐藏职业"守墓人"前置</td><td>巫咸国可直接与亡灵NPC对话；轩辕国古兽遗骸唤醒权限</td><td>墓、守、亡、葬、寂、古</td></tr><tr><td><strong>流浪者</strong></td><td>全系灵兽</td><td>+5%</td><td>移动速度+5%</td><td>交胫国疾风腿初始好感+20；无国家归属剧情选项</td><td>流浪、漂泊、旅、游、无家</td></tr><tr><td><strong>亡国遗孤</strong></td><td>全系灵兽</td><td>+5%</td><td>无直接战斗加成</td><td><strong>20国隐藏对话触发器</strong>：青丘国影狐同情选项、大人国碎山者理解选项、轩辕国守陵氏血脉选项（具体见第六节）</td><td>亡国、遗孤、灭族、复仇、遗民</td></tr><tr><td><strong>药人</strong></td><td>草木系/治愈系灵兽</td><td>+10%</td><td>草木采集+1（全局生效）</td><td>白民国寿桃林采集效率+25%；解锁隐藏职业"血法师"前置（配合医仙）</td><td>药、毒、医、草、丹、蛊、尝</td></tr></tbody></table></div>
+<hr>
+<h3>2.5 方向五：道心倾向（职业适配池）</h3>
+<p>&amp;gt; <strong>关键词特征</strong>：狂、诡、医、机关、兽、符、剑、道、心。</p>
+<div class="tw"><table><thead><tr><th>标签</th><th>契合灵兽类型</th><th>契合度加成</th><th>战斗风格加成</th><th>剧情/探索加成</th><th>推荐关键词示例</th></tr></thead><tbody><tr><td><strong>狂战</strong></td><td>战斗型灵兽（攻击≥防御×2）</td><td>+8%</td><td>攻击+10%，防御-5%</td><td>大人国竞技场连胜判定阈值-2场；毛民国兽化冲突中武力说服+30</td><td>狂、战、勇、疯、血、斗</td></tr><tr><td><strong>诡道</strong></td><td>暗属性/幻系灵兽</td><td>+8%</td><td>陷阱伤害+15%（含墨痕、毒雾、机关）</td><td>交胫国黑市初始信任+20；青丘国影狐派系初始好感+10</td><td>诡、谋、诈、暗、毒、刺</td></tr><tr><td><strong>医仙</strong></td><td>辅助型灵兽（有治疗技能）</td><td>+10%</td><td>治疗效果+15%；解锁隐藏技能"回春诀"</td><td>女子国子母河净化任务中治愈判定+30；白民国乘黄抽血剧情中阻止选项+权重</td><td>医、仙、救、仁、药、疗</td></tr><tr><td><strong>机关</strong></td><td>机关类/傀儡类灵兽</td><td>+10%</td><td>机关类技能CD-10%</td><td>青丘国墨家遗迹直接解锁；劳民国永动齿轮伤害免疫；轩辕国机关造物中立化</td><td>机关、械、傀、墨、巧、工</td></tr><tr><td><strong>驭兽</strong></td><td>全系灵兽</td><td>+10%</td><td>灵兽继承系数额外+5%（可与契约叠加）</td><td>全图灵兽遭遇时首击非敌对（可先行对话）</td><td>驭、兽、驯、牧、御、使</td></tr><tr><td><strong>符箓</strong></td><td>全系灵兽</td><td>+5%</td><td>符箓持续时间+20%（含敕令、护盾、增益类）</td><td>巫咸国占卜龟甲使用效果+25%持续时间</td><td>符、箓、咒、印、阵、文</td></tr><tr><td><strong>剑心</strong></td><td>战斗型灵兽（近战为主）</td><td>+8%</td><td>普攻连段+1段（三段变四段）</td><td>肃慎国射日台拔箭判定+20；大人国竞技场剑类武器伤害+10%</td><td>剑、心、刃、锋、斩、意</td></tr></tbody></table></div>
+<p><strong>命格互斥声明（关联02-3隐藏职业）：</strong></p>
+<ul><li>医仙命格 ↔ 狂战命格：若玩家已习得医仙隐藏技能"回春诀"，则战狂隐藏职业任务链不可触发；反之，若已解锁战狂隐藏职业，则"回春诀"不可习得。</li><li>医仙隐藏技能 ↔ 血法师隐藏职业：二者不可同时拥有。血法师以血代蓝机制会覆盖"回春诀"的治疗逻辑。</li></ul>
+<hr>
+<h2>三、通用标签池（随机补全池）</h2>
+<p>&amp;gt; <strong>抽取规则</strong>：定向抽取不足5个时，从以下标签中随机补足。通用标签可与方向标签共存，无方向冲突。</p>
+<div class="tw"><table><thead><tr><th>标签</th><th>契合灵兽类型</th><th>契合度加成</th><th>特殊效果</th><th>触发彩蛋</th><th>推荐关键词示例</th></tr></thead><tbody><tr><td><strong>吃货</strong></td><td>喜爱草木类灵兽（如绒绒兔、寿桃精）</td><td>+5%</td><td>灵材恢复效果+10%（含丹药、食材）</td><td>无</td><td>吃、馋、饿、食、味、饕餮</td></tr><tr><td><strong>夜行</strong></td><td>夜间出没灵兽（20:00-06:00签约生效）</td><td>+8%</td><td>夜间全属性+5%（主角）</td><td>与"嗜睡"互斥：同时持有则夜间效果抵消</td><td>夜、暗、月、黑、晚、影</td></tr><tr><td><strong>嗜睡</strong></td><td>温和型灵兽（无主动攻击技能）</td><td>+5%</td><td>非战斗状态回血+20%</td><td>与"夜行"互斥：同时持有则非战斗回血降为+10%</td><td>睡、懒、困、眠、静、憩</td></tr><tr><td><strong>洁癖</strong></td><td>瑞兽/洁净型灵兽（如乘黄、机关兽）</td><td>+5%</td><td>中毒/腐蚀持续时间-30%</td><td>黑齿国瘴气层腐蚀叠加上限-1层</td><td>洁、净、癖、清、纯、无瑕</td></tr><tr><td><strong>话痨</strong></td><td>全系灵兽</td><td>+0%</td><td>NPC对话额外选项（部分剧情解锁隐藏信息）</td><td>交胫国商会砍价成功率+15%</td><td>话、唠、说、辩、言、多嘴</td></tr></tbody></table></div>
+<p>&amp;gt; <strong>互斥说明</strong>："夜行"与"嗜睡"若同时被抽中，系统保留先抽中的标签，后抽中的重抽。</p>
+<hr>
+<h2>四、标签抽取与生成机制</h2>
+<h3>4.1 关键词匹配库（推荐词表）</h3>
+<p>&amp;gt; <strong>说明</strong>：以下词表为系统解析的基准库，文案组可在此基础上扩展同义词与近义词。</p>
+<div class="tw"><table><thead><tr><th>标签</th><th>核心词根</th><th>同义词/近义词（示例）</th></tr></thead><tbody><tr><td>孤星</td><td>孤、独、单</td><td>寂寞、无依、唯一、孑然、独行侠、离群</td></tr><tr><td>破军</td><td>破、军、战</td><td>冲锋、陷阵、先锋、破敌、破军星、战阵</td></tr><tr><td>贪狼</td><td>贪、狼、暗</td><td>贪婪、掠夺、暗影、吞噬、夜行、欲望</td></tr><tr><td>紫微</td><td>紫、微、帝</td><td>帝王、天子、尊贵、紫气、天命、龙颜</td></tr><tr><td>天相</td><td>相、辅、治</td><td>辅佐、守护、慈悲、治愈、宰相、庇护</td></tr><tr><td>七杀</td><td>杀、七、凶</td><td>杀伐、嗜血、凶煞、暴烈、战意、屠夫</td></tr><tr><td>禄存</td><td>禄、存、财</td><td>财富、囤积、聚宝、丰饶、商贾、贪婪（与贪狼区分：禄存重财，贪狼重欲）</td></tr><tr><td>金灵</td><td>金、铁、剑</td><td>金刚、锐利、肃杀、金属、刀剑、矿</td></tr><tr><td>木灵</td><td>木、草、生</td><td>生机、森林、草木、治愈、藤、花、药</td></tr><tr><td>水灵</td><td>水、冰、渊</td><td>柔和、深渊、寒冰、流动、雨、海、潮</td></tr><tr><td>火灵</td><td>火、炎、阳</td><td>烈焰、暴烈、赤炎、熔岩、太阳、灼烧</td></tr><tr><td>土灵</td><td>土、山、岩</td><td>厚重、山岳、大地、岩石、尘、壤</td></tr><tr><td>混元</td><td>混、元、全</td><td>混沌、无极、包容、万象、全、皆、混</td></tr><tr><td>阴阳</td><td>阴、阳、太极</td><td>两仪、平衡、日月、冥、光暗、调和</td></tr><tr><td>龙血</td><td>龙、蛟、鳞</td><td>龙裔、蛇、蛟龙、鳞甲、敖、龙王</td></tr><tr><td>凤裔</td><td>凤、鸟、羽</td><td>凤凰、飞鸟、羽翼、翔、鸾、雀</td></tr><tr><td>巫族</td><td>巫、蛊、祭</td><td>巫师、蛊毒、祭祀、咒术、萨满、古老</td></tr><tr><td>妖瞳</td><td>瞳、眼、幻</td><td>眼睛、幻术、狐眼、看破、迷障、凝视</td></tr><tr><td>灵骨</td><td>骨、灵、髓</td><td>骨骼、清瘦、通透、慧根、灵体、仙骨</td></tr><tr><td>凡体</td><td>凡、俗、庶</td><td>凡人、草根、无才、普通、平庸、俗子</td></tr><tr><td>魂异</td><td>魂、鬼、异</td><td>灵魂、鬼魂、异类、冥界、魄、幽灵</td></tr><tr><td>轮回者</td><td>轮、回、生</td><td>转世、重生、循环、宿命、涅槃、再来</td></tr><tr><td>背誓者</td><td>誓、背、罪</td><td>背叛、毁约、负心、罪人、违约、背弃</td></tr><tr><td>守墓人</td><td>墓、守、亡</td><td>守陵、墓葬、亡灵、安息、葬仪、古冢</td></tr><tr><td>流浪者</td><td>浪、流、旅</td><td>漂泊、游子、无家、流浪、行脚、过客</td></tr><tr><td>亡国遗孤</td><td>亡、孤、遗</td><td>灭国、遗民、复仇、末裔、残存、破家</td></tr><tr><td>药人</td><td>药、毒、医</td><td>尝百草、药罐、毒师、医者、丹师、蛊</td></tr><tr><td>狂战</td><td>狂、战、勇</td><td>疯狂、勇猛、斗者、嗜战、武狂、血勇</td></tr><tr><td>诡道</td><td>诡、谋、暗</td><td>诡诈、阴谋、暗杀、毒计、暗算、邪道</td></tr><tr><td>医仙</td><td>医、仙、仁</td><td>医者、仁心、悬壶、救世、药仙、慈悲</td></tr><tr><td>机关</td><td>机、关、械</td><td>机关、傀儡、机械、巧工、墨家、器械</td></tr><tr><td>驭兽</td><td>驭、兽、驯</td><td>御兽、驯养、牧灵、兽王、使役、唤兽</td></tr><tr><td>符箓</td><td>符、箓、咒</td><td>符咒、道符、法印、符文、阵法、咒文</td></tr><tr><td>剑心</td><td>剑、心、锋</td><td>剑客、剑意、刃心、剑修、拔剑、斩心</td></tr><tr><td>吃货</td><td>吃、食、馋</td><td>贪吃、美食、饥饿、饕餮、味蕾、食欲</td></tr><tr><td>夜行</td><td>夜、月、暗</td><td>夜行、月夜、暗影、晚、黑、宵</td></tr><tr><td>嗜睡</td><td>睡、懒、眠</td><td>困倦、安眠、慵懒、沉睡、休憩、梦</td></tr><tr><td>洁癖</td><td>洁、净、癖</td><td>洁癖、清洁、纯净、无瑕、整齐、卫生</td></tr><tr><td>话痨</td><td>话、说、唠</td><td>多言、健谈、唠叨、辩才、碎嘴、言语</td></tr></tbody></table></div>
+<h3>4.2 抽取流程</h3>
+<div class="tw"><table><thead><tr><th>步骤</th><th>规则</th><th>参数</th></tr></thead><tbody><tr><td>1. 关键词提取</td><td>玩家输入 0~500 字，系统分词后匹配上表词根</td><td>匹配权重：核心词根 &amp;gt; 同义词 &amp;gt; 相关语境</td></tr><tr><td>2. 定向抽取</td><td>根据匹配到的方向，从对应池中抽取</td><td>0~3 个，优先取权重最高的标签</td></tr><tr><td>3. 随机补全</td><td>若不足 5 个，从全库（含通用池）随机补足</td><td>补足至 5 个，通用标签占比不超过 2 个</td></tr><tr><td>4. 空白处理</td><td>空白/无意义输入（纯数字/符号/&amp;lt;10字乱码）</td><td>5 个全部随机，彻底"听天由命"</td></tr><tr><td>5. 唯一性校验</td><td>5 个标签互不相同</td><td>重复则重抽，最多重抽 10 次防死锁</td></tr><tr><td>6. 互斥校验</td><td>检查冲突标签（如夜行+嗜睡）</td><td>保留先抽中者，后者重抽</td></tr></tbody></table></div>
+<h3>4.3 加成叠加与硬上限规则（引用03-2 v0.2）</h3>
+<p>&amp;gt; <strong>重构说明（B-05修复）</strong>：以下规则已与03-2第四节硬上限体系统一，原80%溢出线废止。</p>
+<div class="tw"><table><thead><tr><th>规则</th><th>说明</th></tr></thead><tbody><tr><td><strong>同方向取最高</strong></td><td>如同时有「火灵」和「混元」，面对火属性灵兽取 +15%，不叠加为 +23%</td></tr><tr><td><strong>跨方向可叠加</strong></td><td>如「火灵」+15% 与 「狂战」+8% 可同时生效，合计 +23%</td></tr><tr><td><strong>组合彩蛋独立</strong></td><td>满足条件即额外叠加，不受方向限制</td></tr><tr><td><strong>硬上限封顶</strong></td><td>最终签约概率受品质硬上限限制（N=90% / R=85% / SR=75% / SSR=50% / UR=30%，详见03-2第四节）。超出硬上限的部分不再转化为好感度（v0.2起废止溢出转化机制，简化系统认知）。</td></tr></tbody></table></div>
+<hr>
+<h2>五、组合彩蛋与隐藏联动</h2>
+<h3>5.1 官方组合彩蛋表</h3>
+<p>&amp;gt; <strong>重构说明（A-06修复）</strong>：原"背誓者 + 持有本命契约"因背誓者机制上无法同时拥有本命契约，已调整为"背誓者 + 轮回者"，叙事上构成"轮回赎罪"主题，效果保留。</p>
+<div class="tw"><table><thead><tr><th>组合条件</th><th>彩蛋名称</th><th>额外加成</th><th>特殊效果</th><th>剧情关联</th></tr></thead><tbody><tr><td><strong>孤星 + 狼/虎类灵兽</strong></td><td>独狼共鸣</td><td>+5%</td><td>该灵兽拒绝解约（强行解约需额外心魔试炼）</td><td>毛民国兽语者支线中，孤星玩家可跳过"兽化抗争"路线直接对话</td></tr><tr><td><strong>凡体 + 可进化灵兽</strong></td><td>逆袭天命</td><td>+5%</td><td>进化材料-20%，进化后全属性+5%</td><td>轩辕国守陵氏特殊对话："凡人亦可登天"</td></tr><tr><td><strong>龙血 + 凤裔</strong></td><td>龙凤呈祥</td><td>+8%</td><td>同时享受双血脉加成，可签约互斥种族（龙裔+凤裔专属）</td><td>羽民国风灵通道与玄股国深海遗迹联动剧情</td></tr><tr><td><strong>背誓者 + 轮回者</strong></td><td>赎罪者</td><td>+0%</td><td>心魔BOSS血量-20%，虚弱期延长至10天</td><td>心魔试炼副本特殊对话线</td></tr><tr><td><strong>药人 + 医仙</strong></td><td>百草通灵</td><td>+5%</td><td>草木采集+1，解锁隐藏治疗技能"回春诀"</td><td>白民国/女子国净化任务中治愈判定+30</td></tr></tbody></table></div>
+<h3>5.2 隐藏职业关联表（引用02-3）</h3>
+<div class="tw"><table><thead><tr><th>命格标签</th><th>关联隐藏职业</th><th>作用</th></tr></thead><tbody><tr><td>守墓人</td><td>守墓人</td><td>解锁前置条件</td></tr><tr><td>背誓者</td><td>背誓者</td><td>解锁前置条件；心魔BOSS血量-20%</td></tr><tr><td>兽魂行者</td><td>兽魂行者</td><td>龙血/凤裔/巫族命格使兽化持续时间+20%</td></tr><tr><td>墨家传人</td><td>机关</td><td>机关命格使机关造物攻击力+15%</td></tr><tr><td>血法师</td><td>药人 + 医仙</td><td>解锁前置条件（白民国寻找替代路线）</td></tr><tr><td>先知</td><td>天相 / 巫族</td><td>解锁前置条件（巫咸国阻止献祭路线）</td></tr><tr><td>战狂</td><td>狂战</td><td>解锁前置条件（大人国竞技场连胜20场）</td></tr><tr><td>毒龙使</td><td>毒系灵兽本命</td><td>解锁前置条件（黑齿国以毒攻毒路线）</td></tr></tbody></table></div>
+<hr>
+<h2>六、命格与二十国剧情互动索引</h2>
+<p>&amp;gt; <strong>说明</strong>：以下互动为已确认参数，来源于 04-x 国家文档与 03-2 契合度表。</p>
+<div class="tw"><table><thead><tr><th>命格标签</th><th>关联国家</th><th>具体互动</th><th>来源文档</th></tr></thead><tbody><tr><td><strong>妖瞳</strong></td><td>青丘国(NAT_01)</td><td>迷障效果完全免疫；可进入悬空木阁下层；无需迷障披风即可探索虚月核心</td><td>04-1, 03-2 3.4</td></tr><tr><td><strong>龙血</strong></td><td>厌火国(NAT_02)</td><td>玄火蛇进化路线契合度+12%；旱魃残魂对话额外分支</td><td>04-2, 02-4</td></tr><tr><td><strong>龙血</strong></td><td>玄股国(NAT_18)</td><td>共工宫殿剧情特殊选项；共工鳞采集无战斗触发</td><td>04-18</td></tr><tr><td><strong>凤裔</strong></td><td>羽民国(NAT_05)</td><td>风灵通道初始通行权限；罡风层坠落判定免疫（需配合风钢翼）</td><td>04-5</td></tr><tr><td><strong>巫族</strong></td><td>巫咸国(NAT_06)</td><td>大巫师团初始态度缓和；可进入骨塔深渊；魂火伤害-50%</td><td>04-6, 03-2 3.4</td></tr><tr><td><strong>守墓人</strong></td><td>巫咸国(NAT_06)</td><td>可直接与亡灵NPC对话，跳过部分战斗</td><td>04-6, 02-3</td></tr><tr><td><strong>守墓人</strong></td><td>轩辕国(NAT_09)</td><td>封魔台周边古兽遗骸可唤醒助战</td><td>04-9, 02-3</td></tr><tr><td><strong>机关</strong></td><td>青丘国(NAT_01)</td><td>悬空木阁底层墨家遗迹直接解锁；无需解谜</td><td>04-1, 02-3</td></tr><tr><td><strong>机关</strong></td><td>劳民国(NAT_14)</td><td>永动齿轮伤害免疫；可无损操作工厂机关</td><td>04-14, 02-3</td></tr><tr><td><strong>机关</strong></td><td>轩辕国(NAT_09)</td><td>机关造物巡逻路线中立化（需携带机关兽·狻猊）</td><td>04-9</td></tr><tr><td><strong>药人</strong></td><td>全局</td><td>草木类种植单次产量+1（家园系统）</td><td>03-3 6.3</td></tr><tr><td><strong>药人</strong></td><td>白民国(NAT_15)</td><td>寿桃林采集效率+25%</td><td>04-15</td></tr><tr><td><strong>夜行</strong></td><td>全局</td><td>20:00-06:00 签约夜间出没灵兽契合度+8%</td><td>03-2 3.7</td></tr><tr><td><strong>夜行</strong></td><td>青丘国(NAT_01)</td><td>月光草采集无需等待夜间（视为常驻夜间状态）</td><td>03-3 6.1</td></tr><tr><td><strong>凡体</strong></td><td>全局</td><td>所有进化路线材料-20%，进化后属性+5%</td><td>03-1, 03-2 3.4</td></tr><tr><td><strong>背誓者</strong></td><td>心魔试炼</td><td>心魔BOSS血量-20%；惩罚时间延长</td><td>03-2 3.5</td></tr><tr><td><strong>亡国遗孤</strong></td><td>青丘国(NAT_01)</td><td>影狐同情选项（调和路线成功率+10%）</td><td>04-1（推导）</td></tr><tr><td><strong>亡国遗孤</strong></td><td>大人国(NAT_03)</td><td>碎山者理解选项（和解路线成功率+10%）</td><td>04-3（推导）</td></tr><tr><td><strong>亡国遗孤</strong></td><td>轩辕国(NAT_09)</td><td>守陵氏血脉选项（十国归元路线初始好感+10）</td><td>04-9（推导）</td></tr><tr><td><strong>驭兽</strong></td><td>全局</td><td>灵兽继承系数额外+5%；遭遇野生灵兽可先行对话</td><td>03-2 3.6</td></tr><tr><td><strong>医仙</strong></td><td>女子国(NAT_08)</td><td>子母河净化任务治愈判定+30</td><td>04-8</td></tr><tr><td><strong>医仙</strong></td><td>白民国(NAT_15)</td><td>乘黄抽血剧情中"阻止"选项权重+20</td><td>04-15</td></tr><tr><td><strong>狂战</strong></td><td>大人国(NAT_03)</td><td>竞技场连胜判定阈值-2场</td><td>04-3</td></tr><tr><td><strong>狂战</strong></td><td>毛民国(NAT_13)</td><td>兽化冲突中武力说服+30</td><td>04-13</td></tr><tr><td><strong>剑心</strong></td><td>肃慎国(NAT_16)</td><td>射日台拔箭判定+20</td><td>04-16</td></tr><tr><td><strong>剑心</strong></td><td>大人国(NAT_03)</td><td>竞技场剑类武器伤害+10%</td><td>04-3</td></tr></tbody></table></div>
+<hr>
+<h2>七、数值自洽性验证</h2>
+<h3>7.1 理论最高契合度（非彩蛋）</h3>
+<div class="tw"><table><thead><tr><th>场景</th><th>标签组合</th><th>加成合计</th><th>说明</th></tr></thead><tbody><tr><td>火属性战斗型灵兽</td><td>火灵(15%) + 狂战(8%) + 破军(10%)</td><td>+33%</td><td>跨方向叠加，未超硬上限</td></tr><tr><td>SSR瑞兽</td><td>紫微(15%) + 凤裔(12%) + 医仙(10%)</td><td>+37%</td><td>跨方向叠加</td></tr><tr><td>龙裔暗属性灵兽</td><td>龙血(12%) + 阴阳(12%) + 诡道(8%)</td><td>+32%</td><td>跨方向叠加</td></tr><tr><td>全系通用</td><td>混元(8%) + 轮回者(5%) + 流浪者(5%) + 符箓(5%)</td><td>+23%</td><td>低加成但泛用</td></tr></tbody></table></div>
+<h3>7.2 硬上限触顶示例（B-05修复）</h3>
+<p>&amp;gt; <strong>设计意图</strong>：命格加成作为"软上限突破器"，即使玩家灵材不足，高契合命格也能显著提升签约概率；但硬上限（N=90% / R=85% / SR=75% / SSR=50% / UR=30%）仍然生效，防止数值崩坏。</p>
+<div class="tw"><table><thead><tr><th>场景</th><th>命格加成</th><th>灵材加成</th><th>原始合计</th><th>对应品质硬上限</th><th>最终生效加成</th><th>说明</th></tr></thead><tbody><tr><td>满配N品质</td><td>+33%</td><td>+60%</td><td>+93%</td><td>90%</td><td>90%</td><td>超出3%不再转化</td></tr><tr><td>满配SSR神兽</td><td>+37%</td><td>+55%</td><td>+92%</td><td>50%</td><td>50%</td><td>大幅超出，封顶</td></tr><tr><td>满配UR幼崽</td><td>+20%</td><td>+50%</td><td>+70%</td><td>30%</td><td>30%</td><td>上古异兽严格封顶</td></tr></tbody></table></div>
+<hr>
+<h2>八、标签与灵兽数据库交叉索引（速查）</h2>
+<div class="tw"><table><thead><tr><th>命格标签</th><th>最佳适配灵兽（PET ID）</th><th>最佳适配国家</th></tr></thead><tbody><tr><td>孤星</td><td>PET_001 绒绒兔（终极太阴玉兔必需）</td><td>青丘国</td></tr><tr><td>破军</td><td>PET_003 铁骨虎 / PET_027 梼杌幼崽</td><td>大人国/毛民国</td></tr><tr><td>贪狼</td><td>PET_013 毒蛛 / PET_021 风蛇</td><td>黑齿国/交胫国</td></tr><tr><td>紫微</td><td>PET_018 黄帝剑灵 / PET_005 火晶蝶</td><td>轩辕国/厌火国</td></tr><tr><td>天相</td><td>PET_001 绒绒兔 / PET_032 寿桃精</td><td>青丘国/白民国</td></tr><tr><td>七杀</td><td>PET_003 铁骨虎 / PET_023 三首犬</td><td>大人国/三首国</td></tr><tr><td>禄存</td><td>PET_004 寻宝鼠 / PET_022 商魂貉</td><td>青丘国/交胫国</td></tr><tr><td>金灵</td><td>PET_003 铁骨虎 / PET_018 黄帝剑灵</td><td>大人国/轩辕国</td></tr><tr><td>木灵</td><td>PET_008 共生藤 / PET_032 寿桃精</td><td>小人国/白民国</td></tr><tr><td>水灵</td><td>PET_015 子母鱼 / PET_040 玄股鱼人</td><td>女子国/玄股国</td></tr><tr><td>火灵</td><td>PET_002 玄火蛇 / PET_016 火灵童</td><td>厌火国/女子国</td></tr><tr><td>土灵</td><td>PET_006 山岳巨猿 / PET_026 兽魂熊</td><td>大人国/毛民国</td></tr><tr><td>混元</td><td>PET_042 混沌水种 / 双属性灵兽</td><td>玄股国</td></tr><tr><td>阴阳</td><td>PET_015 子母鱼 / PET_016 火灵童</td><td>女子国</td></tr><tr><td>龙血</td><td>PET_002 玄火蛇 / PET_041 共工侍从</td><td>厌火国/玄股国</td></tr><tr><td>凤裔</td><td>PET_009 云雀 / PET_010 大鹏幼鸟</td><td>羽民国</td></tr><tr><td>巫族</td><td>PET_012 引魂灯 / PET_030 时间蠕虫</td><td>巫咸国/劳民国</td></tr><tr><td>妖瞳</td><td>PET_001 绒绒兔 / PET_024 轮回蝶</td><td>青丘国/三首国</td></tr><tr><td>魂异</td><td>PET_012 引魂灯 / PET_045 混沌之瞳</td><td>巫咸国/一目国</td></tr><tr><td>药人</td><td>PET_032 寿桃精 / PET_008 共生藤</td><td>白民国/小人国</td></tr><tr><td>机关</td><td>PET_017 机关兽·狻猊 / PET_028 机关牛</td><td>轩辕国/劳民国</td></tr><tr><td>驭兽</td><td>全系通用</td><td>全局</td></tr><tr><td>剑心</td><td>PET_018 黄帝剑灵 / PET_036 落日箭灵</td><td>轩辕国/肃慎国</td></tr></tbody></table></div>
+<hr>
+<h2>【未定/待研究补充区】</h2>
+<ul><li>[ ] 关键词同义词库需文案组最终确认（ especially "贪婪"在禄存与贪狼中的歧义消解）</li><li>[ ] 命格标签是否影响基础属性成长曲线（宪法规定不影响初始值，但后期是否影响？）</li><li>[ ] 夜行/嗜睡互斥在极端情况下的重抽死锁概率（理论低于 0.01%，需验证）</li><li>[ ] 此处留白：_________________________</li></ul>
+</div></div></body></html>

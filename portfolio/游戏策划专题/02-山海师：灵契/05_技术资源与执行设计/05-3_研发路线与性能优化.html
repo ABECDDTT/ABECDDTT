@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>05-3_研发路线与性能优化 · 杨长辉作品集</title>
+<style>
+*{box-sizing:border-box}
+body{font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;line-height:1.85;color:#26303f;margin:0;background:#f6f8fc;font-size:15.5px}
+.wrap{max-width:900px;margin:0 auto;padding:26px 22px 80px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px;font-size:13px}
+.crumb{color:#7c8aa3;word-break:break-all}
+.crumb b{color:#1d4ed8}
+.back{white-space:nowrap;padding:6px 13px;border-radius:8px;background:#1d4ed8;color:#fff;text-decoration:none;font-size:13px}
+h1{font-size:25px;margin:0 0 4px;letter-spacing:.5px;line-height:1.4}
+.meta{color:#8a97ab;font-size:13px;margin:0 0 20px}
+.doc{background:#fff;border-radius:14px;padding:30px 34px 40px;box-shadow:0 2px 14px rgba(30,50,90,.06)}
+.doc h1,.doc h2,.doc h3,.doc h4{color:#12306e;line-height:1.5}
+.doc h1{font-size:22px;margin:26px 0 12px;padding-bottom:8px;border-bottom:2px solid #e5ecfa}
+.doc h2{font-size:19px;margin:24px 0 10px;padding-left:11px;border-left:4px solid #1d4ed8}
+.doc h3{font-size:16.5px;margin:20px 0 8px;color:#1d4ed8}
+.doc h4{font-size:15px;margin:16px 0 6px;color:#38507f}
+.doc p{margin:0 0 13px;text-align:justify}
+.doc strong{color:#12306e}
+.doc ul{padding-left:22px;margin:0 0 13px}
+.doc li{margin:4px 0}
+.doc pre{background:#0f2035;color:#d7e3f7;padding:15px 17px;border-radius:10px;overflow-x:auto;font-size:13.5px;line-height:1.65;font-family:ui-monospace,Menlo,Consolas,monospace}
+.doc code{background:#eef2fa;padding:1px 5px;border-radius:4px;font-size:13.5px;color:#12306e}
+.doc pre code{background:none;color:inherit;padding:0}
+.doc blockquote{margin:0 0 14px;padding:11px 16px;background:#f3f6fd;border-left:4px solid #9db4e8;border-radius:0 8px 8px 0;color:#3c4b64}
+.doc hr{border:0;border-top:1px solid #e5ecfa;margin:24px 0}
+.tw{overflow-x:auto;margin:0 0 16px;border-radius:9px;border:1px solid #e5ecfa}
+.doc table{border-collapse:collapse;width:100%;font-size:13.5px}
+.doc th{background:#eef3fc;color:#12306e;font-weight:600}
+.doc th,.doc td{border:1px solid #e0e8f6;padding:7px 10px;text-align:left;white-space:nowrap}
+.doc tbody tr:nth-child(even){background:#fafbfe}
+.doc .ms{margin:0 0 20px;border:1px solid #e5ecfa;border-radius:11px;overflow:hidden;background:#fbfcfe}
+.doc .ms img{display:block;width:100%;height:auto}
+.doc .ms figcaption{font-size:12.5px;color:#93a0b4;text-align:center;padding:8px 10px;background:#f6f8fc;border-top:1px solid #eef2fa}
+.doc .poem{margin:0 0 3px;line-height:2.15;font-size:16.5px;color:#1f2b3d;letter-spacing:.8px}
+.doc .psrc{margin:10px 0 0;font-size:12.5px;color:#a3aebb;text-align:right}
+.doc .ocrnote{margin:0 0 18px;padding:10px 15px;background:#f3f6fd;border-left:4px solid #9db4e8;border-radius:0 8px 8px 0;color:#5a6a80;font-size:13px}
+@media(max-width:640px){.wrap{padding:16px 12px 50px}.doc{padding:20px 16px 30px}h1{font-size:20px}}
+</style></head><body>
+<div class="wrap">
+<div class="topbar"><div class="crumb">游戏策划专题 / 02-山海师：灵契 / 05_技术资源与执行设计 / <b>05-3_研发路线与性能优化</b></div>
+<a class="back" href="../../../index.html">← 返回目录</a></div>
+<h1>05-3_研发路线与性能优化</h1>
+<p class="meta">约 884 字 · 原件 <a href="05-3_%E7%A0%94%E5%8F%91%E8%B7%AF%E7%BA%BF%E4%B8%8E%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96.md.md">05-3_研发路线与性能优化.md.md</a></p>
+<div class="doc">
+<h1>一、开发阶段里程碑（甘特图参数化）</h1>
+<div class="tw"><table><thead><tr><th>阶段</th><th>周期</th><th>核心目标</th><th>交付物</th><th>通过标准</th></tr></thead><tbody><tr><td>阶段一：原型验证</td><td>第1-2月</td><td>核心战斗原型+水墨渲染可行性+命格标签算法</td><td>可运行Demo（1职业+1灵兽+标签抽取）</td><td>战斗帧率稳定60FPS，标签抽取响应&lt;500ms</td></tr><tr><td>阶段二：垂直切片</td><td>第3-4月</td><td>青丘国完整任务链+契约系统+进化系统+UI框架</td><td>青丘国可玩版本（4任务+1BOSS+3种契约）</td><td>青丘国全流程无阻塞BUG，BOSS战流畅</td></tr><tr><td>阶段三：Alpha</td><td>第5-8月</td><td>10国主线+全职业+20只灵兽+恶念跨国联动</td><td>Alpha内部包</td><td>10国主线可通关，恶念联动逻辑正确触发</td></tr><tr><td>阶段四：Beta</td><td>第9-11月</td><td>20国全部完成+数值平衡+心魔试炼+隐藏职业</td><td>Steam页面公开+Beta测试包</td><td>20国可通关，无恶性BUG，数值偏差&lt;10%</td></tr><tr><td>阶段五：上线</td><td>第12月+</td><td>正式上线+DLC规划</td><td>Steam/WeGame上架</td><td>首日崩溃率&lt;1%，好评率目标80%+</td></tr></tbody></table></div>
+<h1>二、团队配置与职责</h1>
+<div class="tw"><table><thead><tr><th>岗位</th><th>人数</th><th>职责</th><th>产出物</th><th>协作接口</th></tr></thead><tbody><tr><td>制作人/主策划</td><td>1</td><td>统筹项目，剧情与系统设计终审</td><td>策划案终审版、里程碑检查表</td><td>全系统</td></tr><tr><td>技术策划/程序员</td><td>2</td><td>Godot开发，Trae/Cursor辅助编码</td><td>GDScript代码、技术文档</td><td>策划需求→代码实现</td></tr><tr><td>美术总监</td><td>1</td><td>水墨风格把控，AI生成后修正</td><td>风格指南、修正规范</td><td>06-1/06-2资产终审</td></tr><tr><td>AI美术师</td><td>1</td><td>LiblibAI/SD生成概念图与立绘</td><td>概念图、立绘、场景原画</td><td>按04文档需求产出</td></tr><tr><td>UI设计师</td><td>1（可兼职）</td><td>竹简/卷轴/石板UI载体设计</td><td>UI原型图、切图资源</td><td>03系统文档</td></tr><tr><td>文案/剧情策划</td><td>1（可兼职）</td><td>20国剧情与灵兽背景故事</td><td>对话文本、剧情分支表</td><td>04文档填充</td></tr><tr><td>测试（兼职）</td><td>1</td><td>内部测试、BUG报告</td><td>测试报告、复现步骤</td><td>Alpha后介入</td></tr></tbody></table></div>
+<h1>三、性能预算与优化指标</h1>
+<div class="tw"><table><thead><tr><th>指标</th><th>目标值</th><th>测试场景</th><th>优化手段</th></tr></thead><tbody><tr><td>平均帧率</td><td>≥60 FPS</td><td>青丘国桃林+5只灵兽同屏</td><td>Godot 2D渲染优化，限制同屏粒子数</td></tr><tr><td>内存占用</td><td>≤2GB</td><td>运行2小时后</td><td>场景卸载策略，非当前国家资源不驻留</td></tr><tr><td>加载时间</td><td>≤3秒</td><td>国家间切换</td><td>分块加载，预加载相邻国家边界资源</td></tr><tr><td>存档大小</td><td>≤50MB</td><td>50小时游戏时长</td><td>数据压缩，图片资源不存入存档</td></tr><tr><td>包体大小</td><td>≤2GB</td><td>完整游戏</td><td>AI生成图采用WebP有损压缩，音频OGG格式</td></tr><tr><td>水墨特效性能</td><td>GPU占用&lt;30%</td><td>连续释放合体奥义</td><td>Shader LOD，远距离简化墨痕计算</td></tr></tbody></table></div>
+<h1>四、技术风险与预案</h1>
+<div class="tw"><table><thead><tr><th>风险项</th><th>概率</th><th>影响</th><th>预案</th></tr></thead><tbody><tr><td>Godot 4移动端移植性能不足</td><td>中</td><td>手机端计划受阻</td><td>阶段一即做移动端性能测试，若不达标转Unity</td></tr><tr><td>AI生成图风格不一致</td><td>高</td><td>美术风格崩坏</td><td>建立固定Prompt模板+美术总监100%人工修正</td></tr><tr><td>20国联动逻辑复杂度爆炸</td><td>中</td><td>BUG难以定位</td><td>阶段三引入自动化测试脚本，遍历所有路线组合</td></tr><tr><td>命格标签中文NLP不准确</td><td>中</td><td>玩家体验受损</td><td>建立关键词同义词库+兜底随机机制</td></tr></tbody></table></div>
+<h1>五、版本控制规范</h1>
+<div class="tw"><table><thead><tr><th>分支</th><th>用途</th><th>合并规则</th></tr></thead><tbody><tr><td>main</td><td>稳定版本（可演示）</td><td>仅接受release合并</td></tr><tr><td>develop</td><td>日常开发</td><td>功能完成后合并</td></tr><tr><td>feature/xxx</td><td>单个功能开发</td><td>完成后合并至develop</td></tr><tr><td>art/xxx</td><td>美术资源迭代</td><td>每周五合并至develop</td></tr><tr><td>hotfix/xxx</td><td>紧急修复</td><td>直接合并至main和develop</td></tr></tbody></table></div>
+<h1>【未定/待研究补充区】</h1>
+<ul><li>[ ] 是否引入行为树/状态机插件管理20国NPC AI？（Godot原生 vs 第三方插件）</li><li>[ ] Steam成就系统具体列表（待市场组确认）</li><li>[ ] 此处留白：_________________________</li></ul>
+</div></div></body></html>

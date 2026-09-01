@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>02-4_山海灵兽与英雄数据库 · 杨长辉作品集</title>
+<style>
+*{box-sizing:border-box}
+body{font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;line-height:1.85;color:#26303f;margin:0;background:#f6f8fc;font-size:15.5px}
+.wrap{max-width:900px;margin:0 auto;padding:26px 22px 80px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px;font-size:13px}
+.crumb{color:#7c8aa3;word-break:break-all}
+.crumb b{color:#1d4ed8}
+.back{white-space:nowrap;padding:6px 13px;border-radius:8px;background:#1d4ed8;color:#fff;text-decoration:none;font-size:13px}
+h1{font-size:25px;margin:0 0 4px;letter-spacing:.5px;line-height:1.4}
+.meta{color:#8a97ab;font-size:13px;margin:0 0 20px}
+.doc{background:#fff;border-radius:14px;padding:30px 34px 40px;box-shadow:0 2px 14px rgba(30,50,90,.06)}
+.doc h1,.doc h2,.doc h3,.doc h4{color:#12306e;line-height:1.5}
+.doc h1{font-size:22px;margin:26px 0 12px;padding-bottom:8px;border-bottom:2px solid #e5ecfa}
+.doc h2{font-size:19px;margin:24px 0 10px;padding-left:11px;border-left:4px solid #1d4ed8}
+.doc h3{font-size:16.5px;margin:20px 0 8px;color:#1d4ed8}
+.doc h4{font-size:15px;margin:16px 0 6px;color:#38507f}
+.doc p{margin:0 0 13px;text-align:justify}
+.doc strong{color:#12306e}
+.doc ul{padding-left:22px;margin:0 0 13px}
+.doc li{margin:4px 0}
+.doc pre{background:#0f2035;color:#d7e3f7;padding:15px 17px;border-radius:10px;overflow-x:auto;font-size:13.5px;line-height:1.65;font-family:ui-monospace,Menlo,Consolas,monospace}
+.doc code{background:#eef2fa;padding:1px 5px;border-radius:4px;font-size:13.5px;color:#12306e}
+.doc pre code{background:none;color:inherit;padding:0}
+.doc blockquote{margin:0 0 14px;padding:11px 16px;background:#f3f6fd;border-left:4px solid #9db4e8;border-radius:0 8px 8px 0;color:#3c4b64}
+.doc hr{border:0;border-top:1px solid #e5ecfa;margin:24px 0}
+.tw{overflow-x:auto;margin:0 0 16px;border-radius:9px;border:1px solid #e5ecfa}
+.doc table{border-collapse:collapse;width:100%;font-size:13.5px}
+.doc th{background:#eef3fc;color:#12306e;font-weight:600}
+.doc th,.doc td{border:1px solid #e0e8f6;padding:7px 10px;text-align:left;white-space:nowrap}
+.doc tbody tr:nth-child(even){background:#fafbfe}
+.doc .ms{margin:0 0 20px;border:1px solid #e5ecfa;border-radius:11px;overflow:hidden;background:#fbfcfe}
+.doc .ms img{display:block;width:100%;height:auto}
+.doc .ms figcaption{font-size:12.5px;color:#93a0b4;text-align:center;padding:8px 10px;background:#f6f8fc;border-top:1px solid #eef2fa}
+.doc .poem{margin:0 0 3px;line-height:2.15;font-size:16.5px;color:#1f2b3d;letter-spacing:.8px}
+.doc .psrc{margin:10px 0 0;font-size:12.5px;color:#a3aebb;text-align:right}
+.doc .ocrnote{margin:0 0 18px;padding:10px 15px;background:#f3f6fd;border-left:4px solid #9db4e8;border-radius:0 8px 8px 0;color:#5a6a80;font-size:13px}
+@media(max-width:640px){.wrap{padding:16px 12px 50px}.doc{padding:20px 16px 30px}h1{font-size:20px}}
+</style></head><body>
+<div class="wrap">
+<div class="topbar"><div class="crumb">游戏策划专题 / 02-山海师：灵契 / 02_人物与职业系统 / <b>02-4_山海灵兽与英雄数据库</b></div>
+<a class="back" href="../../../index.html">← 返回目录</a></div>
+<h1>02-4_山海灵兽与英雄数据库</h1>
+<p class="meta">约 4,327 字 · 原件 <a href="02-4_%E5%B1%B1%E6%B5%B7%E7%81%B5%E5%85%BD%E4%B8%8E%E8%8B%B1%E9%9B%84%E6%95%B0%E6%8D%AE%E5%BA%93.md.md">02-4_山海灵兽与英雄数据库.md.md</a></p>
+<div class="doc">
+<h1>02-4_山海灵兽与英雄数据库</h1>
+<h1>引用宪法：v0.2（全局核心参数总表）</h1>
+<h1>关联文档：02-1_人物基础数值库、02-2_职业技能库、02-3_隐藏职业库、03-5_山海素材总库</h1>
+<h1>状态：已重构（第2轮） | 待审：隐藏进化数值在地狱档BOSS战中的峰值验证</h1>
+<hr>
+<h2>一、灵兽属性计算总纲</h2>
+<h3>1.1 核心公式</h3>
+<pre><code>灵兽最终属性 = 玩家基础属性 × 种族系数 × 契约继承系数 × 进化阶段系数
+
+玩家基础属性（50级基准）：
+  生命 = 940  |  攻击 = 178  |  防御 = 93</code></pre>
+<h3>1.2 种族系数与定位</h3>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>定位标签</th><th>生命系数</th><th>攻击系数</th><th>防御系数</th><th>攻速基准</th><th>移速基准</th><th>设计意图</th></tr></thead><tbody><tr><td>肉盾型</td><td>1.20</td><td>0.60</td><td>1.20</td><td>1.3秒</td><td>120</td><td>高承伤，低输出，慢攻速</td></tr><tr><td>输出型</td><td>0.70</td><td>1.00</td><td>0.55</td><td>1.0秒</td><td>160</td><td>标准DPS，脆</td></tr><tr><td>爆发型</td><td>0.60</td><td>1.15</td><td>0.50</td><td>1.5秒</td><td>150</td><td>高攻低频，技能伤害为主</td></tr><tr><td>辅助型</td><td>0.85</td><td>0.50</td><td>0.80</td><td>1.2秒</td><td>140</td><td>治疗/护盾特化</td></tr><tr><td>控制型</td><td>0.80</td><td>0.75</td><td>0.70</td><td>1.1秒</td><td>145</td><td>控场为主，伤害中等</td></tr><tr><td>功能型</td><td>0.65</td><td>0.45</td><td>0.55</td><td>1.0秒</td><td>150</td><td>采集/探测/特殊机制，终极形态保留功能并觉醒战斗能力</td></tr><tr><td>机动型</td><td>0.75</td><td>0.85</td><td>0.60</td><td>1.0秒</td><td>180</td><td>高移速，游击输出</td></tr></tbody></table></div>
+<h3>1.3 契约继承系数</h3>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>契约类型</th><th>继承系数</th><th>说明</th></tr></thead><tbody><tr><td>临时契约</td><td>50%</td><td>剧情演示，无实战价值</td></tr><tr><td>平等契约</td><td>100%</td><td>标准战力，主力阵容</td></tr><tr><td>伙伴契约</td><td>150%</td><td>核心战力，深度培养</td></tr><tr><td>本命契约</td><td>200%</td><td>终极战力，共享被动，解锁隐藏进化前置</td></tr></tbody></table></div>
+<h3>1.4 键位映射声明</h3>
+<blockquote>本文档中灵兽技能统一记为 <strong>主动技1（攻击/控制/功能型）、主动技2（攻击/控制/功能型）、辅助技（纯防御/治疗/净化/增益型，强制）、终极技（大招）、被动（常驻天赋）</strong>。 <strong>人主导模式</strong>：灵兽 主动技1/主动技2 映射至玩家 <strong>F/G</strong> 键手动释放；辅助技/终极技由 AI 在特定条件下自动释放，或玩家按 <strong>R</strong> 键切换为"伙伴主导模式"后手动释放终极技。 <strong>伙伴主导模式</strong>（待开发）：灵兽 主动技1/主动技2/终极技 直接接管主角对应键位，主角退居辅助；辅助技仍由 AI 自动判断释放。</blockquote>
+<h3>1.5 品质与野外遭遇权重（新增）</h3>
+<blockquote><strong>引用 03-2 第三节</strong>。48 只基础灵兽必须标注品质，作为野外刷新池配置依据。</blockquote>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>品质</th><th>名称</th><th>野外遭遇权重</th><th>实际遭遇率</th><th>48只分布数量</th><th>设计意图</th></tr></thead><tbody><tr><td>N</td><td>凡兽</td><td>100</td><td>~55%</td><td>3只</td><td>新手三杰，开局可选</td></tr><tr><td>R</td><td>灵兽</td><td>60</td><td>~30%</td><td>24只</td><td>野外主力，进化潜力稳定</td></tr><tr><td>SR</td><td>珍兽</td><td>20</td><td>~12%</td><td>12只</td><td>区域稀有，任务/路线限定</td></tr><tr><td>SSR</td><td>神兽</td><td>5</td><td>~2.5%</td><td>5只</td><td>顶级神兽，隐藏条件触发</td></tr><tr><td>UR</td><td>上古异兽</td><td>1</td><td>~0.5%</td><td>4只</td><td>传说级，剧情限定或极端稀有</td></tr></tbody></table></div>
+<h3>1.6 进化材料标注规范（新增）</h3>
+<blockquote><strong>全库强制执行</strong>：所有进化材料必须标注 MAT-ID（引用 03-5 山海素材总库）。 <strong>格式</strong>：<code>材料名(MAT-XXxx)×数量</code> 示例：<code>青丘蔓(MAT-C04)×12 + 月光草(MAT-C05)×8</code></blockquote>
+<hr>
+<h2>二、48只基础灵兽定位总览表（重制版）</h2>
+<blockquote>下表已补全品质、统一命名、标注核心进化材料 MAT-ID。命名冲突已修复。</blockquote>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>灵兽ID</th><th>名称</th><th>国家</th><th>品质</th><th>定位</th><th>属性</th><th>获取方式</th><th>进化路线</th><th>隐藏进化</th><th>核心进化材料 MAT-ID</th></tr></thead><tbody><tr><td>PET_001</td><td>绒绒兔</td><td>青丘国</td><td>N</td><td>辅助型</td><td>冰/月</td><td>野外捕获</td><td>月影灵兔→太阴玉兔</td><td>混沌月兔</td><td>C04, C05, SC02, SC01, SC09</td></tr><tr><td>PET_002</td><td>玄火蛇</td><td>厌火国</td><td>N</td><td>爆发型</td><td>火</td><td>野外捕获</td><td>赤焰蛟→九霄烛龙</td><td>混沌烛龙</td><td>S02, B01, C01, SC03, SC01, SC11</td></tr><tr><td>PET_003</td><td>铁骨虎</td><td>大人国</td><td>N</td><td>肉盾型</td><td>金</td><td>野外捕获</td><td>裂山虎王→西方白虎</td><td>庚金白虎</td><td>S01, B03, S03, SC03, SC01</td></tr><tr><td>PET_004</td><td>寻宝鼠</td><td>青丘国</td><td>R</td><td>功能型</td><td>土</td><td>隐藏采集</td><td>探宝灵鼠→聚宝貔貅</td><td>吞金貔貅</td><td>C09, S05, S04, SC01, SC19</td></tr><tr><td>PET_005</td><td>火晶蝶</td><td>厌火国</td><td>SR</td><td>辅助型</td><td>光/火</td><td>厌火国隐藏</td><td>日耀晶蝶→日轮天火</td><td>永昼神蝶</td><td>S02, C09, S04, SC02, SC01</td></tr><tr><td>PET_006</td><td>山岳巨猿</td><td>大人国</td><td>R</td><td>肉盾型</td><td>土</td><td>野外捕获</td><td>通臂猿猴→擎天巨猿</td><td>混世四猴</td><td>S03, S07, S01, SC03, SC01</td></tr><tr><td>PET_007</td><td>微观龙</td><td>小人国</td><td>SR</td><td>机动型</td><td>水/幻</td><td>修复派任务</td><td>芥子灵龙→芥子神龙</td><td>无量天龙</td><td>C07, C13, S16, S04, SC01, SC11</td></tr><tr><td>PET_008</td><td>共生藤</td><td>小人国</td><td>SR</td><td>辅助型</td><td>木/辅助</td><td>调和路线</td><td>缠绕灵藤→世界树幼苗</td><td>建木灵根</td><td>C04, S03, C19, S04, SC02, SC01, SC11</td></tr><tr><td>PET_009</td><td>云雀</td><td>羽民国</td><td>R</td><td>机动型</td><td>风</td><td>野外捕获</td><td>疾风雀→金翅大鹏</td><td>鲲鹏</td><td>B19, C09, S11, SC03, SC01</td></tr><tr><td>PET_010</td><td>大鹏幼鸟</td><td>羽民国</td><td>R</td><td>输出型</td><td>风/金</td><td>蛋培养</td><td>金羽鹏→金翅天鹏</td><td>阴阳鲲鹏</td><td>B19, S07, S04, SC03, SC01</td></tr><tr><td>PET_011</td><td>卜卦龟</td><td>巫咸国</td><td>R</td><td>辅助型</td><td>水/光</td><td>野外捕获</td><td>卦灵龟→长明灯神</td><td>河图洛书</td><td>S21, C06, C05, SC17, SC03, SC01</td></tr><tr><td>PET_012</td><td>引魂灯</td><td>巫咸国</td><td>SR</td><td>控制型</td><td>亡灵/光</td><td>野外捕获</td><td>引魂使者→幽冥灯神</td><td>六道轮回灯</td><td>SC17, C17, C05, SC10, SC03, SC01</td></tr><tr><td>PET_013</td><td>毒蛛</td><td>黑齿国</td><td>R</td><td>控制型</td><td>毒/暗</td><td>野外捕获</td><td>噬魂蛛→万毒蛛后</td><td>九幽毒母</td><td>B02, C17, B09, B06, SC03, SC01</td></tr><tr><td>PET_014</td><td>碧磷蛇</td><td>黑齿国</td><td>R</td><td>爆发型</td><td>毒/木</td><td>野外捕获</td><td>青鳞毒蛇→巴蛇</td><td>相柳</td><td>B02, C15, C17, B06, SC03, SC01</td></tr><tr><td>PET_015</td><td>子母鱼</td><td>女子国</td><td>R</td><td>辅助型</td><td>水/阴</td><td>野外捕获</td><td>阴阳鱼→鲲鹏幼体</td><td>北冥鲲鹏</td><td>C19, C06, C05, S04, SC02, SC01</td></tr><tr><td>PET_016</td><td>火灵童</td><td>女子国</td><td>SR</td><td>爆发型</td><td>火/阴</td><td>女子国隐藏</td><td>阴火童子→九阴真火</td><td>三昧真灵</td><td>S02, C17, C19, S04, SC01</td></tr><tr><td>PET_017</td><td>机关兽·狻猊</td><td>轩辕国</td><td>SR</td><td>肉盾型</td><td>金/火</td><td>黄帝造物任务</td><td>镇魔机关兽→狻猊镇魔像</td><td>轩辕守护兽</td><td>S01, S02, S19, S10, SC03, SC01</td></tr><tr><td>PET_018</td><td>黄帝剑灵</td><td>轩辕国</td><td>SSR</td><td>输出型</td><td>金/光</td><td>隐藏·人形兵器</td><td>剑灵使→人形兵器</td><td>轩辕圣剑</td><td>S09, S05, S13, S10, SC03, SC01</td></tr><tr><td>PET_019</td><td>灵鱼·文鳐</td><td>长臂国</td><td>R</td><td>机动型</td><td>水/风</td><td>渔猎</td><td>飞鱼→文鳐王</td><td>鲲鹏之翼</td><td>B08, B19, S17, B16, SC03, SC01</td></tr><tr><td>PET_020</td><td>巨鳌</td><td>长臂国</td><td>R</td><td>肉盾型</td><td>水/土</td><td>渔猎</td><td>玄鳌→北海玄龟</td><td>玄武</td><td>S17, S03, B08, B16, SC03, SC01</td></tr><tr><td>PET_021</td><td>风蛇</td><td>交胫国</td><td>R</td><td>机动型</td><td>风/暗</td><td>野外捕获</td><td>暗影风蛇→暴风毒蛇</td><td>相柳之影</td><td>B10, C17, S12, B06, B16, SC01</td></tr><tr><td>PET_022</td><td>商魂貉</td><td>交胫国</td><td>R</td><td>功能型</td><td>土/暗</td><td>黑市/任务</td><td>招财貉→聚财貔貅</td><td>吞天貔貅</td><td>S23, S05, C09, S04, SC07, SC19</td></tr><tr><td>PET_023</td><td>三首犬</td><td>三首国</td><td>SR</td><td>输出型</td><td>暗/火</td><td>野外捕获</td><td>地狱犬→地狱三头犬</td><td>刻耳柏洛斯</td><td>S12, SC17, S02, SC03, SC01</td></tr><tr><td>PET_024</td><td>轮回蝶</td><td>三首国</td><td>SR</td><td>控制型</td><td>光/幻</td><td>隐藏</td><td>幻梦蝶→庄周梦蝶</td><td>梦蝶仙</td><td>C14, SC10, C05, SC09, SC03, SC01</td></tr><tr><td>PET_025</td><td>毛民猎犬</td><td>毛民国</td><td>R</td><td>输出型</td><td>土/暗</td><td>野外捕获</td><td>猎魂犬→噬魂猎犬</td><td>哮天犬</td><td>B11, B10, S12, SC03, SC01</td></tr><tr><td>PET_026</td><td>兽魂熊</td><td>毛民国</td><td>R</td><td>肉盾型</td><td>土</td><td>任务</td><td>裂地熊→食铁兽</td><td>蚩尤座骑</td><td>B11, S07, S03, SC06, SC07, SC01</td></tr><tr><td>PET_027</td><td>梼杌幼崽</td><td>毛民国</td><td>UR</td><td>爆发型</td><td>土/暗</td><td>隐藏·传说</td><td>凶兽梼杌→完全体梼杌</td><td>四凶·梼杌</td><td>B12, B11, SC03, C15, SC01, SC11</td></tr><tr><td>PET_028</td><td>机关牛</td><td>劳民国</td><td>R</td><td>肉盾型</td><td>金</td><td>野外捕获</td><td>永动机关牛→机关巨兽</td><td>墨家机关兽</td><td>S01, S19, S07, SC03, SC01</td></tr><tr><td>PET_029</td><td>诅咒工蚁</td><td>劳民国</td><td>R</td><td>功能型</td><td>土/暗</td><td>任务</td><td>工蚁统领→蚩尤工魂</td><td>蚁后</td><td>S03, B11, SC06, SC03, SC01</td></tr><tr><td>PET_030</td><td>时间蠕虫</td><td>劳民国</td><td>UR</td><td>辅助型</td><td>光/幻</td><td>隐藏·传说</td><td>时之虫→时光龙</td><td>永恒之虫</td><td>C14, SC10, SC09, SC03, SC01</td></tr><tr><td>PET_031</td><td>乘黄幼崽</td><td>白民国</td><td>SR</td><td>机动型</td><td>光/木</td><td>任务</td><td>瑞光乘黄→乘黄神兽</td><td>万寿乘黄</td><td>B19, C10, S04, SC02, SC01</td></tr><tr><td>PET_032</td><td>寿桃精</td><td>白民国</td><td>R</td><td>辅助型</td><td>木/光</td><td>野外捕获</td><td>桃灵→蟠桃树灵</td><td>西王母桃</td><td>C10, C04, S03, S04, SC02, SC01</td></tr><tr><td>PET_033</td><td>饕餮分身·寿</td><td>白民国</td><td>UR</td><td>爆发型</td><td>暗/吞噬</td><td>隐藏·传说</td><td>暴食之兽→饕餮幼体</td><td>混沌饕餮</td><td>C12, B15, SC19, SC03, SC01, SC11</td></tr><tr><td>PET_034</td><td>猎犬·盘瓠</td><td>肃慎国</td><td>R</td><td>输出型</td><td>土/暗</td><td>野外捕获</td><td>盘瓠猎犬→神犬盘瓠</td><td>天狗</td><td>B11, S18, SC03, SC01</td></tr><tr><td>PET_035</td><td>雪鸮</td><td>肃慎国</td><td>R</td><td>机动型</td><td>冰/风</td><td>野外捕获</td><td>冰风鸮→海东青</td><td>金翅雪鸮</td><td>B19, C11, SC03, SC01</td></tr><tr><td>PET_036</td><td>落日箭灵</td><td>肃慎国</td><td>SSR</td><td>输出型</td><td>金/光</td><td>隐藏·传说</td><td>箭魂→射日箭灵</td><td>后羿箭魂</td><td>S13, S05, S07, SC03, SC01</td></tr><tr><td>PET_037</td><td>贪吃鼠</td><td>无肠国</td><td>R</td><td>功能型</td><td>土/暗</td><td>野外捕获</td><td>暴食鼠→饕餮鼠</td><td>吞天鼠</td><td>C12, B11, B15, SC03, SC01</td></tr><tr><td>PET_038</td><td>饕餮之舌</td><td>无肠国</td><td>SR</td><td>爆发型</td><td>暗/吞噬</td><td>任务</td><td>暴食之舌→饕餮口器</td><td>混沌之口</td><td>B15, C17, C12, SC19, SC03, SC01</td></tr><tr><td>PET_039</td><td>净胃虫</td><td>无肠国</td><td>SSR</td><td>辅助型</td><td>光</td><td>隐藏·传说</td><td>净化之虫→净世灵虫</td><td>光明圣虫</td><td>S20, C05, S04, SC02, SC01</td></tr><tr><td>PET_040</td><td>玄股鱼人</td><td>玄股国</td><td>R</td><td>机动型</td><td>水</td><td>野外捕获</td><td>深海鱼人→深海领主</td><td>共工后裔</td><td>B08, S16, B16, SC03, SC01</td></tr><tr><td>PET_041</td><td>共工侍从</td><td>玄股国</td><td>SR</td><td>控制型</td><td>水/暗</td><td>任务</td><td>水神侍→相柳</td><td>共工真魂</td><td>B16, B09, SC03, SC01, SC20</td></tr><tr><td>PET_042</td><td>混沌水种</td><td>玄股国</td><td>UR</td><td>爆发型</td><td>水/混沌</td><td>隐藏·传说</td><td>混沌水灵→混沌之源</td><td>归墟之眼</td><td>B09, C06, SC11, SC03, SC01</td></tr><tr><td>PET_043</td><td>独目隼</td><td>一目国</td><td>R</td><td>机动型</td><td>风/光</td><td>野外捕获</td><td>真视隼→金翅隼王</td><td>天眼隼</td><td>B19, S14, SC03, SC01</td></tr><tr><td>PET_044</td><td>真视蟾蜍</td><td>一目国</td><td>R</td><td>功能型</td><td>水/光</td><td>野外捕获</td><td>寻宝蟾→三足金蟾</td><td>招财金蟾</td><td>S17, S14, SC03, SC01</td></tr><tr><td>PET_045</td><td>混沌之瞳</td><td>一目国</td><td>SSR</td><td>控制型</td><td>暗</td><td>隐藏·传说</td><td>盲目之眼→混沌之眼</td><td>归墟之瞳</td><td>S14, C17, SC13, SC03, SC01</td></tr><tr><td>PET_046</td><td>气鼠</td><td>结胸国</td><td>R</td><td>功能型</td><td>风</td><td>野外捕获</td><td>储气鼠→气海鼠</td><td>无量气鼠</td><td>S15, S11, SC03, SC01</td></tr><tr><td>PET_047</td><td>结胸龟</td><td>结胸国</td><td>SR</td><td>肉盾型</td><td>土/光</td><td>野外捕获</td><td>玄甲龟→玄武</td><td>真武大帝</td><td>S15, S03, SC03, SC01</td></tr><tr><td>PET_048</td><td>虚空囊</td><td>结胸国</td><td>SSR</td><td>功能型</td><td>空间/幻</td><td>隐藏·传说</td><td>空间囊→虚空行者</td><td>归墟之囊</td><td>SC14, C14, SC11, SC03, SC01</td></tr></tbody></table></div>
+<blockquote><strong>命名冲突修复记录</strong>： - PET_010 终极形态原"金翅大鹏" → 改为<strong>金翅天鹏</strong>（与 PET_009 区分） - PET_012 终极形态原"长明灯神" → 改为<strong>幽冥灯神</strong>（与 PET_011 区分） - PET_022 终极形态原"聚宝貔貅" → 改为<strong>聚财貔貅</strong>（与 PET_004 区分）</blockquote>
+<hr>
+<h2>三、技能表格式统一规范（全库强制执行）</h2>
+<blockquote>所有灵兽技能表必须遵循以下格式，禁止留白，禁止省略列。</blockquote>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>技能</th><th>类型</th><th>初始效果</th><th>一阶强化</th><th>终极强化</th><th>CD</th><th>灵力/能量消耗</th></tr></thead><tbody><tr><td>主动技1·xxx</td><td>攻击型/控制型/功能型</td><td>...</td><td>...</td><td>...</td><td>X秒</td><td>X灵力</td></tr><tr><td>主动技2·xxx</td><td>攻击型/控制型/功能型</td><td>...</td><td>...</td><td>...</td><td>X秒</td><td>X灵力</td></tr><tr><td>辅助技·xxx</td><td>纯辅助型（治疗/护盾/净化/增益）</td><td>...</td><td>...</td><td>...</td><td>X秒</td><td>X灵力</td></tr><tr><td>终极技·xxx</td><td>终极技</td><td>...</td><td>...</td><td>...</td><td>X秒</td><td>能量槽满</td></tr><tr><td>被动·xxx</td><td>常驻天赋</td><td>...</td><td>...</td><td>...</td><td>—</td><td>—</td></tr></tbody></table></div>
+<blockquote><strong>铁律</strong>： 1. 被动技能的 CD 和 消耗 列必须填写 <code>—</code>，不可留白。 2. 所有技能名统一为 <code>主动技1·</code> / <code>主动技2·</code> / <code>辅助技·</code> / <code>终极技·</code> / <code>被动·</code> 前缀，便于程序解析。 3. 效果描述中涉及数值的，必须标注计算基准（如"攻击×80%"而非"大量伤害"）。 4. <strong>槽位功能铁律：前两槽（主动技1/主动技2）可攻击、可控制、可功能位移；第三槽（辅助技）强制为纯防御/治疗/净化/增益类，禁止放置任何伤害或控制技能。</strong></blockquote>
+<hr>
+<h2>四、代表性灵兽完整数据（格式示范）</h2>
+<blockquote>以下展示 3 只不同品质灵兽的完整重构后格式。<strong>其余 45 只已按此标准统一处理</strong>。</blockquote>
+<h3>4.1 PET_001 绒绒兔 | N | 辅助型 | 冰/月</h3>
+<p><strong>三阶段属性（平等契约 100%）</strong></p>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>阶段</th><th>等级要求</th><th>生命</th><th>攻击</th><th>防御</th><th>攻速</th><th>移速</th><th>进化材料</th></tr></thead><tbody><tr><td>初始·绒绒兔</td><td>Lv1</td><td>174</td><td>16</td><td>14</td><td>1.2秒</td><td>140</td><td>—</td></tr><tr><td>一阶·月影灵兔</td><td>Lv15+</td><td>1,039</td><td>116</td><td>76</td><td>1.1秒</td><td>150</td><td>青丘蔓(MAT-C04)×12 + 月光草(MAT-C05)×8</td></tr><tr><td>终极·太阴玉兔</td><td>Lv40+</td><td>1,598</td><td>178</td><td>130</td><td>1.0秒</td><td>160</td><td>青丘蔓(MAT-C04)×25 + 净化之光(MAT-SC02)×5 + 昆仑玉(MAT-S04)×5 + 执念结晶(MAT-SC01)×1 + 孤星命格</td></tr><tr><td>隐藏·混沌月兔</td><td>Lv45+</td><td>1,758</td><td>196</td><td>143</td><td>0.9秒</td><td>170</td><td>太阴玉兔 + 三世镜碎片(MAT-SC09)×3 + 月蚀之夜触发</td></tr></tbody></table></div>
+<p><strong>技能表（标准格式）</strong></p>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>技能</th><th>类型</th><th>初始效果</th><th>一阶强化</th><th>终极强化</th><th>CD</th><th>灵力/能量消耗</th></tr></thead><tbody><tr><td>主动技1·月辉</td><td>攻击型治疗</td><td>小范围恢复灵兽攻击×80%生命</td><td>恢复×110%，范围+30%</td><td>恢复×150%，附加减伤15%持续3秒</td><td>10秒</td><td>15灵力</td></tr><tr><td>主动技2·绒绒冲撞</td><td>功能型控制</td><td>翻滚撞击，冰伤+减速30%持续3秒</td><td>减速50%，附加冻结1秒</td><td>击飞+冻结2秒，落地冰爆（攻击×100%）</td><td>12秒</td><td>20灵力</td></tr><tr><td>终极技·月影降临</td><td>终极·领域治疗</td><td>月光领域，友方每秒恢复×30%，持续5秒</td><td>每秒×45%，持续6秒，清除1负面</td><td>每秒×60%，持续8秒，领域内有概率重置主动技2 CD</td><td>60秒</td><td>能量槽满</td></tr><tr><td>被动·月之庇护</td><td>常驻天赋</td><td>夜间全属性+10%</td><td>夜间全属性+15%，冰抗+20%</td><td>夜间全属性+20%，冰抗+30%；队友夜间同享一半加成</td><td>—</td><td>—</td></tr></tbody></table></div>
+<blockquote><strong>隐藏进化·混沌月兔</strong>：月蚀之夜在青丘国祭坛触发，属性再×1.1。被动变为"混沌月相"——每30秒自动切换盈缺，盈时治疗+50%，缺时攻击附加冰蚀（防御-3%/层，上限10层）。</blockquote>
+<hr>
+<h3>4.2 PET_018 黄帝剑灵 | SSR | 输出型 | 金/光</h3>
+<p><strong>三阶段属性（平等契约 100%）</strong></p>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>阶段</th><th>等级要求</th><th>生命</th><th>攻击</th><th>防御</th><th>攻速</th><th>移速</th><th>进化材料</th></tr></thead><tbody><tr><td>初始·黄帝剑灵</td><td>Lv1</td><td>144</td><td>36</td><td>11</td><td>1.0秒</td><td>155</td><td>隐藏，人形兵器</td></tr><tr><td>一阶·剑灵使</td><td>Lv20+</td><td>861</td><td>213</td><td>51</td><td>1.0秒</td><td>160</td><td>轩辕黄玉(MAT-S09)×10 + 星辰砂(MAT-S05)×5 + 落日箭羽(MAT-S13)×5</td></tr><tr><td>终极·人形兵器</td><td>Lv45+</td><td>1,316</td><td>356</td><td>93</td><td>0.9秒</td><td>165</td><td>剑灵使 + 封魔台碎片(MAT-S10)×5 + 凶兽残魂(MAT-SC03)×3 + 昆仑玉(MAT-S04)×5 + 执念结晶(MAT-SC01)×1 + 本命契约</td></tr><tr><td>隐藏·轩辕圣剑</td><td>Lv48+</td><td>1,448</td><td>392</td><td>102</td><td>0.8秒</td><td>170</td><td>人形兵器 + 龙鳞碎片(MAT-B20)×3 + 凤尾花(MAT-C16)×10 + 龙凤呈祥命格 + 轩辕国黄帝陵祭剑仪式</td></tr></tbody></table></div>
+<p><strong>技能表（标准格式）</strong></p>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>技能</th><th>类型</th><th>初始效果</th><th>一阶强化</th><th>终极强化</th><th>CD</th><th>灵力/能量消耗</th></tr></thead><tbody><tr><td>主动技1·剑气</td><td>攻击型</td><td>远程剑气，穿透+高暴击</td><td>暴击+30%，穿透+3，剑气后主角可瞬身接斩</td><td>暴击+40%，穿透+4，瞬身斩伤害+50%，剑气附加光属性灼烧</td><td>10秒</td><td>15灵力</td></tr><tr><td>主动技2·御剑</td><td>功能型位移</td><td>御剑飞行，越障+路径伤害</td><td>飞行无敌+路径伤害+50%，飞行终点自动释放裂空爪</td><td>飞行无敌2秒+路径伤害+80%，终点自动释放强化裂空爪（破甲-30%）</td><td>12秒</td><td>18灵力</td></tr><tr><td>终极技·轩辕剑诀</td><td>终极·爆发</td><td>召唤巨剑斩击，单体巨额金光伤害</td><td>伤害×1.35，范围变半场，斩击后主角攻击+50%持续10秒</td><td>伤害×1.7，全场斩击（优先BOSS），主角攻击+70%且暴击率+25%持续12秒</td><td>75秒</td><td>能量槽满</td></tr><tr><td>被动·剑心通明</td><td>常驻天赋</td><td>主角暴击率+10%，暴伤+20%</td><td>暴击+20%，暴伤+35%，暴击时剑灵协同攻击（攻击×50%）</td><td>暴击+30%，暴伤+50%，协同攻击×80%，且暴击时有概率重置主动技1 CD（内置CD 10秒）</td><td>—</td><td>—</td></tr></tbody></table></div>
+<hr>
+<h3>4.3 PET_027 梼杌幼崽 | UR | 爆发型 | 土/暗</h3>
+<p><strong>三阶段属性（平等契约 100%）</strong></p>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>阶段</th><th>等级要求</th><th>生命</th><th>攻击</th><th>防御</th><th>攻速</th><th>移速</th><th>进化材料</th></tr></thead><tbody><tr><td>初始·梼杌幼崽</td><td>Lv1</td><td>133</td><td>36</td><td>11</td><td>1.4秒</td><td>150</td><td>兽魂行者隐藏职业共鸣</td></tr><tr><td>一阶·凶兽梼杌</td><td>Lv20+</td><td>799</td><td>196</td><td>51</td><td>1.3秒</td><td>155</td><td>梼杌骨笛(MAT-B12)×1 + 兽魂绒毛(MAT-B11)×15 + 凶兽残魂(MAT-SC03)×1 + 龙血草(MAT-C15)×5</td></tr><tr><td>终极·完全体梼杌</td><td>Lv45+</td><td>1,222</td><td>392</td><td>93</td><td>1.2秒</td><td>160</td><td>凶兽梼杌 + 梼杌骨笛(MAT-B12)×3 + 凶兽残魂(MAT-SC03)×3 + 昆仑玉(MAT-S04)×5 + 执念结晶(MAT-SC01)×1 + 本命契约累计72小时</td></tr><tr><td>隐藏·四凶·梼杌</td><td>Lv48+</td><td>1,344</td><td>431</td><td>102</td><td>1.1秒</td><td>165</td><td>完全体梼杌 + 混沌水种(MAT-SC11)×1 + 收集其他三凶兽残魂（饕餮/混沌/穷奇）+ 完成"四凶归位"隐藏剧情</td></tr></tbody></table></div>
+<p><strong>技能表（标准格式）</strong></p>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>技能</th><th>类型</th><th>初始效果</th><th>一阶强化</th><th>终极强化</th><th>CD</th><th>灵力/能量消耗</th></tr></thead><tbody><tr><td>主动技1·梼杌之牙</td><td>攻击型破甲</td><td>猛咬+撕裂，无视30%防御+出血</td><td>无视50%防御，出血×2，命中后主角可接合击</td><td>无视60%防御，出血×3，合击伤害+50%，撕裂附加"凶煞"（受暗伤+20%）</td><td>12秒</td><td>18灵力</td></tr><tr><td>主动技2·凶兽遁</td><td>功能型位移</td><td>潜入地下2秒，出土时范围恐惧</td><td>出土伤害+50%+恐惧3秒，出土后主角获得霸体</td><td>出土伤害+80%+恐惧4秒，霸体3秒，出土留下暗元素领域（领域内敌人攻击-15%）</td><td>14秒</td><td>20灵力</td></tr><tr><td>终极技·梼杌降世</td><td>终极·变身</td><td>化身为梼杌，全属性+60%，攻击附带恐惧</td><td>全属性+85%，恐惧概率+30%，变身期间主角与灵兽分摊伤害-50%</td><td>全属性+110%，恐惧概率+50%，分摊伤害-60%，变身期间击杀敌人延长2秒</td><td>75秒</td><td>能量槽满</td></tr><tr><td>被动·凶鳞</td><td>常驻天赋</td><td>主角受击时释放凶气反击×50%</td><td>反击×75%+吸血15%</td><td>反击×100%+吸血25%，反击附加"凶煞"（受暗伤+20%），若签订本命契约，反击概率提升至80%</td><td>—</td><td>—</td></tr></tbody></table></div>
+<blockquote><strong>隐藏进化·四凶·梼杌</strong>：四凶齐聚时，被动变为"四凶共鸣"——每有一只其他四凶兽（队友或召唤物）在场，全属性+10%（上限30%）。成为全游戏最强爆发组合的核心。</blockquote>
+<hr>
+<h2>五、进化路线通用规则（重制版）</h2>
+<h3>5.1 三阶段进化基准</h3>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>阶段</th><th>属性系数</th><th>技能强化幅度</th><th>解锁内容</th></tr></thead><tbody><tr><td>初始</td><td>×1.0</td><td>基础效果</td><td>—</td></tr><tr><td>一阶</td><td>×1.3~1.5</td><td>效果+30%~50%，新增控制/位移</td><td>被动觉醒第一层</td></tr><tr><td>终极</td><td>×2.0~2.5</td><td>效果+60%~100%，新增团队/领域机制</td><td>被动完全体，解锁终极技终极形态</td></tr><tr><td>隐藏</td><td>×2.2~2.8</td><td>效果+80%~120%，机制质变</td><td>被动超频，专属剧情/联动彩蛋</td></tr></tbody></table></div>
+<h3>5.2 隐藏进化触发条件分类</h3>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>类型</th><th>说明</th><th>代表灵兽</th></tr></thead><tbody><tr><td>剧情联动型</td><td>完成特定国家隐藏路线+命格要求</td><td>混沌月兔、四凶·梼杌、真武大帝</td></tr><tr><td>职业共鸣型</td><td>需特定隐藏职业解锁</td><td>墨家机关兽、永恒之虫</td></tr><tr><td>契约羁绊型</td><td>需本命契约+累计时长/击杀</td><td>完全体梼杌、万寿乘黄</td></tr><tr><td>双兽合体型</td><td>两只特定灵兽同时出战触发</td><td>真武大帝（结胸龟+巨鳌）</td></tr><tr><td>试炼挑战型</td><td>完成高难挑战/连胜/全中</td><td>后羿箭魂、庚金白虎</td></tr><tr><td>资源献祭型</td><td>消耗特定稀有材料×N</td><td>混沌饕餮、招财金蟾</td></tr></tbody></table></div>
+<h3>5.3 形态回溯规则</h3>
+<ul><li>已进化灵兽可在"灵契回溯"中切换为任意过往形态</li></ul>
+<ul><li>切换仅改变外观与技能组，<strong>属性保持终极/隐藏形态数值</strong></li></ul>
+<ul><li>切换无消耗，非战斗状态即时生效</li></ul>
+<ul><li>本命契约下，回溯形态仍共享被动技能</li></ul>
+<hr>
+<h2>六、跨种族签约限制与特殊规则</h2>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>命格标签</th><th>可签约种族</th><th>不可签约种族</th><th>特殊规则</th></tr></thead><tbody><tr><td>龙血</td><td>龙裔、蛇类、爬行类</td><td>凤裔专属</td><td>龙凤呈祥彩蛋可突破</td></tr><tr><td>凤裔</td><td>鸟类、瑞兽、飞行类</td><td>龙裔专属</td><td>龙凤呈祥彩蛋可突破</td></tr><tr><td>妖瞳</td><td>狐族、幻系、瞳术类</td><td>—</td><td>可看破青丘迷障</td></tr><tr><td>巫族</td><td>亡灵、古兽、灵魂体</td><td>瑞兽/神兽（有排斥）</td><td>守墓人隐藏职业解锁</td></tr><tr><td>魂异</td><td>灵魂体、亡灵</td><td>血肉实体（有排斥）</td><td>灵魂结晶掉落+5%</td></tr><tr><td>凡体</td><td>全系</td><td>—</td><td>进化材料-20%，进化后属性+5%</td></tr></tbody></table></div>
+<hr>
+<h2>【未定/待研究补充区】</h2>
+<ul><li>[ ] 隐藏进化数值在地狱档BOSS战（攻击342）中的峰值验证</li></ul>
+<ul><li>[ ] 双兽合体型隐藏进化（如真武大帝）在多人模式中的同步问题</li></ul>
+<ul><li>[ ] 功能型灵兽隐藏进化后战斗能力过强，是否破坏职业平衡？</li></ul>
+<ul><li>[ ] 48只灵兽终极技能量槽充能速率是否统一？建议按定位差异化（肉盾受击充能/输出伤害充能）</li></ul>
+<ul><li>[ ] 灵兽好感度系统对技能效果的影响参数（当前未设计）</li></ul>
+<ul><li>[ ] 灵兽死亡/叛逃机制（理智值&lt;30时概率叛逃，见04-17）</li></ul>
+<ul><li>[ ] 传说级灵兽（UR）的获取动画与契约仪式差异化</li></ul>
+<ul><li>[ ] 此处留白：_________________________</li></ul>
+</div></div></body></html>

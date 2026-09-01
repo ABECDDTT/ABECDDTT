@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>03-3_细节玩法库（采集种植合成集市） · 杨长辉作品集</title>
+<style>
+*{box-sizing:border-box}
+body{font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;line-height:1.85;color:#26303f;margin:0;background:#f6f8fc;font-size:15.5px}
+.wrap{max-width:900px;margin:0 auto;padding:26px 22px 80px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px;font-size:13px}
+.crumb{color:#7c8aa3;word-break:break-all}
+.crumb b{color:#1d4ed8}
+.back{white-space:nowrap;padding:6px 13px;border-radius:8px;background:#1d4ed8;color:#fff;text-decoration:none;font-size:13px}
+h1{font-size:25px;margin:0 0 4px;letter-spacing:.5px;line-height:1.4}
+.meta{color:#8a97ab;font-size:13px;margin:0 0 20px}
+.doc{background:#fff;border-radius:14px;padding:30px 34px 40px;box-shadow:0 2px 14px rgba(30,50,90,.06)}
+.doc h1,.doc h2,.doc h3,.doc h4{color:#12306e;line-height:1.5}
+.doc h1{font-size:22px;margin:26px 0 12px;padding-bottom:8px;border-bottom:2px solid #e5ecfa}
+.doc h2{font-size:19px;margin:24px 0 10px;padding-left:11px;border-left:4px solid #1d4ed8}
+.doc h3{font-size:16.5px;margin:20px 0 8px;color:#1d4ed8}
+.doc h4{font-size:15px;margin:16px 0 6px;color:#38507f}
+.doc p{margin:0 0 13px;text-align:justify}
+.doc strong{color:#12306e}
+.doc ul{padding-left:22px;margin:0 0 13px}
+.doc li{margin:4px 0}
+.doc pre{background:#0f2035;color:#d7e3f7;padding:15px 17px;border-radius:10px;overflow-x:auto;font-size:13.5px;line-height:1.65;font-family:ui-monospace,Menlo,Consolas,monospace}
+.doc code{background:#eef2fa;padding:1px 5px;border-radius:4px;font-size:13.5px;color:#12306e}
+.doc pre code{background:none;color:inherit;padding:0}
+.doc blockquote{margin:0 0 14px;padding:11px 16px;background:#f3f6fd;border-left:4px solid #9db4e8;border-radius:0 8px 8px 0;color:#3c4b64}
+.doc hr{border:0;border-top:1px solid #e5ecfa;margin:24px 0}
+.tw{overflow-x:auto;margin:0 0 16px;border-radius:9px;border:1px solid #e5ecfa}
+.doc table{border-collapse:collapse;width:100%;font-size:13.5px}
+.doc th{background:#eef3fc;color:#12306e;font-weight:600}
+.doc th,.doc td{border:1px solid #e0e8f6;padding:7px 10px;text-align:left;white-space:nowrap}
+.doc tbody tr:nth-child(even){background:#fafbfe}
+.doc .ms{margin:0 0 20px;border:1px solid #e5ecfa;border-radius:11px;overflow:hidden;background:#fbfcfe}
+.doc .ms img{display:block;width:100%;height:auto}
+.doc .ms figcaption{font-size:12.5px;color:#93a0b4;text-align:center;padding:8px 10px;background:#f6f8fc;border-top:1px solid #eef2fa}
+.doc .poem{margin:0 0 3px;line-height:2.15;font-size:16.5px;color:#1f2b3d;letter-spacing:.8px}
+.doc .psrc{margin:10px 0 0;font-size:12.5px;color:#a3aebb;text-align:right}
+.doc .ocrnote{margin:0 0 18px;padding:10px 15px;background:#f3f6fd;border-left:4px solid #9db4e8;border-radius:0 8px 8px 0;color:#5a6a80;font-size:13px}
+@media(max-width:640px){.wrap{padding:16px 12px 50px}.doc{padding:20px 16px 30px}h1{font-size:20px}}
+</style></head><body>
+<div class="wrap">
+<div class="topbar"><div class="crumb">游戏策划专题 / 02-山海师：灵契 / 03_核心系统与通用机制库 / <b>03-3_细节玩法库（采集种植合成集市）</b></div>
+<a class="back" href="../../../index.html">← 返回目录</a></div>
+<h1>03-3_细节玩法库（采集种植合成集市）</h1>
+<p class="meta">约 2,592 字 · 原件 <a href="03-3_%E7%BB%86%E8%8A%82%E7%8E%A9%E6%B3%95%E5%BA%93%EF%BC%88%E9%87%87%E9%9B%86%E7%A7%8D%E6%A4%8D%E5%90%88%E6%88%90%E9%9B%86%E5%B8%82%EF%BC%89.md.md">03-3_细节玩法库（采集种植合成集市）.md.md</a></p>
+<div class="doc">
+<h1>03-3_细节玩法库（采集·种植·合成·集市·离线傀儡）</h1>
+<h1>引用宪法：v0.3（全局核心参数总表）</h1>
+<h1>关联文档：02-4_山海灵兽与英雄数据库、03-5_山海素材总库、04-x_二十国剧情线</h1>
+<h1>状态：已重构（第4轮） | 已修复：B-06 离线挂机经济通胀、对齐宪法6.7经济硬上限</h1>
+<hr>
+<h2>一、炼丹炉合成配方表（24条）</h2>
+<blockquote><strong>合成规则</strong>：   ① 所有配方成功率100%（炼丹炉为系统功能，非概率玩法）；   ② 合成需消耗"丹火"×1（每日自动恢复3点，或消耗低阶灵材补充：朱果×1=1点、灵芝×1=1点）；   ③ 配方分为恢复/增益/进化/特殊四类；   ④ 所有材料须标注 MAT-ID（引用03-5），禁止使用未编号灵材。</blockquote>
+<h3>1.1 恢复类（6条）</h3>
+<div class="tw"><table><thead><tr><th>产物</th><th>配方</th><th>效果</th><th>获取等级</th><th>丹火消耗</th></tr></thead><tbody><tr><td>小还丹</td><td>朱果(MAT-C01)×2 + 灵芝(MAT-C02)×1</td><td>恢复生命值30%</td><td>Lv1</td><td>1</td></tr><tr><td>大还丹</td><td>朱果(MAT-C01)×5 + 灵芝(MAT-C02)×3 + 忘忧草(MAT-C03)×1</td><td>恢复生命值60%</td><td>Lv10</td><td>2</td></tr><tr><td>回灵散</td><td>灵芝(MAT-C02)×3 + 月光草(MAT-C05)×1</td><td>恢复灵力值50%</td><td>Lv5</td><td>1</td></tr><tr><td>清心丸</td><td>忘忧草(MAT-C03)×2 + 寒潭露(MAT-C06)×1</td><td>清除所有负面状态</td><td>Lv15</td><td>2</td></tr><tr><td>九转还魂丹</td><td>九幽噬魂散(MAT-B07)×1 + 净魂池水(MAT-SC15)×1</td><td>战斗中复活一次（满血）</td><td>Lv30</td><td>5</td></tr><tr><td>延寿丹</td><td>乘黄之血(MAT-B14)×1 + 不息泉水(MAT-C20)×1 + 寿桃核(MAT-C10)×1</td><td>死亡后自动复活一次（单场战斗限一次）</td><td>Lv35</td><td>5</td></tr></tbody></table></div>
+<h3>1.2 增益类（6条）</h3>
+<div class="tw"><table><thead><tr><th>产物</th><th>配方</th><th>效果</th><th>获取等级</th><th>丹火消耗</th></tr></thead><tbody><tr><td>神行丹</td><td>缩形草(MAT-C07)×1 + 疾风腿骨(MAT-B10)×1</td><td>移动速度+30%，持续10分钟</td><td>Lv15</td><td>2</td></tr><tr><td>寒冰丹</td><td>冰魄(MAT-C11)×2 + 净魂池水(MAT-SC15)×1</td><td>永久免疫厌火国热浪伤害</td><td>Lv25</td><td>3</td></tr><tr><td>水火同源丹</td><td>共工鳞(MAT-B16)×1 + 火精石(MAT-S02)×3</td><td>火系灵兽临时获得水属性（30分钟）</td><td>Lv35</td><td>4</td></tr><tr><td>狂暴药剂</td><td>狂暴灵泉(MAT-C21)×1 + 虎魄精华(MAT-B03)×1</td><td>全属性+20%，但灵兽失控3秒</td><td>Lv25</td><td>3</td></tr><tr><td>水下呼吸丹</td><td>归墟灵鱼鳔(MAT-B08)×1 + 寒潭露(MAT-C06)×2</td><td>水下呼吸+60分钟</td><td>Lv20</td><td>2</td></tr><tr><td>迷障披风</td><td>青丘蔓(MAT-C04)×20 + 织梦丝(MAT-C08)×5</td><td>永久免疫青丘国迷障效果</td><td>Lv20</td><td>3</td></tr></tbody></table></div>
+<h3>1.3 进化类（8条）</h3>
+<div class="tw"><table><thead><tr><th>产物</th><th>配方</th><th>效果</th><th>获取等级</th><th>丹火消耗</th></tr></thead><tbody><tr><td>三昧真火石</td><td>火精石(MAT-S02)×3 + 赤焰狐血(MAT-B01)×1</td><td>玄火蛇一阶进化必需/不灭篝火</td><td>Lv15</td><td>3</td></tr><tr><td>月华凝露</td><td>青丘蔓(MAT-C04)×5 + 月光草(MAT-C05)×3 + 须弥露珠(MAT-C13)×1</td><td>绒绒兔一阶进化加速道具</td><td>Lv15</td><td>3</td></tr><tr><td>虎魄丹</td><td>虎魄精华(MAT-B03)×3 + 玄铁矿(MAT-S01)×5 + 息壤(MAT-S03)×2</td><td>铁骨虎一阶进化加速道具</td><td>Lv20</td><td>3</td></tr><tr><td>风钢翼</td><td>泰坦精钢(MAT-S07)×3 + 罡风结晶(MAT-S11)×2</td><td>飞行类灵兽进化通用/闪避装备</td><td>Lv25</td><td>4</td></tr><tr><td>昆仑灵液</td><td>昆仑玉(MAT-S04)×1 + 净魂池水(MAT-SC15)×2</td><td>终极进化辅助材料（降低灵魂结晶需求×1）</td><td>Lv35</td><td>5</td></tr><tr><td>九霄龙魂</td><td>三昧真火石×3 + 凶兽残魂(MAT-SC03)×1 + 执念结晶(MAT-SC01)×1</td><td>玄火蛇终极进化辅助</td><td>Lv40</td><td>6</td></tr><tr><td>太阴月精</td><td>月华凝露×3 + 净化之光(MAT-SC02)×1 + 执念结晶(MAT-SC01)×1</td><td>绒绒兔终极进化辅助</td><td>Lv35</td><td>5</td></tr><tr><td>白虎战魂</td><td>虎魄丹×3 + 战魂结晶(MAT-SC06)×1 + 执念结晶(MAT-SC01)×1</td><td>铁骨虎终极进化辅助</td><td>Lv45</td><td>6</td></tr></tbody></table></div>
+<h3>1.4 特殊功能类（4条）</h3>
+<div class="tw"><table><thead><tr><th>产物</th><th>配方</th><th>效果</th><th>获取等级</th><th>丹火消耗</th></tr></thead><tbody><tr><td>镇魂符</td><td>轩辕黄玉(MAT-S09)×1 + 魂火余烬(MAT-SC17)×1</td><td>心魔试炼BOSS血量-20%</td><td>Lv30</td><td>4</td></tr><tr><td>缚灵网</td><td>织梦丝(MAT-C08)×10 + 曼陀罗(MAT-C17)×3</td><td>捕捉灵魂体灵兽成功率+30%</td><td>Lv25</td><td>3</td></tr><tr><td>黑水毒</td><td>黑水样本(MAT-B09)×1 + 玄蛇毒囊(MAT-B02)×2</td><td>武器附魔：攻击附加腐蚀（持续5秒）</td><td>Lv30</td><td>3</td></tr><tr><td>因果锚</td><td>因果线(MAT-SC08)×3 + 星辰砂(MAT-S05)×5</td><td>临时封印四凶兽某一能力（单次BOSS战）</td><td>Lv40</td><td>6</td></tr></tbody></table></div>
+<hr>
+<h2>二、归墟集市3:1兑换规则</h2>
+<blockquote><strong>核心规则</strong>：多余灵材可按3:1比例兑换为同品级其他类型材料。   <strong>限制</strong>：灵魂结晶类（MAT-SCxx）不可通过兑换获得，仅可出售换取其他类；传说(橙)品级材料不可兑换。</blockquote>
+<h3>2.1 兑换映射表</h3>
+<div class="tw"><table><thead><tr><th>原类型</th><th>目标类型</th><th>兑换比例</th><th>规则说明</th></tr></thead><tbody><tr><td>草木类(C)</td><td>金石类(S)</td><td>3:1</td><td>3份草木换1份同品级金石</td></tr><tr><td>草木类(C)</td><td>异兽血(B)</td><td>3:1</td><td>3份草木换1份同品级异兽血</td></tr><tr><td>金石类(S)</td><td>草木类(C)</td><td>3:1</td><td>3份金石换1份同品级草木</td></tr><tr><td>金石类(S)</td><td>异兽血(B)</td><td>3:1</td><td>3份金石换1份同品级异兽血</td></tr><tr><td>异兽血(B)</td><td>草木类(C)</td><td>3:1</td><td>3份异兽血换1份同品级草木</td></tr><tr><td>异兽血(B)</td><td>金石类(S)</td><td>3:1</td><td>3份异兽血换1份同品级金石</td></tr><tr><td>任意类型</td><td>灵魂结晶(SC)</td><td>不可兑换</td><td>SC仅可通过高难度内容产出</td></tr><tr><td>灵魂结晶(SC)</td><td>任意类型</td><td>1:3</td><td>1份SC可换3份同品级其他类</td></tr></tbody></table></div>
+<h3>2.2 品级兑换限制</h3>
+<div class="tw"><table><thead><tr><th>品级</th><th>是否可兑换</th><th>备注</th></tr></thead><tbody><tr><td>普通(白)</td><td>是</td><td>无限制</td></tr><tr><td>稀有(蓝)</td><td>是</td><td>需完成交胫国"开放商路"任务后解锁</td></tr><tr><td>史诗(紫)</td><td>是</td><td>需交胫国商会好感度达到"尊敬"</td></tr><tr><td>传说(橙)</td><td>否</td><td>传说级材料不可兑换，仅可交易</td></tr></tbody></table></div>
+<h3>2.3 价格浮动参数</h3>
+<div class="tw"><table><thead><tr><th>触发条件</th><th>价格影响</th><th>来源</th></tr></thead><tbody><tr><td>交胫国路线"支持商会"</td><td>全图商店价格+30%，兑换比例变为4:1</td><td>LINK_11</td></tr><tr><td>交胫国路线"开放商路"</td><td>全图商店价格-20%，兑换比例变为2:1</td><td>LINK_11</td></tr><tr><td>交胫国路线"取而代之"</td><td>玩家获得每日金币分红，但兑换锁定为3:1</td><td>04-11</td></tr><tr><td>持有"商会贵宾"身份</td><td>集市刷新时额外出现1个兑换槽位</td><td>04-11</td></tr><tr><td>高恶念值国家(&gt;60)集市</td><td>有概率出现灵魂结晶类直接购买（高价）</td><td>03-3基础规则</td></tr></tbody></table></div>
+<hr>
+<h2>三、家园种植系统参数表</h2>
+<blockquote><strong>解锁条件</strong>：完成青丘国主线Q01_02后，获得"灵圃"家园地块。   <strong>基础规则</strong>：种植需先获得种子/幼苗，生长周期为现实时间，离线时继续生长。</blockquote>
+<h3>3.1 种子-产出-周期表</h3>
+<div class="tw"><table><thead><tr><th>种子/幼苗ID</th><th>名称</th><th>产出物</th><th>单次产量</th><th>生长周期(现实)</th><th>种植条件</th><th>关联国家</th></tr></thead><tbody><tr><td>SEED-C01</td><td>朱果苗</td><td>朱果(MAT-C01)×3</td><td>3</td><td>2小时</td><td>普通土壤</td><td>全局</td></tr><tr><td>SEED-C02</td><td>灵芝菌</td><td>灵芝(MAT-C02)×2</td><td>2</td><td>4小时</td><td>湿润环境</td><td>全局</td></tr><tr><td>SEED-C04</td><td>青丘蔓种子</td><td>青丘蔓(MAT-C04)×3</td><td>3</td><td>6小时</td><td>湿润环境/灵气温润</td><td>青丘国</td></tr><tr><td>SEED-C05</td><td>月光草种</td><td>月光草(MAT-C05)×2</td><td>2</td><td>8小时</td><td>夜间生长（20:00-06:00播种）</td><td>青丘国</td></tr><tr><td>SEED-C10</td><td>寿桃核</td><td>寿桃×2 + 寿桃核(MAT-C10)×1（概率）</td><td>2-3</td><td>24小时</td><td>白民国土壤/息壤(MAT-S03)×1</td><td>白民国</td></tr><tr><td>SEED-C11</td><td>冰魄结晶</td><td>冰魄(MAT-C11)×1</td><td>1</td><td>12小时</td><td>寒冷环境/肃慎国</td><td>肃慎国</td></tr><tr><td>SEED-S01</td><td>玄铁矿苗</td><td>玄铁矿(MAT-S01)×3</td><td>3</td><td>6小时</td><td>矿山土壤/大人国</td><td>大人国</td></tr><tr><td>SEED-S02</td><td>火精石种</td><td>火精石(MAT-S02)×2</td><td>2</td><td>8小时</td><td>火山土壤/厌火国</td><td>厌火国</td></tr><tr><td>SEED-S03</td><td>息壤块</td><td>息壤(MAT-S03)×2（自我增殖）</td><td>2</td><td>4小时</td><td>任意土壤</td><td>轩辕国</td></tr><tr><td>SEED-S05</td><td>星辰砂盆</td><td>星辰砂(MAT-S05)×2</td><td>2</td><td>10小时</td><td>夜间沙漠环境</td><td>全局（夜间）</td></tr></tbody></table></div>
+<h3>3.2 种植系统高级规则</h3>
+<div class="tw"><table><thead><tr><th>项目</th><th>参数</th><th>说明</th></tr></thead><tbody><tr><td>种植上限</td><td>初始5格，每完成1国主线+1格</td><td>上限20格</td></tr><tr><td>灵兽辅助</td><td>携带草木系灵兽（如绒绒兔PET_001）</td><td>生长周期-20%</td></tr><tr><td>肥料系统</td><td>息壤(MAT-S03)×1 = 单次产量+50%</td><td>可叠加至+100%（上限2份息壤）</td></tr><tr><td>枯萎机制</td><td>生长周期×2时间未收获</td><td>产物枯萎，需重新播种</td></tr><tr><td>跨周目继承</td><td>家园种植状态不继承</td><td>每局重新开垦</td></tr><tr><td>恶念值影响</td><td>家园所在国家恶念值&gt;60</td><td>生长周期+50%，有概率产出"魔化作物"</td></tr></tbody></table></div>
+<blockquote><strong>魔化作物</strong>：外观漆黑，可用于毒/暗系合成，但不可用于正常进化。魔化作物有独立图鉴位（C级议题待验证）。</blockquote>
+<h3>3.3 特殊种植联动</h3>
+<div class="tw"><table><thead><tr><th>联动条件</th><th>效果</th><th>来源</th></tr></thead><tbody><tr><td>青丘国调和路线完成</td><td>青丘蔓种植产量+1</td><td>04-1</td></tr><tr><td>白民国放归乘黄路线</td><td>寿桃核种植有概率产出"瑞光寿桃"（效果翻倍）</td><td>04-15</td></tr><tr><td>劳民国解除诅咒</td><td>可在劳民国土壤种植"永动花"（产出永动核心碎片MAT-S19）</td><td>04-14</td></tr><tr><td>持有"药人"命格</td><td>所有草木类种植单次产量+1</td><td>03-1</td></tr></tbody></table></div>
+<h3>3.4 手动种植效率基准（用于经济平衡验证）</h3>
+<blockquote><strong>引用宪法6.7</strong>：手动种植效率为自动化产出的对标基准。</blockquote>
+<div class="tw"><table><thead><tr><th>场景</th><th>效率计算</th><th>说明</th></tr></thead><tbody><tr><td>满格20格·朱果</td><td>20格 × (3份/2小时) = 30份/小时</td><td>最高效手动配置</td></tr><tr><td>满格20格·息壤施肥</td><td>30份 × 1.5 = 45份/小时</td><td>理论峰值（需持续投入息壤）</td></tr><tr><td>常规混合种植</td><td>约15~25份/小时</td><td>不同作物混合的实际效率</td></tr><tr><td><strong>自动化上限</strong></td><td><strong>≤ 手动峰值 × 60% = 27份/小时</strong></td><td>宪法6.7铁律</td></tr></tbody></table></div>
+<hr>
+<h2>四、自动战斗傀儡（离线系统）参数</h2>
+<blockquote><strong>重构说明（B-06修复）</strong>：原"每小时产出 = 玩家当前等级 × 2份"导致50级24小时产出2400份，远超手动种植效率（约30份/小时），严重破坏经济平衡。现严格对齐宪法6.7经济硬上限。</blockquote>
+<h3>4.1 基础参数</h3>
+<div class="tw"><table><thead><tr><th>项目</th><th>参数</th><th>说明</th></tr></thead><tbody><tr><td>解锁条件</td><td>获得永动核心(MAT-S19)×1</td><td>劳民国工厂采集/交胫国黑市</td></tr><tr><td>功能</td><td>离线时自动刷取低级灵材</td><td>仅采集普通(白)/稀有(蓝)品级</td></tr><tr><td><strong>效率公式</strong></td><td><strong>floor(玩家当前等级 × 0.3) 份/小时</strong></td><td>宪法6.7强制规定</td></tr><tr><td>产出范围</td><td>仅限草木类/金石类普通&amp;稀有材料</td><td>不出产异兽血/灵魂结晶/史诗及以上</td></tr><tr><td>离线上限</td><td>24小时封顶</td><td>超过部分不累计</td></tr><tr><td><strong>日产出上限</strong></td><td><strong>360份（50级×24h）</strong></td><td>普通+稀有混合，约60%草木+40%金石</td></tr><tr><td>核心能量消耗</td><td>每运行1小时消耗1点"核心能量"</td><td>核心能量通过永动核心补充（1颗=100点）</td></tr><tr><td>恶念值影响</td><td>离线期间不触发恶念值变化</td><td>纯资源产出，不影响世界状态</td></tr></tbody></table></div>
+<h3>4.2 各等级离线产出速查</h3>
+<div class="tw"><table><thead><tr><th>玩家等级</th><th>每小时产出</th><th>24h总产出</th><th>核心能量消耗/日</th></tr></thead><tbody><tr><td>Lv10</td><td>3份</td><td>72份</td><td>24点</td></tr><tr><td>Lv20</td><td>6份</td><td>144份</td><td>24点</td></tr><tr><td>Lv30</td><td>9份</td><td>216份</td><td>24点</td></tr><tr><td>Lv40</td><td>12份</td><td>288份</td><td>24点</td></tr><tr><td>Lv50</td><td>15份</td><td>360份</td><td>24点</td></tr></tbody></table></div>
+<h3>4.3 经济平衡验证（B-06修复确认）</h3>
+<div class="tw"><table><thead><tr><th>对比项</th><th>数值</th><th>结论</th></tr></thead><tbody><tr><td>手动种植峰值（20格朱果+息壤）</td><td>45份/小时</td><td>基准</td></tr><tr><td>离线挂机上限（50级）</td><td>15份/小时</td><td>45 × 33.3% = 15，符合≤60%铁律</td></tr><tr><td>离线日产出（50级）</td><td>360份</td><td>约为手动满负荷8小时的产出</td></tr><tr><td>原问题数值（v0.2）</td><td>2400份/日</td><td>超出手动峰值5.3倍，已废止</td></tr><tr><td>核心能量成本</td><td>1永动核心=100点≈4.16日运行</td><td>高等级玩家需定期补充核心，形成资源循环</td></tr></tbody></table></div>
+<h3>4.4 多周目继承规则</h3>
+<div class="tw"><table><thead><tr><th>项目</th><th>规则</th></tr></thead><tbody><tr><td>傀儡等级</td><td>不继承，每局重新解锁</td></tr><tr><td>永动核心</td><td>若多周目继承系统开放，最多继承2颗</td></tr><tr><td>离线产出记录</td><td>不继承</td></tr></tbody></table></div>
+<hr>
+<h2>五、经济系统闭环验证</h2>
+<blockquote><strong>目的</strong>：证明03-3所有产出途径符合宪法6.7"自动化产出≤手动种植60%"铁律。</blockquote>
+<div class="tw"><table><thead><tr><th>产出途径</th><th>日产出上限</th><th>品级限制</th><th>是否受60%铁律约束</th></tr></thead><tbody><tr><td>手动种植（20格满肥）</td><td>~1080份（24h×45份）</td><td>普通~史诗</td><td>基准</td></tr><tr><td>离线傀儡</td><td>360份</td><td>普通~稀有</td><td>是，33%</td></tr><tr><td>野外采集（主动）</td><td>无硬上限，受体力/时间限制</td><td>全品级</td><td>基准</td></tr><tr><td>集市兑换</td><td>仅转换，不新增</td><td>—</td><td>—</td></tr><tr><td>炼丹炉合成</td><td>消耗材料，不新增</td><td>—</td><td>—</td></tr><tr><td>高恶念黑市购买</td><td>金币消耗</td><td>含灵魂结晶</td><td>受金币产出速率间接约束</td></tr></tbody></table></div>
+<p><strong>结论</strong>：离线系统360份/日上限，仅为手动种植峰值的33%，留有充足空间容纳玩家主动采集/种植，经济通胀风险已消除。</p>
+<hr>
+<h2>【未定/待研究补充区】</h2>
+<ul><li>[ ] 魔化作物是否有独立图鉴收集价值？</li><li>[ ] 传说级材料是否允许在极</li></ul>
+</div></div></body></html>

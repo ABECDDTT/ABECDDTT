@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>02-1_人物基础数值库 · 杨长辉作品集</title>
+<style>
+*{box-sizing:border-box}
+body{font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;line-height:1.85;color:#26303f;margin:0;background:#f6f8fc;font-size:15.5px}
+.wrap{max-width:900px;margin:0 auto;padding:26px 22px 80px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px;font-size:13px}
+.crumb{color:#7c8aa3;word-break:break-all}
+.crumb b{color:#1d4ed8}
+.back{white-space:nowrap;padding:6px 13px;border-radius:8px;background:#1d4ed8;color:#fff;text-decoration:none;font-size:13px}
+h1{font-size:25px;margin:0 0 4px;letter-spacing:.5px;line-height:1.4}
+.meta{color:#8a97ab;font-size:13px;margin:0 0 20px}
+.doc{background:#fff;border-radius:14px;padding:30px 34px 40px;box-shadow:0 2px 14px rgba(30,50,90,.06)}
+.doc h1,.doc h2,.doc h3,.doc h4{color:#12306e;line-height:1.5}
+.doc h1{font-size:22px;margin:26px 0 12px;padding-bottom:8px;border-bottom:2px solid #e5ecfa}
+.doc h2{font-size:19px;margin:24px 0 10px;padding-left:11px;border-left:4px solid #1d4ed8}
+.doc h3{font-size:16.5px;margin:20px 0 8px;color:#1d4ed8}
+.doc h4{font-size:15px;margin:16px 0 6px;color:#38507f}
+.doc p{margin:0 0 13px;text-align:justify}
+.doc strong{color:#12306e}
+.doc ul{padding-left:22px;margin:0 0 13px}
+.doc li{margin:4px 0}
+.doc pre{background:#0f2035;color:#d7e3f7;padding:15px 17px;border-radius:10px;overflow-x:auto;font-size:13.5px;line-height:1.65;font-family:ui-monospace,Menlo,Consolas,monospace}
+.doc code{background:#eef2fa;padding:1px 5px;border-radius:4px;font-size:13.5px;color:#12306e}
+.doc pre code{background:none;color:inherit;padding:0}
+.doc blockquote{margin:0 0 14px;padding:11px 16px;background:#f3f6fd;border-left:4px solid #9db4e8;border-radius:0 8px 8px 0;color:#3c4b64}
+.doc hr{border:0;border-top:1px solid #e5ecfa;margin:24px 0}
+.tw{overflow-x:auto;margin:0 0 16px;border-radius:9px;border:1px solid #e5ecfa}
+.doc table{border-collapse:collapse;width:100%;font-size:13.5px}
+.doc th{background:#eef3fc;color:#12306e;font-weight:600}
+.doc th,.doc td{border:1px solid #e0e8f6;padding:7px 10px;text-align:left;white-space:nowrap}
+.doc tbody tr:nth-child(even){background:#fafbfe}
+.doc .ms{margin:0 0 20px;border:1px solid #e5ecfa;border-radius:11px;overflow:hidden;background:#fbfcfe}
+.doc .ms img{display:block;width:100%;height:auto}
+.doc .ms figcaption{font-size:12.5px;color:#93a0b4;text-align:center;padding:8px 10px;background:#f6f8fc;border-top:1px solid #eef2fa}
+.doc .poem{margin:0 0 3px;line-height:2.15;font-size:16.5px;color:#1f2b3d;letter-spacing:.8px}
+.doc .psrc{margin:10px 0 0;font-size:12.5px;color:#a3aebb;text-align:right}
+.doc .ocrnote{margin:0 0 18px;padding:10px 15px;background:#f3f6fd;border-left:4px solid #9db4e8;border-radius:0 8px 8px 0;color:#5a6a80;font-size:13px}
+@media(max-width:640px){.wrap{padding:16px 12px 50px}.doc{padding:20px 16px 30px}h1{font-size:20px}}
+</style></head><body>
+<div class="wrap">
+<div class="topbar"><div class="crumb">游戏策划专题 / 02-山海师：灵契 / 02_人物与职业系统 / <b>02-1_人物基础数值库</b></div>
+<a class="back" href="../../../index.html">← 返回目录</a></div>
+<h1>02-1_人物基础数值库</h1>
+<p class="meta">约 3,395 字 · 原件 <a href="02-1_%E4%BA%BA%E7%89%A9%E5%9F%BA%E7%A1%80%E6%95%B0%E5%80%BC%E5%BA%93.md.md">02-1_人物基础数值库.md.md</a></p>
+<div class="doc">
+<h1>引用宪法：v0.1（全局核心参数总表）</h1>
+<h1>关联文档：02-2_职业技能库、02-3_隐藏职业库、02-4_山海灵兽与英雄数据库、03-2_契约与属性继承、03-4_战斗与碰撞数值</h1>
+<h1>状态：已重制 | 待审：职业修正系数在50级后的线性验证</h1>
+<hr>
+<h2>一、无职业基础属性模版（宪法基准）</h2>
+<blockquote><strong>说明</strong>：以下公式为宪法规定的"无职业裸身基准"。实际战斗属性 = 基准值 × 职业修正系数（见第三节） + 装备/BUFF加成。</blockquote>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>属性</th><th>基础值</th><th>成长规则</th><th>50级基准值</th><th>50级浮动上限</th><th>计算公式</th><th>备注</th></tr></thead><tbody><tr><td>生命值</td><td>100</td><td>每级+5</td><td>450</td><td>585</td><td><code>100 + 体魄×10 + 等级×5</code></td><td>体魄每点+10生命</td></tr><tr><td>灵力值</td><td>50</td><td>每级+3</td><td>280</td><td>364</td><td><code>50 + 灵力×8 + 等级×3</code></td><td>灵力每点+8灵力</td></tr><tr><td>攻击力</td><td>10</td><td>每级+1</td><td>178</td><td>231</td><td><code>10 + 力量×2 + 等级×1</code></td><td>力量每点+2攻击</td></tr><tr><td>防御力</td><td>5</td><td>不随等级成长</td><td>93</td><td>120</td><td><code>5 + 体魄×1.5</code></td><td>体魄每点+1.5防御</td></tr><tr><td>耐力值</td><td>100</td><td>固定</td><td>100</td><td>100</td><td>固定100</td><td>每秒恢复20点；右键闪避/空格位移每次消耗25点，灵战士空格格挡每秒消耗10点</td></tr><tr><td>连续闪避惩罚</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>第3次闪避/位移消耗翻倍（50点），触发3秒疲劳（恢复降至5点/秒，无法闪避/位移）</td></tr></tbody></table></div>
+<blockquote><strong>属性成长规则</strong>：每升1级，体魄/灵力/力量各自动+1。开局全属性=10（宪法规定），50级时全属性=59。</blockquote>
+<hr>
+<h2>二、等级成长曲线表（1-50级，每5级节点）</h2>
+<h3>2.1 经验需求公式</h3>
+<p>plain</p>
+<pre><code>升级需求 = 180 × 1.135^(当前等级-1)</code></pre>
+<ul><li><strong>增长模式</strong>：指数平滑增长，增长率13.5%/级</li></ul>
+<ul><li><strong>总经验池</strong>：747,891（1级→50级累计）</li></ul>
+<ul><li><strong>预估通关时长</strong>：主线+支线约60-80小时</li></ul>
+<h3>2.2 每5级节点详表（无职业基准）</h3>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>等级</th><th>升级需求</th><th>累计经验</th><th>全属性</th><th>生命基准</th><th>生命上限</th><th>灵力基准</th><th>灵力上限</th><th>攻击基准</th><th>攻击上限</th><th>防御基准</th><th>防御上限</th><th>备注</th></tr></thead><tbody><tr><td>1</td><td>0</td><td>0</td><td>10</td><td>205</td><td>266</td><td>133</td><td>172</td><td>31</td><td>40</td><td>20</td><td>26</td><td>初始</td></tr><tr><td>5</td><td>298</td><td>996</td><td>14</td><td>265</td><td>344</td><td>177</td><td>230</td><td>43</td><td>55</td><td>26</td><td>33</td><td>—</td></tr><tr><td>10</td><td>562</td><td>3,212</td><td>19</td><td>340</td><td>442</td><td>232</td><td>301</td><td>58</td><td>75</td><td>33</td><td>42</td><td>一阶进化门槛</td></tr><tr><td>15</td><td>1,059</td><td>7,388</td><td>24</td><td>415</td><td>539</td><td>287</td><td>373</td><td>73</td><td>94</td><td>41</td><td>53</td><td>一阶进化门槛</td></tr><tr><td>20</td><td>1,996</td><td>15,258</td><td>29</td><td>490</td><td>637</td><td>342</td><td>444</td><td>88</td><td>114</td><td>48</td><td>62</td><td>一阶进化门槛</td></tr><tr><td>25</td><td>3,759</td><td>30,083</td><td>34</td><td>565</td><td>734</td><td>397</td><td>516</td><td>103</td><td>133</td><td>56</td><td>72</td><td>—</td></tr><tr><td>30</td><td>7,081</td><td>58,010</td><td>39</td><td>640</td><td>832</td><td>452</td><td>587</td><td>118</td><td>153</td><td>63</td><td>81</td><td>—</td></tr><tr><td>35</td><td>13,339</td><td>110,616</td><td>44</td><td>715</td><td>929</td><td>507</td><td>659</td><td>133</td><td>172</td><td>71</td><td>92</td><td>终极进化门槛</td></tr><tr><td>40</td><td>25,125</td><td>209,703</td><td>49</td><td>790</td><td>1027</td><td>562</td><td>730</td><td>148</td><td>192</td><td>78</td><td>101</td><td>终极进化门槛</td></tr><tr><td>45</td><td>47,324</td><td>396,343</td><td>54</td><td>865</td><td>1124</td><td>617</td><td>802</td><td>163</td><td>211</td><td>86</td><td>111</td><td>终极进化门槛</td></tr><tr><td>50</td><td>89,139</td><td>747,891</td><td>59</td><td>940</td><td>1222</td><td>672</td><td>873</td><td>178</td><td>231</td><td>93</td><td>120</td><td>版本上限</td></tr></tbody></table></div>
+<blockquote><strong>浮动上限触发条件</strong>：兽血沸腾+30%攻速、灵气共鸣+5%全属性/层（上限10层+50%）、命格标签（狂战+10%攻击-5%防御）、人兽同契+50%~+70%。理论峰值需多层BUFF叠加，实战常驻上限约为基准值的115%~120%。</blockquote>
+<hr>
+<h2>三、职业基础属性修正与特色参数表</h2>
+<blockquote><strong>计算方式</strong>：实际属性 = 第二节基准值 × 职业修正系数（向下取整）。特色参数为独立加法/乘法区间，与BUFF不冲突。</blockquote>
+<h3>3.1 三大基础职业修正</h3>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>职业</th><th>生命系数</th><th>灵力系数</th><th>攻击系数</th><th>防御系数</th><th>职业定位</th><th>特色参数</th></tr></thead><tbody><tr><td>驭灵师</td><td>0.90</td><td>1.20</td><td>0.90</td><td>0.80</td><td>中距离控场·灵兽强化</td><td>灵兽继承系数额外+5%（与契约类型叠加）；灵兽技能效果+10%；主角近战伤害-10%；空格【灵兽瞬闪】落点触发墨痕减速</td></tr><tr><td>灵战士</td><td>1.15</td><td>0.80</td><td>1.15</td><td>1.10</td><td>近身高频输出·肉盾夹击</td><td>近战破甲效率+15%；替命触发后灵兽反击伤害+20%；灵兽继承系数-5%（偏自身战斗）；空格【铁壁格挡】精准弹反触发灵兽协击</td></tr><tr><td>灵术师</td><td>0.80</td><td>1.30</td><td>1.00</td><td>0.70</td><td>远程AOE·元素转化</td><td>元素伤害+12%；技能射程+20%；灵兽投射（E技）爆炸范围+15%；空格【元素遁】路径留下元素领域</td></tr></tbody></table></div>
+<h3>3.2 50级三大职业实际基准速查（无BUFF）</h3>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>职业</th><th>生命</th><th>灵力</th><th>攻击</th><th>防御</th><th>预估承受BOSS同级普攻次数</th><th>定位说明</th></tr></thead><tbody><tr><td>驭灵师</td><td>846</td><td>806</td><td>160</td><td>74</td><td>~6.8次</td><td>高灵力高续航，本体脆弱，依赖灵兽护主与双位移（右键闪避+空格瞬闪）</td></tr><tr><td>灵战士</td><td>1,081</td><td>538</td><td>205</td><td>102</td><td>~9.6次</td><td>高血高防高攻，前线肉盾，唯一格挡职业，人兽夹击破甲</td></tr><tr><td>灵术师</td><td>752</td><td>874</td><td>178</td><td>65</td><td>~5.8次</td><td>玻璃大炮，灵力充沛可频繁释放技能，依赖射程与元素遁走位</td></tr></tbody></table></div>
+<blockquote><strong>跨职业平衡验证</strong>：以50级普通档BOSS（攻击214，防御74）为靶标： - 灵战士击杀时长约85秒（高攻高防，站撸能力强） - 驭灵师击杀时长约95秒（灵兽继承加成后实际DPS与灵战士持平，但本体需走位） - 灵术师击杀时长约90秒（元素伤害+12%与射程优势弥补防御劣势） - 三者差异控制在±10%内，符合"同等级不同手感"设计目标。</blockquote>
+<hr>
+<h2>四、隐藏职业基础属性修正表</h2>
+<blockquote><strong>说明</strong>：隐藏职业在解锁后，覆盖原基础职业修正（不叠加）。特色机制见02-3。</blockquote>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>隐藏职业</th><th>生命系数</th><th>灵力系数</th><th>攻击系数</th><th>防御系数</th><th>战斗定位</th><th>特色参数</th></tr></thead><tbody><tr><td>封灵师</td><td>0.85</td><td>1.30</td><td>0.85</td><td>0.85</td><td>多灵兽控场·封印流</td><td>灵兽操控上限+2（可同时3只）；临时灵兽继承系数为平等契约80%；本体灵力恢复速度+20%；空格【封灵步】落点留下封印阵</td></tr><tr><td>兽魂行者</td><td>1.20</td><td>0.70</td><td>1.20</td><td>1.00</td><td>近战变身·人兽合一</td><td>兽化期间主角属性=本命灵兽属性×120%（取代主角原属性）；变身持续15秒，CD 60秒；空格【兽魂铁壁】精准格挡触发本命灵兽免费Q技</td></tr><tr><td>墨家传人</td><td>0.90</td><td>1.10</td><td>0.95</td><td>0.90</td><td>中远程机关·傀儡协同</td><td>傀儡视为额外召唤物，继承主角攻击×80%；傀儡不享受契约继承，但享受命格加成；空格【机关跃】后撤留下自爆陷阱</td></tr><tr><td>背誓者</td><td>1.00</td><td>1.00</td><td>1.00</td><td>1.00</td><td>均衡型·契约特化</td><td>无本命契约；平等契约继承系数提升至150%，伙伴契约提升至200%（与03-2背誓者规则一致）；空格【背誓之跃】攻守双效</td></tr><tr><td>山海绘卷师</td><td>0.85</td><td>1.20</td><td>0.90</td><td>0.80</td><td>随机召唤·辅助输出</td><td>任意技能有15%概率召唤已收集灵兽释放一次SKILL_Q（不消耗灵力，不占用契约槽）；空格【绘卷遁】位移后概率召唤协击</td></tr><tr><td>守墓人</td><td>1.00</td><td>0.90</td><td>0.95</td><td>1.05</td><td>亡灵特化·防御反制</td><td>与亡灵系灵兽签约无惩罚；对亡灵系敌人伤害+20%；受到亡灵系伤害-15%；空格【幽冥步】穿过敌人触发恐惧</td></tr><tr><td>血法师</td><td>1.10</td><td>0.50</td><td>1.25</td><td>0.70</td><td>自残输出·血源转化</td><td>无灵力消耗，所有技能消耗生命值；生命低于30%时攻击+20%；空格【血遁】消耗生命位移并腐蚀减防</td></tr><tr><td>先知</td><td>0.80</td><td>1.40</td><td>0.80</td><td>0.80</td><td>预知控场·时间操控</td><td>闪避/格挡判定窗口+0.1秒；受致命伤10%概率自动闪避（内置CD 60秒）；空格【预知闪】无敌帧最长且闪避成功自动反击</td></tr><tr><td>战狂</td><td>1.15</td><td>0.60</td><td>1.25</td><td>0.90</td><td>狂战士·低血高伤</td><td>每损失10%生命攻击+3%（上限27%）；击杀敌人攻击+5%可叠5层；空格【血战格挡】以血换攻，按住空格扣血而非耐力</td></tr><tr><td>毒龙使</td><td>0.90</td><td>1.10</td><td>1.00</td><td>0.80</td><td>持续毒伤·Debuff流</td><td>所有攻击附带龙毒（上限10层）；对中毒敌人攻击+15%；空格【蛇行】位移路径留下剧毒领域</td></tr></tbody></table></div>
+<h3>4.1 隐藏职业50级基准速查</h3>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>隐藏职业</th><th>生命</th><th>灵力</th><th>攻击</th><th>防御</th><th>空格机制</th><th>与基础职业对比</th></tr></thead><tbody><tr><td>封灵师</td><td>799</td><td>874</td><td>151</td><td>79</td><td>位移·控场</td><td>比驭灵师更脆，但灵力更高，适合频繁释放多灵兽技能</td></tr><tr><td>兽魂行者</td><td>1,128</td><td>470</td><td>214</td><td>93</td><td>防御·弹反</td><td>与灵战士接近，兽化期间属性完全替换为灵兽×120%，爆发峰值更高</td></tr><tr><td>墨家传人</td><td>846</td><td>739</td><td>169</td><td>84</td><td>位移·陷阱</td><td>介于驭灵师与灵战士之间，傀儡提供额外输出与嘲讽</td></tr><tr><td>背誓者</td><td>940</td><td>672</td><td>178</td><td>93</td><td>位移·双效</td><td>标准均衡模板，依靠高契约系数弥补无本命的损失</td></tr><tr><td>山海绘卷师</td><td>799</td><td>806</td><td>160</td><td>74</td><td>位移·随机</td><td>与驭灵师几乎一致，但被动随机召唤提供额外DPS与控场</td></tr><tr><td>守墓人</td><td>940</td><td>605</td><td>169</td><td>98</td><td>位移·恐惧</td><td>比灵战士略低攻，但防御更高，专精亡灵对抗</td></tr><tr><td>血法师</td><td>1,034</td><td>336</td><td>223</td><td>65</td><td>位移·腐蚀</td><td>高攻低防，无灵力，所有空格技能自残，高风险高回报</td></tr><tr><td>先知</td><td>752</td><td>941</td><td>142</td><td>74</td><td>位移·反击</td><td>极致辅助，本体输出低，但无敌帧最长，团队容错率极高</td></tr><tr><td>战狂</td><td>1,081</td><td>403</td><td>223</td><td>84</td><td>防御·血偿</td><td>与血法师同攻但更肉，空格以血换攻，低血线攻击翻倍</td></tr><tr><td>毒龙使</td><td>846</td><td>739</td><td>178</td><td>74</td><td>位移·剧毒</td><td>标准攻击，依赖Dot层数叠加与空格铺毒</td></tr></tbody></table></div>
+<hr>
+<h2>五、状态效果参数表（含职业差异化）</h2>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>状态名</th><th>触发条件</th><th>基准效果</th><th>上限效果</th><th>持续时间</th><th>是否可叠加</th><th>职业差异</th></tr></thead><tbody><tr><td>背誓者虚弱</td><td>强行解除本命契约</td><td>全属性-50%</td><td>全属性-50%（固定）</td><td>7天游戏内</td><td>不可</td><td>全职业固定</td></tr><tr><td>转职冷却</td><td>主动转职</td><td>扣除50%当前经验</td><td>扣除50%当前经验（固定）</td><td>即时</td><td>不可</td><td>全职业固定</td></tr><tr><td>兽血沸腾</td><td>灵战士Q技 / 被动触发</td><td>攻速+30%</td><td>攻速+45%</td><td>8秒</td><td>不可</td><td>灵战士专属；灵术师/驭灵师无法触发</td></tr><tr><td>灵气共鸣</td><td>十国归元每收集一国</td><td>该国属性加成+5%</td><td>该国属性加成+5%（固定/层）</td><td>永久</td><td>可（上限10层）</td><td>全职业固定；多周目继承时重置</td></tr><tr><td>墨韵</td><td>驭灵师普攻命中</td><td>目标防御-5%/层</td><td>目标防御-8%/层</td><td>5秒</td><td>可（基准3层/上限5层）</td><td>驭灵师专属被动天赋</td></tr><tr><td>元素亲和</td><td>灵术师常驻</td><td>元素伤害+8%</td><td>元素伤害+15%</td><td>常驻</td><td>不可</td><td>灵术师专属被动天赋；属性随当前灵兽改变</td></tr><tr><td>替命护盾</td><td>灵战士E技释放</td><td>吸收1次致命伤害</td><td>吸收1次致命伤害（机制不变，数值提升）</td><td>直到触发</td><td>不可</td><td>灵战士专属；触发后灵兽反击</td></tr><tr><td>火鳞护体</td><td>玄火蛇E技（灵兽）</td><td>近战反弹攻击×30%火伤</td><td>近战反弹攻击×50%火伤</td><td>8秒</td><td>不可</td><td>仅对出战灵兽生效</td></tr><tr><td>绒毛护盾</td><td>绒绒兔E技（灵兽）</td><td>吸收灵兽防御×150%伤害</td><td>吸收灵兽防御×250%伤害</td><td>6秒</td><td>不可</td><td>仅对出战灵兽生效</td></tr><tr><td>虎魄共鸣</td><td>铁骨虎E技（灵兽）</td><td>主角获得灵兽防御×50%</td><td>主角获得灵兽防御×80%</td><td>10秒</td><td>不可</td><td>仅对出战灵兽生效</td></tr></tbody></table></div>
+<hr>
+<h2>六、耐力系统参数（引用03-4，此处汇总）</h2>
+<blockquote><strong>全局键位声明</strong>：WASD纯移动，鼠标右键全职业基础闪避，空格位移，Q/E/R人技/人技/大招，F/G灵兽双技。</blockquote>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>项目</th><th>基准值</th><th>上限值</th><th>说明</th></tr></thead><tbody><tr><td>耐力上限</td><td>100</td><td>100</td><td>固定，所有职业共享</td></tr><tr><td>自然恢复</td><td>每秒20点</td><td>每秒20点</td><td>固定；疲劳状态降至每秒5点</td></tr><tr><td>右键闪避消耗</td><td>每次25点</td><td>每次25点</td><td>0.3秒无敌帧，八方向位移，可连闪2次</td></tr><tr><td>空格位移消耗</td><td>每次25点</td><td>每次25点</td><td>驭灵师/灵术师/隐藏职业（除兽魂行者/战狂外）职业特色位移，0.3秒无敌帧</td></tr><tr><td>空格格挡消耗</td><td>每秒10点</td><td>每秒10点</td><td>灵战士与兽魂行者专属，按住空格持续耗耐；精准格挡不额外消耗，触发灵兽协击</td></tr><tr><td>连续闪避/位移</td><td>第3次消耗翻倍（50点）</td><td>第3次消耗翻倍（50点）</td><td>右键与空格共享连续计数，独立计算各职业</td></tr><tr><td>疲劳状态</td><td>3秒内无法闪避/位移/格挡</td><td>3秒内无法闪避/位移/格挡</td><td>恢复降至每秒5点；战狂空格【血战格挡】以扣血替代，不受疲劳影响</td></tr><tr><td>战狂血偿</td><td>每秒扣1%当前生命</td><td>每秒扣1%当前生命</td><td>战狂专属，按住空格不耗耐力而是扣血；精准格挡叠加攻击BUFF</td></tr></tbody></table></div>
+<blockquote><strong>职业耐力差异补充</strong>： - 灵战士：右键闪避用于紧急脱身，空格格挡用于正面硬刚，耐力分配以"格挡为主、闪避为辅" - 驭灵师/灵术师：右键闪避与空格位移双位移生存，无格挡，耐力消耗较快，需预留25点应对突发 - 战狂：空格以血代耐，理论上无限格挡，但压血线风险极高</blockquote>
+<hr>
+<h2>七、跨表一致性声明</h2>
+<ul><li><strong>键位体系与操作上限</strong>：WASD纯移动，Q/E/R为人技/人技/大招，空格职业差异化（灵战士铁壁格挡/驭灵师灵兽瞬闪/灵术师元素遁），鼠标右键全职业基础闪避（0.3秒无敌帧），F/G为灵兽手动双技。玩家同时操控主角（Q/E/R/空格）与灵兽（F/G），共6个主动按键，符合2D ARPG操作上限。</li></ul>
+<ul><li><strong>职业修正与BOSS模板</strong>：50级灵战士攻击205，BOSS血量50,000，防御102（灵战士防×0.8≈82，但BOSS模板固定为玩家防御×0.8，即灵战士面对BOSS防御74，因为BOSS防御基于"玩家当前防御力"而非职业后防御？此处明确：BOSS防御 = 玩家基础防御力（宪法公式结果，不计入职业修正）× 0.8 = 93 × 0.8 ≈ 74。职业修正只影响主角，不影响BOSS对主角的判定，保持BOSS难度统一。</li></ul>
+<ul><li><strong>成长曲线与进化门槛</strong>：一阶进化门槛（Lv10/15/20）时玩家已积累约3,000~15,000经验；终极进化门槛（Lv35/40/45）时累计经验110,000~400,000。灵魂结晶作为稀缺资源控制终极进化节奏。</li></ul>
+<ul><li><strong>属性成长与契约继承</strong>：以50级驭灵师为例，本命契约灵兽攻击 = 160 × 200% = 320，驭灵师特色+5%继承 = 实际336，与02-2职业技能库中的灵兽技能系数（F技×120%~180%）自洽。</li></ul>
+<ul><li><strong>耐力与生存验证</strong>：驭灵师50级生命846，防御74，承受BOSS普攻（攻击214）约6.8次；配合右键闪避（25耐）+空格瞬闪（25耐），100耐力恰好支撑2轮完整双位移，第3次进入疲劳，符合"高机动低容错"设计。灵战士50级生命1,081，防御102，承受约9.6次普攻；空格格挡每秒10耐，可持续格挡10秒，足够覆盖BOSS一套连招，符合"站撸坦克"定位。</li></ul>
+<ul><li><strong>所有浮动上限均标注来源</strong>：命格标签、BUFF技能、隐藏职业、特殊道具四类来源互不冲突，叠加时采用"加法优先，乘法封顶"原则。</li></ul>
+<hr>
+<h2>【未定/待研究补充区】</h2>
+<ul><li>[ ] 50级后是否有突破等级（如转生/飞升系统）</li></ul>
+<ul><li>[ ] 命格标签是否影响基础属性成长曲线（宪法规定不影响初始值，但后期是否影响？）</li></ul>
+<ul><li>[ ] 属性点自由分配方案（当前为自动成长，是否开放手动分配？）</li></ul>
+<ul><li>[ ] 隐藏职业之间是否互斥的数值验证（如兽魂行者+封灵师同时解锁时的属性覆盖优先级）</li></ul>
+<ul><li>[ ] 战狂血偿格挡在地狱档BOSS战中的耐力替代逻辑是否会导致生存率计算偏差</li></ul>
+<ul><li>[ ] 此处留白：_________________________</li></ul>
+</div></div></body></html>

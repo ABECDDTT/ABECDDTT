@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>03-2_契约与属性继承 · 杨长辉作品集</title>
+<style>
+*{box-sizing:border-box}
+body{font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;line-height:1.85;color:#26303f;margin:0;background:#f6f8fc;font-size:15.5px}
+.wrap{max-width:900px;margin:0 auto;padding:26px 22px 80px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px;font-size:13px}
+.crumb{color:#7c8aa3;word-break:break-all}
+.crumb b{color:#1d4ed8}
+.back{white-space:nowrap;padding:6px 13px;border-radius:8px;background:#1d4ed8;color:#fff;text-decoration:none;font-size:13px}
+h1{font-size:25px;margin:0 0 4px;letter-spacing:.5px;line-height:1.4}
+.meta{color:#8a97ab;font-size:13px;margin:0 0 20px}
+.doc{background:#fff;border-radius:14px;padding:30px 34px 40px;box-shadow:0 2px 14px rgba(30,50,90,.06)}
+.doc h1,.doc h2,.doc h3,.doc h4{color:#12306e;line-height:1.5}
+.doc h1{font-size:22px;margin:26px 0 12px;padding-bottom:8px;border-bottom:2px solid #e5ecfa}
+.doc h2{font-size:19px;margin:24px 0 10px;padding-left:11px;border-left:4px solid #1d4ed8}
+.doc h3{font-size:16.5px;margin:20px 0 8px;color:#1d4ed8}
+.doc h4{font-size:15px;margin:16px 0 6px;color:#38507f}
+.doc p{margin:0 0 13px;text-align:justify}
+.doc strong{color:#12306e}
+.doc ul{padding-left:22px;margin:0 0 13px}
+.doc li{margin:4px 0}
+.doc pre{background:#0f2035;color:#d7e3f7;padding:15px 17px;border-radius:10px;overflow-x:auto;font-size:13.5px;line-height:1.65;font-family:ui-monospace,Menlo,Consolas,monospace}
+.doc code{background:#eef2fa;padding:1px 5px;border-radius:4px;font-size:13.5px;color:#12306e}
+.doc pre code{background:none;color:inherit;padding:0}
+.doc blockquote{margin:0 0 14px;padding:11px 16px;background:#f3f6fd;border-left:4px solid #9db4e8;border-radius:0 8px 8px 0;color:#3c4b64}
+.doc hr{border:0;border-top:1px solid #e5ecfa;margin:24px 0}
+.tw{overflow-x:auto;margin:0 0 16px;border-radius:9px;border:1px solid #e5ecfa}
+.doc table{border-collapse:collapse;width:100%;font-size:13.5px}
+.doc th{background:#eef3fc;color:#12306e;font-weight:600}
+.doc th,.doc td{border:1px solid #e0e8f6;padding:7px 10px;text-align:left;white-space:nowrap}
+.doc tbody tr:nth-child(even){background:#fafbfe}
+.doc .ms{margin:0 0 20px;border:1px solid #e5ecfa;border-radius:11px;overflow:hidden;background:#fbfcfe}
+.doc .ms img{display:block;width:100%;height:auto}
+.doc .ms figcaption{font-size:12.5px;color:#93a0b4;text-align:center;padding:8px 10px;background:#f6f8fc;border-top:1px solid #eef2fa}
+.doc .poem{margin:0 0 3px;line-height:2.15;font-size:16.5px;color:#1f2b3d;letter-spacing:.8px}
+.doc .psrc{margin:10px 0 0;font-size:12.5px;color:#a3aebb;text-align:right}
+.doc .ocrnote{margin:0 0 18px;padding:10px 15px;background:#f3f6fd;border-left:4px solid #9db4e8;border-radius:0 8px 8px 0;color:#5a6a80;font-size:13px}
+@media(max-width:640px){.wrap{padding:16px 12px 50px}.doc{padding:20px 16px 30px}h1{font-size:20px}}
+</style></head><body>
+<div class="wrap">
+<div class="topbar"><div class="crumb">游戏策划专题 / 02-山海师：灵契 / 03_核心系统与通用机制库 / <b>03-2_契约与属性继承</b></div>
+<a class="back" href="../../../index.html">← 返回目录</a></div>
+<h1>03-2_契约与属性继承</h1>
+<p class="meta">约 3,517 字 · 原件 <a href="03-2_%E5%A5%91%E7%BA%A6%E4%B8%8E%E5%B1%9E%E6%80%A7%E7%BB%A7%E6%89%BF.md.md">03-2_契约与属性继承.md.md</a></p>
+<div class="doc">
+<h1>03-2_契约与属性继承</h1>
+<h1>引用宪法：v0.2（全局核心参数总表）</h1>
+<h1>关联文档：02-1_人物基础数值库、02-2_职业技能库、02-4_山海灵兽与英雄数据库、03-1_命格标签库</h1>
+<h1>状态：已重构 | 待审：UR野外遭遇率与多周目掉落验证</h1>
+<hr>
+<h2>一、契约类型总表</h2>
+<div class="tw"><table><thead><tr><th>契约类型</th><th>属性继承系数</th><th>数量限制</th><th>共享被动</th><th>可进化</th><th>解约条件</th><th>特殊规则</th></tr></thead><tbody><tr><td>临时契约</td><td>50%</td><td>无上限</td><td>否</td><td>否</td><td>战斗外自动解除</td><td>无法进化，不建议投入资源</td></tr><tr><td>平等契约</td><td>100%</td><td>最多5只</td><td>否</td><td>是</td><td>随时可解，无惩罚</td><td>标准主力阵容</td></tr><tr><td>伙伴契约</td><td>150%</td><td>最多3只</td><td>否</td><td>是</td><td>随时可解，无惩罚</td><td>深度培养核心战力</td></tr><tr><td>本命契约</td><td>200%</td><td>仅1只</td><td>是</td><td>是</td><td>强行解除触发心魔试炼</td><td>全游戏唯一，共享被动，受等级约束</td></tr></tbody></table></div>
+<blockquote><strong>继承系数浮动</strong>：基础值 × 契约系数。实际战斗中可叠加命格、BUFF、隐藏职业加成，但<strong>契约类型本身的基础系数固定不变</strong>，外部加成在伤害公式中独立计算。</blockquote>
+<hr>
+<h2>二、初始灵兽选择（开局自选）</h2>
+<blockquote><strong>修正</strong>：序章「梦入山海」完成后，玩家升至 <strong>Lv2</strong>。因此开局自选灵兽（Lv1）满足本命契约等级约束（2 &gt; 1），可立即签订本命。</blockquote>
+<div class="tw"><table><thead><tr><th>可选灵兽</th><th>品质</th><th>属性</th><th>定位</th><th>说明</th></tr></thead><tbody><tr><td>绒绒兔</td><td>N</td><td>冰/月</td><td>辅助型</td><td>治疗/护盾，适合稳健开局</td></tr><tr><td>玄火蛇</td><td>N</td><td>火</td><td>爆发型</td><td>高攻Dot，适合激进开局</td></tr><tr><td>铁骨虎</td><td>N</td><td>金</td><td>肉盾型</td><td>高防破甲，适合站撸开局</td></tr><tr><td>寻宝鼠</td><td>R</td><td>土</td><td>功能型</td><td>采集/探测，适合探索开局</td></tr></tbody></table></div>
+<blockquote><strong>选择后规则</strong>： - 自选灵兽自动签订为<strong>平等契约</strong>（100%继承） - 玩家可在后续随时将其提升为<strong>伙伴契约</strong>或<strong>本命契约</strong>（需满足本命等级约束） - 自选灵兽的进化路线与野外捕捉的同名灵兽完全一致 - 若玩家对自选结果不满意，可在获得「忘川水」后解除并重新选择（消耗道具）</blockquote>
+<hr>
+<h2>三、野外灵兽品质与遭遇率</h2>
+<blockquote><strong>核心分离原则</strong>：「遭遇率」与「捕捉率」完全分离。 - <strong>遭遇率</strong>：决定你在野外遇到某种品质灵兽的概率。高品质灵兽本身就很罕见。 - <strong>捕捉率</strong>：决定你遇到后能否成功契约。按品质固定基础率，不受"野外是否出现"影响。</blockquote>
+<h3>3.1 品质分级与野外遭遇权重</h3>
+<div class="tw"><table><thead><tr><th>品质</th><th>名称</th><th>野外遭遇权重</th><th>实际遭遇率（单只）</th><th>描述</th></tr></thead><tbody><tr><td>N</td><td>凡兽</td><td>100</td><td>约55%</td><td>路边宠，随处可见（如绒绒兔、机关牛）</td></tr><tr><td>R</td><td>灵兽</td><td>60</td><td>约30%</td><td>常见灵兽，有进化潜力（如玄火蛇、碧磷蛇）</td></tr><tr><td>SR</td><td>珍兽</td><td>20</td><td>约12%</td><td>稀有灵兽，特定区域出没（如卜卦龟、火灵童）</td></tr><tr><td>SSR</td><td>神兽</td><td>5</td><td>约2.5%</td><td>顶级神兽，隐藏条件触发（如黄帝剑灵、落日箭灵）</td></tr><tr><td>UR</td><td>上古异兽</td><td>1</td><td>约0.5%</td><td>唯一/隐藏，剧情限定或极端稀有（如饕餮分身·寿、混沌水种）</td></tr></tbody></table></div>
+<blockquote><strong>遭遇率说明</strong>： - 野外每次刷新灵兽时，按权重随机抽取品质，再在该品质池内随机抽取具体种族。 - 权重越高，越容易遇到。N品质是基础，UR是彩蛋级遭遇。 - <strong>高品质灵兽的出现本身就是稀有事件</strong>，无需在捕捉率上额外惩罚。 - 部分UR灵兽<strong>不在野外常规刷新池</strong>中，仅通过剧情、隐藏任务或安全祭坛特殊召唤获得。</blockquote>
+<h3>3.2 特殊遭遇规则</h3>
+<div class="tw"><table><thead><tr><th>规则</th><th>说明</th></tr></thead><tbody><tr><td>等级匹配</td><td>野外灵兽等级与玩家当前等级挂钩（±3级浮动），不会出现Lv1玩家遇到Lv50灵兽</td></tr><tr><td>区域限定</td><td>某些灵兽只在特定国家/地形出现（如玄火蛇仅在厌火国火山带）</td></tr><tr><td>时间限定</td><td>部分灵兽夜间/白天出现（如月光草相关的灵兽夜间刷新率+50%）</td></tr><tr><td>恶念值影响</td><td>高恶念值区域（&gt;60），野外灵兽攻击欲望增强，但遭遇率不变</td></tr><tr><td>保底刷新</td><td>连续20次未遇到SR及以上品质，第21次强制提升一级权重（仅对当前区域生效）</td></tr></tbody></table></div>
+<hr>
+<h2>四、签约成功率公式（重构版）</h2>
+<h3>4.1 基础公式</h3>
+<pre><code>最终签约概率 = 品质基础率 × 等级差系数 × 灵兽等级阻力
+               + 灵材加成（受品质效率限制）
+               + 命格加成（受品质效率限制）</code></pre>
+<p><strong>硬下限</strong>：UR = 1%，其他品质 = 5% <strong>硬上限</strong>：受品质签约上限限制（见下表）</p>
+<h3>4.2 品质基础参数</h3>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>品质</th><th>基础签约率</th><th>签约上限</th><th>加成效率</th><th>说明</th></tr></thead><tbody><tr><td>N</td><td>40%</td><td>90%</td><td>100%</td><td>新手友好，几乎必成</td></tr><tr><td>R</td><td>30%</td><td>85%</td><td>100%</td><td>常见灵兽，略有挑战</td></tr><tr><td>SR</td><td>15%</td><td>75%</td><td>90%</td><td>需要准备灵材</td></tr><tr><td>SSR</td><td>5%</td><td>50%</td><td>70%</td><td>顶级神兽，需多次尝试</td></tr><tr><td>UR</td><td>1%</td><td>30%</td><td>50%</td><td>上古异兽，资源堆砌</td></tr></tbody></table></div>
+<blockquote><strong>加成效率说明</strong>：高品质灵兽对"贡品/命格"有抗性。例如UR灵兽只吸收50%的加成效果，即你提供+40%的加成，实际只获得+20%。</blockquote>
+<h3>4.3 等级差系数（玩家等级 vs 灵兽等级）</h3>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>等级差（玩家-灵兽）</th><th>系数</th><th>说明</th></tr></thead><tbody><tr><td>&gt;= +10</td><td>1.5</td><td>等级碾压，概率提升</td></tr><tr><td>+5 ~ +9</td><td>1.2</td><td>明显优势</td></tr><tr><td>0 ~ +4</td><td>1.0</td><td>同级或略高，标准概率</td></tr><tr><td>-1 ~ -5</td><td>0.6</td><td>玩家略低，概率降低</td></tr><tr><td>-6 ~ -10</td><td>0.3</td><td>明显劣势，大幅削减</td></tr><tr><td>&lt;= -11</td><td>0.1</td><td>严重不足，几乎不可能</td></tr></tbody></table></div>
+<h3>4.4 灵兽等级阻力系数</h3>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>灵兽等级</th><th>系数</th><th>说明</th></tr></thead><tbody><tr><td>1-10</td><td>1.00</td><td>幼年期，无额外阻力</td></tr><tr><td>11-20</td><td>0.85</td><td>成长期，开始产生抗拒</td></tr><tr><td>21-35</td><td>0.70</td><td>成熟期，野性难驯</td></tr><tr><td>36-45</td><td>0.55</td><td>完全体，极难压制</td></tr><tr><td>46-50</td><td>0.40</td><td>巅峰期，近乎不可签约</td></tr></tbody></table></div>
+<h3>4.5 灵材与道具加成</h3>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>加成来源</th><th>基础加成</th><th>受品质效率影响</th><th>说明</th></tr></thead><tbody><tr><td>契合灵材×1</td><td>+10%</td><td>是</td><td>每份+10%，最高使用5份</td></tr><tr><td>契合灵材×5</td><td>+50%</td><td>是</td><td>达到常规上限</td></tr><tr><td>特殊道具（缚灵网等）</td><td>+15%</td><td>是</td><td>一次性道具</td></tr><tr><td>灵兽血量&lt;30%</td><td>+5%</td><td>否</td><td>战斗削弱奖励</td></tr><tr><td>灵兽血量&lt;10%</td><td>+10%</td><td>否</td><td>极限削弱奖励</td></tr></tbody></table></div>
+<h3>4.6 典型场景验证</h3>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>场景</th><th>玩家Lv</th><th>品质</th><th>兽Lv</th><th>基础率</th><th>等级差系数</th><th>兽等级阻力</th><th>小计</th><th>灵材加成(受效率)</th><th>命格加成(受效率)</th><th>原始合计</th><th>上限</th><th>最终概率</th></tr></thead><tbody><tr><td>新手契约路边宠</td><td>2</td><td>N</td><td>1</td><td>40%</td><td>1.2</td><td>1.00</td><td>48%</td><td>+30%(100%)</td><td>+10%(100%)</td><td>88%</td><td>90%</td><td><strong>88%</strong></td></tr><tr><td>新手越级抓R</td><td>2</td><td>R</td><td>5</td><td>30%</td><td>0.6</td><td>0.85</td><td>15.3%</td><td>+30%(100%)</td><td>+5%(100%)</td><td>50.3%</td><td>85%</td><td><strong>50.3%</strong></td></tr><tr><td>Lv15签约一阶</td><td>15</td><td>R</td><td>10</td><td>30%</td><td>1.2</td><td>0.85</td><td>30.6%</td><td>+40%(100%)</td><td>+10%(100%)</td><td>80.6%</td><td>85%</td><td><strong>80.6%</strong></td></tr><tr><td>Lv20挑战区域SR</td><td>20</td><td>SR</td><td>15</td><td>15%</td><td>1.2</td><td>0.70</td><td>12.6%</td><td>+40%(90%)</td><td>+12%(90%)</td><td>59.4%</td><td>75%</td><td><strong>59.4%</strong></td></tr><tr><td>Lv35签约SSR</td><td>35</td><td>SSR</td><td>30</td><td>5%</td><td>1.2</td><td>0.70</td><td>4.2%</td><td>+50%(70%)</td><td>+15%(70%)</td><td>47.7%</td><td>50%</td><td><strong>47.7%</strong></td></tr><tr><td>满级签约满级UR</td><td>50</td><td>UR</td><td>50</td><td>1%</td><td>1.0</td><td>0.40</td><td>0.4%</td><td>+50%(50%)</td><td>+20%(50%)</td><td>35.4%</td><td>30%</td><td><strong>30.0%（触上限）</strong></td></tr><tr><td>满级签约Lv1 UR幼崽</td><td>50</td><td>UR</td><td>1</td><td>1%</td><td>1.5</td><td>1.00</td><td>1.5%</td><td>+50%(50%)</td><td>+20%(50%)</td><td>36.5%</td><td>30%</td><td><strong>30.0%（触上限）</strong></td></tr><tr><td>新手尝试野外SSR</td><td>5</td><td>SSR</td><td>3</td><td>5%</td><td>1.2</td><td>1.00</td><td>6.0%</td><td>+30%(70%)</td><td>+0%</td><td>27.0%</td><td>50%</td><td><strong>27.0%</strong></td></tr><tr><td>新手尝试野外UR</td><td>5</td><td>UR</td><td>3</td><td>1%</td><td>1.2</td><td>1.00</td><td>1.2%</td><td>+30%(50%)</td><td>+0%</td><td>16.2%</td><td>30%</td><td><strong>16.2%</strong></td></tr></tbody></table></div>
+<blockquote><strong>设计意图</strong>： - 高品质灵兽本身<strong>遭遇率极低</strong>（UR仅0.5%），遇到已是运气。 - 遇到后，UR的基础捕捉率1%确实很低，但通过<strong>满级+灵材+命格</strong>可堆到30%上限，需要多次尝试和大量资源，符合"上古异兽"定位。 - 新手在野外遇到SSR/UR的概率本身就很低（权重系统控制），不会频繁出现"新手被高难度捕捉折磨"的情况。 - <strong>安全祭坛保底</strong>：三次野外失败后，可在安全区召唤幼崽（100%成功），彻底避免坏档。</blockquote>
+<h3>4.7 溢出与硬上限统一说明</h3>
+<blockquote><strong>引用宪法 v0.2</strong>：最终签约概率受品质硬上限封顶，任何情况下不可突破。 - N 上限 90% | R 上限 85% | SR 上限 75% | SSR 上限 50% | UR 上限 30% 命格/灵材加成在触及硬上限前可叠加；超过硬上限的部分不再转化为好感度（原 03-1 的 80% 溢出线废止，以本表硬上限为准）。</blockquote>
+<hr>
+<h2>五、命格契合度加成（契约相关精简版）</h2>
+<blockquote>完整命格库见03-1。此处仅列出与签约直接相关的加成。</blockquote>
+<h3>5.1 加成规则</h3>
+<ul><li><strong>同方向取最高</strong>：如同时有「火灵」和「混元」，面对火属性灵兽取+15%，不叠加为+23%</li></ul>
+<ul><li><strong>跨方向可叠加</strong>：如「火灵」+15% 与 「狂战」+8% 可同时生效，合计+23%</li></ul>
+<ul><li><strong>溢出转化</strong>：最终加成超过上限时，多余部分转化为签约后好感度初始值（每1%溢出=5点好感度）</li></ul>
+<h3>5.2 主要加成标签</h3>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>标签</th><th>匹配灵兽类型</th><th>契合度加成</th><th>备注</th></tr></thead><tbody><tr><td>驭兽</td><td>全系灵兽</td><td>+10%</td><td>职业最优解，灵兽继承额外+5%</td></tr><tr><td>五行专精（金木水火土）</td><td>对应属性灵兽</td><td>+15%</td><td>属性专精最高加成</td></tr><tr><td>紫微</td><td>瑞兽/神兽（SSR及以上）</td><td>+15%</td><td>高稀有度高回报</td></tr><tr><td>龙血</td><td>龙裔/蛇类/爬行类</td><td>+12%</td><td>—</td></tr><tr><td>凤裔</td><td>鸟类/瑞兽/飞行类</td><td>+12%</td><td>—</td></tr><tr><td>巫族</td><td>亡灵/古兽/灵魂体</td><td>+12%</td><td>—</td></tr><tr><td>妖瞳</td><td>狐族/幻系/瞳术类</td><td>+10%</td><td>可看破青丘迷障</td></tr><tr><td>凡体</td><td>全系灵兽</td><td>+0%</td><td>进化材料-20%，进化后属性+5%（补偿型）</td></tr></tbody></table></div>
+<h3>5.3 组合彩蛋</h3>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>组合条件</th><th>彩蛋名称</th><th>额外加成</th><th>特殊效果</th></tr></thead><tbody><tr><td>龙血 + 凤裔（同时持有）</td><td>龙凤呈祥</td><td>+8%</td><td>可同时签约互斥种族（龙裔+凤裔专属）</td></tr><tr><td>凡体 + 可进化灵兽</td><td>逆袭天命</td><td>+5%</td><td>进化材料-20%，进化后全属性+5%</td></tr><tr><td>孤星 + 狼/虎类灵兽</td><td>独狼共鸣</td><td>+5%</td><td>该灵兽拒绝解约（强制解约需额外心魔试炼）</td></tr></tbody></table></div>
+<hr>
+<h2>六、本命契约唯一性规则</h2>
+<h3>6.1 基础规则</h3>
+<ul><li>全游戏同时只能存在<strong>1个</strong>本命契约</li></ul>
+<ul><li>签订新本命前必须先解除旧本命</li></ul>
+<ul><li>解除方式：</li></ul>
+<ul><li><strong>强行解除</strong>：触发心魔试炼 + 7天虚弱期</li></ul>
+<ul><li><strong>和平解除</strong>：消耗「忘川水」×1（稀有道具，巫咸国/三首国产出）</li></ul>
+<h3>6.2 等级约束（修正说明）</h3>
+<p>plain</p>
+<pre><code>本命契约签订条件：
+  1. 玩家等级必须严格高于灵兽当前等级（玩家Lv &gt; 灵兽Lv）
+  2. 若灵兽已达当前版本等级上限（50级），则玩家也必须达到50级
+  3. 仅本命契约受此约束，平等/伙伴/临时契约不受限制</code></pre>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>玩家Lv</th><th>灵兽Lv</th><th>约束结果</th><th>说明</th></tr></thead><tbody><tr><td>30</td><td>25</td><td>允许</td><td>30 &gt; 25，符合"以强契弱"</td></tr><tr><td>30</td><td>30</td><td>拒绝</td><td>必须严格大于，同级不可</td></tr><tr><td>30</td><td>35</td><td>拒绝</td><td>玩家等级不足</td></tr><tr><td>50</td><td>50</td><td>允许</td><td>满级对满级，"同登巅峰"仪式</td></tr><tr><td>1</td><td>1</td><td>拒绝</td><td>必须严格大于（Lv2方可签约Lv1）</td></tr><tr><td>5</td><td>1</td><td>允许</td><td>新手可签约初始灵兽为本命</td></tr></tbody></table></div>
+<blockquote><strong>序章修正</strong>：序章完成后玩家为 Lv2，开局自选灵兽为 Lv1，满足约束。防止高等级玩家无脑契约满级 UR。</blockquote>
+<h3>6.3 本命契约与隐藏职业联动</h3>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>隐藏职业</th><th>契约影响</th><th>说明</th></tr></thead><tbody><tr><td>背誓者</td><td>无法签订本命契约；平等契约提升至150%，伙伴契约提升至200%</td><td>与兽魂行者互斥</td></tr><tr><td>兽魂行者</td><td>强制绑定本命契约；兽化期间继承系数额外+30%（峰值260%）</td><td>与背誓者互斥</td></tr><tr><td>山海绘卷师</td><td>不改动契约；随机召唤数值基于当前出战灵兽的契约类型</td><td>建议携带伙伴/本命以最大化伤害</td></tr></tbody></table></div>
+<hr>
+<h2>七、解约与心魔试炼</h2>
+<h3>7.1 强行解除流程</h3>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>项目</th><th>参数</th><th>说明</th></tr></thead><tbody><tr><td>触发条件</td><td>强行解除本命契约</td><td>—</td></tr><tr><td>虚弱期</td><td>全属性-50%</td><td>持续7天游戏内时间（约现实2-3小时）</td></tr><tr><td>心魔副本</td><td>随时可进入</td><td>击败心魔BOSS可立即解除虚弱</td></tr><tr><td>胜利奖励</td><td>立刻解除虚弱期</td><td>无其他奖励</td></tr><tr><td>失败惩罚</td><td>无额外惩罚</td><td>继续虚弱，可重复挑战</td></tr><tr><td>硬等解除</td><td>7天结束后自动解除</td><td>无等级惩罚</td></tr><tr><td>等级惩罚</td><td>倒计时3小时（现实时间）后执行</td><td>当前等级÷2（向下取整）</td></tr></tbody></table></div>
+<h3>7.2 心魔BOSS参数</h3>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>项目</th><th>公式/数值</th></tr></thead><tbody><tr><td>BOSS血量</td><td>玩家当前等级×1000 + 已解除本命次数×500</td></tr><tr><td>BOSS攻击</td><td>玩家基准攻击力×1.2</td></tr><tr><td>BOSS防御</td><td>玩家基准防御力×0.8</td></tr></tbody></table></div>
+<blockquote><strong>与等级约束的联动</strong>：强行解除后进入7天虚弱期（全属性-50%），此时玩家等级可能大幅下降，可能无法满足新本命契约的「玩家Lv &gt; 灵兽Lv」约束。设计意图：防止频繁更换本命。</blockquote>
+<hr>
+<h2>八、安全祭坛保底机制（修正）</h2>
+<blockquote><strong>核心规则</strong>：野外捕捉三次失败后，玩家可在任意国家的「安全祭坛」召唤该灵兽的幼崽，100%成功。</blockquote>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>项目</th><th>规则</th><th>说明</th></tr></thead><tbody><tr><td>触发条件</td><td>同一灵兽野外捕捉失败3次</td><td>该灵兽进入24小时「警觉」状态，不可再次野外捕捉</td></tr><tr><td>召唤地点</td><td>任意国家安全祭坛</td><td>非战斗区域，绝对安全</td></tr><tr><td>消耗材料</td><td>对应契合灵材×2~5</td><td>根据品质浮动</td></tr><tr><td>成功率</td><td>100%</td><td>必成</td></tr><tr><td>幼崽属性</td><td>野生成体的90%</td><td>可通过进化补全至100%</td></tr><tr><td>进化差异</td><td>幼崽与野生进化路线完全一致</td><td>仅初始属性差10%，无其他惩罚</td></tr></tbody></table></div>
+<blockquote><strong>幼崽属性计算</strong>：幼崽初始属性 = 该灵兽在同等契约下的野生基准属性 × 90%。 例：50 级平等契约绒绒兔野生基准攻击 = 178，幼崽攻击 = 160。通过进化至终极形态后，属性完全追平野生进化体。</blockquote>
+<blockquote><strong>设计意图</strong>：彻底杜绝「因运气差而无法获得心仪灵兽」的负体验。野外捕捉是给愿意挑战概率的玩家准备的（有完整属性和成就感），安全祭坛是给稳健型玩家的保底（略弱但稳定获得）。</blockquote>
+<hr>
+<h2>九、转职规则</h2>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>项目</th><th>规则</th><th>说明</th></tr></thead><tbody><tr><td>触发条件</td><td>任何时候主动转职</td><td>无场景限制</td></tr><tr><td>经验扣除</td><td>当前经验值 × 50%（向下取整）</td><td>无虚弱期</td></tr><tr><td>契约影响</td><td>转职不改变已有契约类型和等级</td><td>仅影响职业修正系数</td></tr><tr><td>冷却</td><td>无</td><td>但经验损失本身即为惩罚</td></tr></tbody></table></div>
+<hr>
+<h2>十、跨表一致性声明（修正版）</h2>
+<ul><li><strong>遭遇率与捕捉率分离</strong>：UR灵兽野外遭遇率仅0.5%（权重系统），遇到后捕捉率按UR标准（1%基础，上限30%）。不因"野外出现"而额外降低捕捉率。</li></ul>
+<ul><li><strong>初始自选与野外捕获一致</strong>：开局自选的绒绒兔/玄火蛇等，与野外捕获的同名灵兽在属性、技能、进化路线上完全一致，仅获取方式不同。</li></ul>
+<ul><li><strong>安全祭坛不破坏稀有性</strong>：幼崽属性为90%，且需消耗灵材，是保底而非捷径。追求完美属性的玩家仍需挑战野外捕捉。</li></ul>
+<ul><li><strong>本命契约等级约束</strong>：序章后 Lv2 可签 Lv1 初始灵兽；防止高等级玩家无脑契约满级 UR。</li></ul>
+<ul><li><strong>所有加成硬上限封顶</strong>：以 03-2 第四节品质上限为准，03-1 原 80% 溢出线废止。</li></ul>
+<hr>
+<h2>【未定/待研究补充区】</h2>
+<ul><li>[x] 和平解除道具「忘川水」产出途径：暂定三首国轮回井（每周目 3 个）、巫咸国净魂池任务线（一次性 2 个）、高恶念值黑市（概率刷新，单价 5000 金币）。</li></ul>
+<ul><li>[ ] 多周目时初始自选灵兽是否可继承上周目进化形态</li></ul>
+<ul><li>[ ] 幼崽 90% 属性在满级进化后是否完全追平野生（需数值验证）</li></ul>
+<ul><li>[ ] 野外 UR 遭遇率 0.5% 在多周目后是否需提升</li></ul>
+<ul><li>[ ] 此处留白：_________________________</li></ul>
+</div></div></body></html>

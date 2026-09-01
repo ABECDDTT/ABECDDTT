@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>02-3_隐藏职业库 · 杨长辉作品集</title>
+<style>
+*{box-sizing:border-box}
+body{font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;line-height:1.85;color:#26303f;margin:0;background:#f6f8fc;font-size:15.5px}
+.wrap{max-width:900px;margin:0 auto;padding:26px 22px 80px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px;font-size:13px}
+.crumb{color:#7c8aa3;word-break:break-all}
+.crumb b{color:#1d4ed8}
+.back{white-space:nowrap;padding:6px 13px;border-radius:8px;background:#1d4ed8;color:#fff;text-decoration:none;font-size:13px}
+h1{font-size:25px;margin:0 0 4px;letter-spacing:.5px;line-height:1.4}
+.meta{color:#8a97ab;font-size:13px;margin:0 0 20px}
+.doc{background:#fff;border-radius:14px;padding:30px 34px 40px;box-shadow:0 2px 14px rgba(30,50,90,.06)}
+.doc h1,.doc h2,.doc h3,.doc h4{color:#12306e;line-height:1.5}
+.doc h1{font-size:22px;margin:26px 0 12px;padding-bottom:8px;border-bottom:2px solid #e5ecfa}
+.doc h2{font-size:19px;margin:24px 0 10px;padding-left:11px;border-left:4px solid #1d4ed8}
+.doc h3{font-size:16.5px;margin:20px 0 8px;color:#1d4ed8}
+.doc h4{font-size:15px;margin:16px 0 6px;color:#38507f}
+.doc p{margin:0 0 13px;text-align:justify}
+.doc strong{color:#12306e}
+.doc ul{padding-left:22px;margin:0 0 13px}
+.doc li{margin:4px 0}
+.doc pre{background:#0f2035;color:#d7e3f7;padding:15px 17px;border-radius:10px;overflow-x:auto;font-size:13.5px;line-height:1.65;font-family:ui-monospace,Menlo,Consolas,monospace}
+.doc code{background:#eef2fa;padding:1px 5px;border-radius:4px;font-size:13.5px;color:#12306e}
+.doc pre code{background:none;color:inherit;padding:0}
+.doc blockquote{margin:0 0 14px;padding:11px 16px;background:#f3f6fd;border-left:4px solid #9db4e8;border-radius:0 8px 8px 0;color:#3c4b64}
+.doc hr{border:0;border-top:1px solid #e5ecfa;margin:24px 0}
+.tw{overflow-x:auto;margin:0 0 16px;border-radius:9px;border:1px solid #e5ecfa}
+.doc table{border-collapse:collapse;width:100%;font-size:13.5px}
+.doc th{background:#eef3fc;color:#12306e;font-weight:600}
+.doc th,.doc td{border:1px solid #e0e8f6;padding:7px 10px;text-align:left;white-space:nowrap}
+.doc tbody tr:nth-child(even){background:#fafbfe}
+.doc .ms{margin:0 0 20px;border:1px solid #e5ecfa;border-radius:11px;overflow:hidden;background:#fbfcfe}
+.doc .ms img{display:block;width:100%;height:auto}
+.doc .ms figcaption{font-size:12.5px;color:#93a0b4;text-align:center;padding:8px 10px;background:#f6f8fc;border-top:1px solid #eef2fa}
+.doc .poem{margin:0 0 3px;line-height:2.15;font-size:16.5px;color:#1f2b3d;letter-spacing:.8px}
+.doc .psrc{margin:10px 0 0;font-size:12.5px;color:#a3aebb;text-align:right}
+.doc .ocrnote{margin:0 0 18px;padding:10px 15px;background:#f3f6fd;border-left:4px solid #9db4e8;border-radius:0 8px 8px 0;color:#5a6a80;font-size:13px}
+@media(max-width:640px){.wrap{padding:16px 12px 50px}.doc{padding:20px 16px 30px}h1{font-size:20px}}
+</style></head><body>
+<div class="wrap">
+<div class="topbar"><div class="crumb">游戏策划专题 / 02-山海师：灵契 / 02_人物与职业系统 / <b>02-3_隐藏职业库</b></div>
+<a class="back" href="../../../index.html">← 返回目录</a></div>
+<h1>02-3_隐藏职业库</h1>
+<p class="meta">约 8,791 字 · 原件 <a href="02-3_%E9%9A%90%E8%97%8F%E8%81%8C%E4%B8%9A%E5%BA%93.md.md">02-3_隐藏职业库.md.md</a></p>
+<div class="doc">
+<h1>02-3_隐藏职业库（重构版 v0.3）</h1>
+<h1>引用宪法：v0.2（全局核心参数总表）</h1>
+<h1>关联文档：02-1_人物基础数值库、02-2_职业技能库、03-1_命格标签库、03-2_契约与属性继承、03-5_山海素材总库、04-x_二十国剧情线</h1>
+<h1>状态：已重构（第3轮） | 已修复：B-01 互斥表格格式、B-07 忘川水产出来源</h1>
+<hr>
+<h2>一、隐藏职业总览表</h2>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>隐藏职业</th><th>解锁条件</th><th>战斗定位</th><th>生命系数</th><th>灵力系数</th><th>攻击系数</th><th>防御系数</th><th>与原职业关系</th><th>互斥职业</th></tr></thead><tbody><tr><td>封灵师</td><td>厌火国破棺路线+无本命击败旱魃残魂</td><td>多灵兽控场·封印流</td><td>0.85</td><td>1.30</td><td>0.85</td><td>0.85</td><td>覆盖R；Q/E/空格强化</td><td>—</td></tr><tr><td>兽魂行者</td><td>走兽终极形态+本命契约累计72h</td><td>近战变身·人兽合一</td><td>1.20</td><td>0.70</td><td>1.20</td><td>1.00</td><td>替换Q/E/空格；R改为兽化</td><td>背誓者</td></tr><tr><td>墨家传人</td><td>青丘国墨家遗迹+机关命格</td><td>中远程机关·傀儡协同</td><td>0.90</td><td>1.10</td><td>0.95</td><td>0.90</td><td>改普攻；覆盖Q/E/R/空格</td><td>—</td></tr><tr><td>背誓者</td><td>强行解约3次+完成3次心魔试炼</td><td>均衡型·契约特化</td><td>1.00</td><td>1.00</td><td>1.00</td><td>1.00</td><td>保留左键/Q/E；覆盖R/空格</td><td>兽魂行者</td></tr><tr><td>山海绘卷师</td><td>收集齐任意一卷图鉴全部灵兽</td><td>随机召唤·辅助输出</td><td>0.85</td><td>1.20</td><td>0.90</td><td>0.80</td><td>覆盖Q/E/R/空格</td><td>—</td></tr><tr><td>守墓人</td><td>守墓人命格+3国以上低恶念结局</td><td>亡灵特化·防御反制</td><td>1.00</td><td>0.90</td><td>0.95</td><td>1.05</td><td>覆盖Q/E/R/空格</td><td>—</td></tr><tr><td>血法师</td><td>白民国寻找替代路线+药人/医仙命格</td><td>自残输出·血源转化</td><td>1.10</td><td>0.50</td><td>1.25</td><td>0.70</td><td>覆盖Q/E/R/空格；改资源逻辑</td><td>医仙隐藏技能</td></tr><tr><td>先知</td><td>巫咸国阻止献祭路线+天相/巫族命格</td><td>预知控场·时间操控</td><td>0.80</td><td>1.40</td><td>0.80</td><td>0.80</td><td>覆盖Q/E/R/空格</td><td>—</td></tr><tr><td>战狂</td><td>大人国竞技场连胜20场+战意结晶×3</td><td>狂战士·低血高伤</td><td>1.15</td><td>0.60</td><td>1.25</td><td>0.90</td><td>覆盖Q/E/R/空格</td><td>医仙</td></tr><tr><td>毒龙使</td><td>黑齿国以毒攻毒路线+毒系灵兽本命</td><td>持续毒伤·Debuff流</td><td>0.90</td><td>1.10</td><td>1.00</td><td>0.80</td><td>覆盖Q/E/R/空格</td><td>—</td></tr></tbody></table></div>
+<blockquote><strong>全局键位声明</strong>：隐藏职业沿用02-2键位体系——WASD移动，鼠标左键普攻，鼠标右键闪避，Q/E/R人技/人技/大招，F/G灵兽双技。空格键被隐藏职业特色机制覆盖（不再继承基础职业的空格）。</blockquote>
+<hr>
+<h2>二、隐藏职业详细设计</h2>
+<h3>2.1 封灵师</h3>
+<p><strong>解锁条件</strong>：厌火国主线选择"破棺"路线（恶念-30），且在最终BOSS战中<strong>未使用本命契约</strong>击败旱魃残魂。</p>
+<p><strong>属性修正</strong>：生命0.85 / 灵力1.30 / 攻击0.85 / 防御0.85 <strong>战斗定位</strong>：高灵力续航，多单位控场，本体脆弱依赖灵兽护主与走位。</p>
+<p><strong>技能组</strong></p>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>技能名</th><th>按键</th><th>类型</th><th>基准效果</th><th>上限效果</th><th>CD</th><th>消耗</th><th>上限触发条件</th></tr></thead><tbody><tr><td>封灵笔</td><td>鼠标左键</td><td>普攻</td><td>三段墨痕，第三段封印目标1秒</td><td>第三段封印1.5秒+破防10%</td><td>—</td><td>无</td><td>符箓命格+20%持续时间</td></tr><tr><td>敕令·封</td><td>Q</td><td>控制·转化</td><td>封印单体敌人，转化为临时灵兽（对BOSS无效，精英怪30%概率），持续15秒。临时灵兽继承主角属性×60%，可释放一次SKILL_Q</td><td>继承80%，持续20秒，可释放Q+W</td><td>18秒</td><td>25灵力</td><td>驭兽命格+10%、封灵师专属任务</td></tr><tr><td>灵阵·守</td><td>E</td><td>辅助·减伤</td><td>召唤灵阵，范围内所有灵兽（含临时）为主角分担30%伤害，持续8秒</td><td>分担45%，持续10秒，阵内灵兽攻速+15%</td><td>22秒</td><td>30灵力</td><td>天相命格+10%治疗量</td></tr><tr><td>万灵归宗·封</td><td>R</td><td>终极·爆发</td><td>同时召唤所有已契约灵兽+临时灵兽，每只释放一次终极技能幻影，持续5秒</td><td>每只额外释放一次SKILL_Q，持续6秒</td><td>能量槽满</td><td>60灵力</td><td>万灵共鸣BUFF+20%</td></tr><tr><td>封灵步</td><td>空格</td><td>位移·控场</td><td>灵兽带主角短距离瞬移，无敌0.3秒，落点留下封印阵，敌人进入减速40%持续2秒</td><td>无敌0.4秒，减速60%持续3秒，落点触发临时灵兽自动协击一次</td><td>8秒</td><td>25耐力</td><td>符箓命格+20%持续时间、诡道命格+15%陷阱伤害</td></tr><tr><td>封灵</td><td>被动</td><td>常驻</td><td>击败敌人20%概率自动封印为临时灵兽（上限2只，持续30秒）</td><td>概率30%，上限3只</td><td>—</td><td>无</td><td>诡道命格+15%陷阱伤害（封印视为陷阱）</td></tr></tbody></table></div>
+<blockquote><strong>属性搭配与闯关策略</strong>：封灵师闯关核心是"以量取胜"。面对单体BOSS时，利用空格【封灵步】绕后躲避技能，落点封印阵减速BOSS，普攻第三段封印可打断BOSS读条。Q【敕令·封】尝试将周围小怪转化为临时灵兽增加输出点；E【灵阵·守】在BOSS爆发期开启，让多只灵兽分摊伤害。由于本体极脆（防御79），必须依赖空格位移和右键闪避的双重机动，避免正面接触。推荐携带控制型灵兽（如引魂灯、轮回蝶）延长控场链。</blockquote>
+<p><strong>契约联动</strong>：无法签订本命契约；临时灵兽不占用契约槽位，但无法进化、无法继承被动。</p>
+<p><strong>命格联动</strong>：驭兽命格使临时灵兽继承系数+10%；诡道命格使封印持续时间+25%。</p>
+<p><strong>剧情关联</strong>：厌火国LINK_02；解锁后可在巫咸国轮回镜处触发"封灵问天"隐藏对话。</p>
+<hr>
+<h3>2.2 兽魂行者</h3>
+<p><strong>解锁条件</strong>：任意走兽类灵兽（铁骨虎/山岳巨猿/毛民猎犬/兽魂熊等）进化至终极形态，并与其签订本命契约累计满72小时（游戏内时间）。</p>
+<p><strong>属性修正</strong>：生命1.20 / 灵力0.70 / 攻击1.20 / 防御1.00 <strong>战斗定位</strong>：近战爆发，人兽属性合一，极致单核。</p>
+<p><strong>技能组</strong></p>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>技能名</th><th>按键</th><th>类型</th><th>基准效果</th><th>上限效果</th><th>CD</th><th>消耗</th><th>上限触发条件</th></tr></thead><tbody><tr><td>兽化爪击</td><td>鼠标左键</td><td>普攻</td><td>使用本命灵兽普攻模组，三段连段</td><td>攻速+15%，第三段附带灵兽属性异常</td><td>—</td><td>无</td><td>剑心命格+1段普攻</td></tr><tr><td>兽化·Q</td><td>Q</td><td>攻击</td><td>释放本命灵兽SKILL_Q，伤害×1.2</td><td>伤害×1.5，CD-3秒</td><td>继承灵兽CD</td><td>20灵力</td><td>本命契约200%继承</td></tr><tr><td>兽化·W</td><td>E</td><td>功能</td><td>释放本命灵兽SKILL_W，效果×1.2</td><td>效果×1.5，附加霸体1秒</td><td>继承灵兽CD</td><td>20灵力</td><td>伙伴契约150%继承</td></tr><tr><td>完全兽化</td><td>R</td><td>终极·变身</td><td>彻底变身为灵兽，主角属性=本命灵兽属性×120%，持续15秒。期间可使用灵兽全部技能（Q/W/E/R），CD独立计算</td><td>持续18秒，属性×130%，击杀延长2秒</td><td>能量槽满</td><td>60灵力</td><td>灵气共鸣+5%/层</td></tr><tr><td>兽魂铁壁</td><td>空格</td><td>防御·弹反</td><td>按住空格格挡，精准格挡触发本命灵兽免费释放一次SKILL_Q；普通格挡减伤70%</td><td>精准格挡触发免费SKILL_Q且伤害×1.5，减伤85%，兽化期间变为免费SKILL_R</td><td>—</td><td>每秒10耐力</td><td>本命契约200%继承、龙血/凤裔/巫族命格+20%兽化持续时间</td></tr><tr><td>兽血共鸣</td><td>被动</td><td>常驻</td><td>本命灵兽继承系数额外+30%（即本命契约从200%→230%）；兽化期间可达260%峰值</td><td>兽化期间额外+10%暴击率</td><td>—</td><td>无</td><td>龙血/凤裔/巫族命格+20%兽化持续时间</td></tr></tbody></table></div>
+<blockquote><strong>属性搭配与闯关策略</strong>：兽魂行者是极致单核，闯关时需围绕本命灵兽属性构建全队。空格【兽魂铁壁】是核心生存与爆发手段——精准格挡直接触发本命灵兽的SKILL_Q（如铁骨虎的裂金爪破甲、梼杌幼崽的梼杌之牙），相当于白送一次高伤技能。完全兽化R期间，属性替换为灵兽×120%，此时空格精准格挡甚至能免费释放SKILL_R（如白虎降临），爆发窗口全职业最高。推荐选择高爆发型本命（如玄火蛇、梼杌幼崽），利用属性克制（火克木等）在兽化15秒内秒杀BOSS阶段。</blockquote>
+<p><strong>契约联动</strong>：强制绑定本命契约；本命契约等级约束严格生效（玩家Lv &gt; 灵兽Lv）。</p>
+<p><strong>命格联动</strong>：龙血/凤裔/巫族命格使兽化持续时间+20%；狂战命格使兽化期间攻击+10%但防御-5%。</p>
+<p><strong>剧情关联</strong>：毛民国LINK_13（兽魂行者隐藏职业可直接与梼杌幼崽共鸣）。</p>
+<hr>
+<h3>2.3 墨家传人</h3>
+<p><strong>解锁条件</strong>：青丘国隐藏任务"墨家遗迹"（需持有"机关"命格，在悬空木阁底层触发机关谜题并解开）。</p>
+<p><strong>属性修正</strong>：生命0.90 / 灵力1.10 / 攻击0.95 / 防御0.90 <strong>战斗定位</strong>：中远程机关造物，傀儡协同，阵地战。</p>
+<p><strong>技能组</strong></p>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>技能名</th><th>按键</th><th>类型</th><th>基准效果</th><th>上限效果</th><th>CD</th><th>消耗</th><th>上限触发条件</th></tr></thead><tbody><tr><td>傀儡射击</td><td>鼠标左键</td><td>普攻</td><td>远程物理，三段，第三段傀儡协同攻击（傀儡伤害=主角攻击×80%）</td><td>第三段傀儡伤害×120%，射程+20%</td><td>—</td><td>无</td><td>机关命格+10%机关伤害</td></tr><tr><td>机关·攻</td><td>Q</td><td>召唤·攻击</td><td>部署攻击傀儡，自动攻击最近敌人，继承主角攻击×80%，持续20秒。上限2只</td><td>继承100%，上限3只，持续25秒</td><td>12秒</td><td>20灵力</td><td>机关命格+10%</td></tr><tr><td>机关·守</td><td>E</td><td>召唤·防御</td><td>部署防御傀儡，为主角吸收伤害（护盾=主角防御×300%），持续10秒。若与攻击傀儡同时在场，攻击傀儡获得护盾20%</td><td>护盾×400%，持续12秒，攻击傀儡护盾40%</td><td>18秒</td><td>25灵力</td><td>天相命格+10%</td></tr><tr><td>墨家巨兽</td><td>R</td><td>终极·召唤</td><td>召唤巨型机关兽（第三只傀儡），全属性=主角×150%，持续12秒，可释放范围AOE（攻击×250%）</td><td>全属性×180%，持续15秒，AOE伤害×350%</td><td>能量槽满</td><td>60灵力</td><td>万灵共鸣BUFF+20%</td></tr><tr><td>机关跃</td><td>空格</td><td>位移·陷阱</td><td>向后跃出3码，无敌0.2秒，原地留下自爆机关（主角攻击×100%）并嘲讽周围敌人1秒</td><td>后跃无敌0.3秒，自爆攻击×150%，嘲讽2秒，爆炸附加破甲-15%</td><td>10秒</td><td>25耐力</td><td>机关命格+10%、诡道命格+15%陷阱伤害</td></tr><tr><td>非攻</td><td>被动</td><td>常驻</td><td>傀儡在场时，主角受到的单次伤害超过生命上限20%时，由最近傀儡承担50%</td><td>承担70%，且傀儡恢复承担量30%生命</td><td>—</td><td>无</td><td>机关命格+10%</td></tr></tbody></table></div>
+<blockquote><strong>属性搭配与闯关策略</strong>：墨家传人是阵地战大师，闯关时需提前布置战场。进入BOSS房前，Q【机关·攻】召唤2只攻击傀儡建立火力点；开战后E【机关·守】放置防御傀儡吸收伤害。空格【机关跃】用于紧急后撤并留下自爆陷阱，既能拉开距离又能补伤害。面对高机动BOSS时，利用自爆机关的嘲讽强制BOSS转向，为自己争取输出窗口。推荐携带功能型或辅助型灵兽（如寻宝鼠、寿桃精）作为"核心能源"，傀儡继承灵兽属性×30%后攻防一体。</blockquote>
+<p><strong>契约联动</strong>：灵兽变为"核心能源"——出战灵兽不再直接战斗，而是附身于傀儡，使傀儡继承灵兽属性×30%额外加成。</p>
+<p><strong>命格联动</strong>：机关命格使傀儡攻击力+15%；符箓命格使傀儡持续时间+20%。</p>
+<p><strong>剧情关联</strong>：青丘国LINK_01；劳民国LINK_14（墨家传人可无损操作永动齿轮）。</p>
+<hr>
+<h3>2.4 背誓者</h3>
+<p><strong>解锁条件</strong>：累计强行解除本命契约3次，并完成3次心魔试炼（允许失败，但必须进入过）。</p>
+<p><strong>属性修正</strong>：生命1.00 / 灵力1.00 / 攻击1.00 / 防御1.00 <strong>战斗定位</strong>：标准均衡，无本命，依靠高契约系数与心魔之力。</p>
+<p><strong>技能组</strong></p>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>技能名</th><th>按键</th><th>类型</th><th>基准效果</th><th>上限效果</th><th>CD</th><th>消耗</th><th>上限触发条件</th></tr></thead><tbody><tr><td>保留原职业</td><td>鼠标左键/Q/E</td><td>—</td><td>保留转职前基础职业的普攻、Q技、E技</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td>心魔同契</td><td>R</td><td>终极·召唤</td><td>召唤心魔分身（继承主角属性×100%），持续10秒。心魔攻击附带吸血（伤害的20%给主角）</td><td>继承120%，持续14秒，吸血30%</td><td>能量槽满</td><td>50灵力</td><td>背誓者命格+心魔BOSS血量-20%</td></tr><tr><td>背誓之跃</td><td>空格</td><td>位移·双效</td><td>向前位移3码，若落点有敌人则心魔撕咬（攻击×80%+吸血20%）；若落点无敌人则获得心魔护盾（吸收生命上限10%伤害）</td><td>撕咬伤害×1.2+吸血30%，护盾15%生命上限</td><td>8秒</td><td>25耐力</td><td>背誓者命格、七杀命格+5%暴击</td></tr><tr><td>背誓者</td><td>被动</td><td>常驻</td><td>无法签订本命契约；平等契约继承150%，伙伴契约继承200%；强行解约惩罚时间延长至10天</td><td>平等160%，伙伴210%；解约惩罚延长至14天</td><td>—</td><td>无</td><td>背誓者命格</td></tr></tbody></table></div>
+<blockquote><strong>属性搭配与闯关策略</strong>：背誓者保留原职业普攻与Q/E，操作熟悉度高，是"准毕业"替代方案。空格【背誓之跃】是均衡核心——进攻时跳入敌群触发撕咬吸血，防守时后跳获得护盾。由于无本命，推荐携带伙伴契约200%的强力灵兽（如黄帝剑灵、落日箭灵）弥补输出。面对BOSS时，利用原职业Q/E建立输出循环，R【心魔同契】召唤分身形成"双主角"围攻，分身吸血极大提升续航。若转职前为灵战士，可保留铁壁格挡的操作习惯，但空格已替换为背誓之跃，需适应新的攻防节奏。</blockquote>
+<p><strong>契约联动</strong>：与"本命契约"系统彻底互斥；但平等/伙伴契约系数极高，伙伴契约200%已接近基准本命契约。</p>
+<p><strong>命格联动</strong>：背誓者命格使心魔试炼BOSS血量-20%（与被动叠加后-40%），但惩罚时间进一步延长。</p>
+<p><strong>剧情关联</strong>：03-2契约文档核心案例；任何需要"本命契约"触发的剧情（如轩辕国黄帝剑灵）均无法通过背誓者完成。</p>
+<hr>
+<h3>2.5 山海绘卷师</h3>
+<p><strong>解锁条件</strong>：收集齐《山海经图鉴》中任意一卷的全部灵兽（如"南山经"卷：绒绒兔、玄火蛇、铁骨虎、寻宝鼠、火晶蝶、山岳巨猿）。</p>
+<p><strong>属性修正</strong>：生命0.85 / 灵力1.20 / 攻击0.90 / 防御0.80 <strong>战斗定位</strong>：随机召唤，玻璃大炮，依赖图鉴完整度。</p>
+<p><strong>技能组</strong></p>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>技能名</th><th>按键</th><th>类型</th><th>基准效果</th><th>上限效果</th><th>CD</th><th>消耗</th><th>上限触发条件</th></tr></thead><tbody><tr><td>绘灵笔</td><td>鼠标左键</td><td>普攻</td><td>水墨攻击，三段，第三段15%概率召唤随机已收集灵兽幻影协击（造成其攻击×50%）</td><td>概率25%，伤害×80%</td><td>—</td><td>无</td><td>混元命格+2%全属性</td></tr><tr><td>泼墨·兽临</td><td>Q</td><td>随机召唤</td><td>随机召唤一只已收集灵兽释放其SKILL_Q，伤害=该灵兽攻击×100%（按主角属性×契约系数计算）</td><td>伤害×150%，可指定灵兽</td><td>14秒</td><td>22灵力</td><td>驭兽命格+10%</td></tr><tr><td>丹青·护</td><td>E</td><td>随机辅助</td><td>随机召唤一只已收集灵兽释放其SKILL_E（辅助技），效果×1.2</td><td>效果×1.5，附加净化</td><td>18秒</td><td>25灵力</td><td>天相命格+10%</td></tr><tr><td>山海绘卷·全开</td><td>R</td><td>终极·爆发</td><td>同时召唤3只随机已收集灵兽，各释放一次R技能，持续5秒</td><td>召唤4只，持续7秒，可重复同一种</td><td>能量槽满</td><td>70灵力</td><td>万灵共鸣BUFF+20%</td></tr><tr><td>绘卷遁</td><td>空格</td><td>位移·随机</td><td>化为水墨向前位移，无敌0.3秒，路径减速敌人30%，位移后30%概率召唤随机灵兽幻影协击一次（攻击×50%）</td><td>无敌0.4秒，减速50%，协击概率50%且伤害×80%，附加对应元素共鸣</td><td>8秒</td><td>25耐力</td><td>混元命格+2%全属性、符箓命格+20%持续时间</td></tr><tr><td>万象</td><td>被动</td><td>常驻</td><td>任意技能15%概率额外召唤一只灵兽释放SKILL_Q（不耗灵力，不占契约槽）</td><td>概率25%，可触发SKILL_W</td><td>—</td><td>无</td><td>禄存命格+5%灵材掉落（图鉴收集加速）</td></tr></tbody></table></div>
+<blockquote><strong>属性搭配与闯关策略</strong>：山海绘卷师是"欧皇之友"，闯关依赖图鉴收集度。空格【绘卷遁】不仅是生存位移，更是额外的随机输出触发器——位移后概率召唤协击，配合被动万象形成"技能→协击→空格→再协击"的连锁。面对未知属性BOSS时，绘卷师的随机召唤可快速试探BOSS弱点属性（如火灵兽触发克制则换火属性主攻）。推荐优先收集多属性灵兽（火/冰/毒/光/暗各至少1只），确保Q【泼墨·兽临】总能roll到克制属性。E【丹青·护】随机到辅助技时，可救命于危难。</blockquote>
+<p><strong>契约联动</strong>：不改动契约系统；但"随机召唤"的数值基于当前出战灵兽的契约类型（建议携带伙伴/本命以最大化随机召唤伤害）。</p>
+<p><strong>命格联动</strong>：混元命格使随机召唤伤害+10%；禄存命格加速图鉴收集。</p>
+<p><strong>剧情关联</strong>：三首国LINK_12（三世镜碎片与图鉴共鸣可解锁"全视之眼"线索）。</p>
+<hr>
+<h3>2.6 守墓人</h3>
+<p><strong>解锁条件</strong>：开局持有"守墓人"命格标签，且在三个以上国家选择低恶念值结局（恶念≤0）。</p>
+<p><strong>属性修正</strong>：生命1.00 / 灵力0.90 / 攻击0.95 / 防御1.05 <strong>战斗定位</strong>：亡灵特化，防御反制，场景互动型。</p>
+<p><strong>技能组</strong></p>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>技能名</th><th>按键</th><th>类型</th><th>基准效果</th><th>上限效果</th><th>CD</th><th>消耗</th><th>上限触发条件</th></tr></thead><tbody><tr><td>镇魂尺</td><td>鼠标左键</td><td>普攻</td><td>近战三段，对亡灵敌人伤害+30%</td><td>对亡灵+50%，第三段击退</td><td>—</td><td>无</td><td>巫族命格+12%亡灵契合</td></tr><tr><td>唤灵</td><td>Q</td><td>召唤·场景</td><td>唤醒周围一具古兽遗骸（仅古墓/遗迹/战场场景可用），转化为临时亡灵灵兽，继承主角属性×70%，持续20秒</td><td>继承90%，持续30秒，可携带1只跨场景</td><td>20秒</td><td>25灵力</td><td>守墓人命格</td></tr><tr><td>安息</td><td>E</td><td>控制·恢复</td><td>令范围内亡灵敌人停止行动3秒，并恢复主角生命×15%</td><td>停止5秒，恢复25%，清除1负面</td><td>16秒</td><td>20灵力</td><td>天相命格+10%</td></tr><tr><td>黄泉之门</td><td>R</td><td>终极·领域</td><td>开启黄泉领域，领域内所有阵亡敌人复活为亡灵友军（持续15秒），主角与亡灵系灵兽全属性+30%</td><td>持续20秒，全属性+45%，亡灵友军继承100%</td><td>能量槽满</td><td>60灵力</td><td>灵气共鸣+5%/层</td></tr><tr><td>幽冥步</td><td>空格</td><td>位移·恐惧</td><td>向前位移，无敌0.3秒，若穿过敌人则使其恐惧0.5秒并附加亡灵印记（受亡灵伤害+20%持续5秒）</td><td>无敌0.4秒，恐惧1秒，印记增伤30%，恐惧结束后减速30%</td><td>8秒</td><td>25耐力</td><td>守墓人命格、巫族命格+12%亡灵契合</td></tr><tr><td>守墓</td><td>被动</td><td>常驻</td><td>与亡灵系灵兽签约无惩罚；对亡灵敌人伤害+20%；受亡灵伤害-15%；自动发现场景隐藏遗骸</td><td>伤害+30%，减伤-25%，发现遗骸范围+50%</td><td>—</td><td>无</td><td>守墓人命格</td></tr></tbody></table></div>
+<blockquote><strong>属性搭配与闯关策略</strong>：守墓人是场景特化型，在古墓/遗迹关卡强度极高。空格【幽冥步】可穿透BOSS触发恐惧打断连招，是极强的控场位移。Q【唤灵】在特定场景可召唤额外战力，形成"主角+灵兽+遗骸"的三打一。面对亡灵系BOSS（如巫咸国大巫师团）时，被动减伤+增伤形成绝对优势。推荐永久携带亡灵系灵兽（引魂灯、卜卦龟），享受无惩罚签约+属性加成。非古墓场景时，依赖E【安息】的强控和R【黄泉之门】的亡者大军硬推。</blockquote>
+<p><strong>契约联动</strong>：与亡灵系灵兽（引魂灯、卜卦龟、竞技场幽魂等）签约时，无视"跨种族排斥"惩罚。</p>
+<p><strong>命格联动</strong>：守墓人命格是解锁前置；巫族命格使唤灵持续时间+20%。</p>
+<p><strong>剧情关联</strong>：巫咸国LINK_06（守墓人可直接与大巫师团亡灵对话，跳过战斗）；轩辕国LINK_09（封魔台古兽遗骸可唤醒助战）。</p>
+<hr>
+<h3>2.7 血法师（新增）</h3>
+<p><strong>解锁条件</strong>：白民国主线选择"寻找替代"路线（恶念+20），且持有"药人"或"医仙"命格。</p>
+<p><strong>属性修正</strong>：生命1.10 / 灵力0.50 / 攻击1.25 / 防御0.70 <strong>战斗定位</strong>：自残输出，血源转化，无灵力依赖。</p>
+<p><strong>技能组</strong></p>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>技能名</th><th>按键</th><th>类型</th><th>基准效果</th><th>上限效果</th><th>CD</th><th>消耗</th><th>上限触发条件</th></tr></thead><tbody><tr><td>血刃</td><td>鼠标左键</td><td>普攻</td><td>中距离血刃，三段，第三段吸血10%</td><td>第三段吸血20%，射程+30%</td><td>—</td><td>无</td><td>狂战命格+10%攻击</td></tr><tr><td>血祭</td><td>Q</td><td>爆发·自残</td><td>消耗当前生命15%，释放血刃波（攻击×250%），命中恢复造成伤害30%生命</td><td>消耗10%，伤害×320%，恢复40%</td><td>12秒</td><td>消耗生命</td><td>医仙命格+15%治疗效果（影响吸血）</td></tr><tr><td>血契</td><td>E</td><td>辅助·转移</td><td>与出战灵兽建立血链，灵兽受到伤害50%转移给主角，灵兽攻击+40%，持续10秒</td><td>转移30%，攻击+60%，持续13秒</td><td>20秒</td><td>消耗生命5%</td><td>驭兽命格+10%</td></tr><tr><td>血海</td><td>R</td><td>终极·爆发</td><td>大范围血爆，消耗当前生命50%，造成攻击×500%范围真实伤害。击杀敌人恢复最大生命30%</td><td>消耗40%，伤害×600%，恢复40%</td><td>能量槽满</td><td>消耗生命</td><td>万灵共鸣BUFF+20%</td></tr><tr><td>血遁</td><td>空格</td><td>位移·腐蚀</td><td>消耗当前生命5%，化为血雾向前冲刺，无敌0.3秒，路径上敌人腐蚀减防10%持续3秒</td><td>消耗3%，无敌0.4秒，腐蚀减防15%且附加出血（攻击×10%/秒，3秒）</td><td>8秒</td><td>消耗生命5%</td><td>药人命格+草木采集（血法师可采集血源草替代生命消耗）</td></tr><tr><td>血源</td><td>被动</td><td>常驻</td><td>无灵力消耗，所有技能消耗生命值；生命低于30%时攻击+20%；灵兽继承系数-10%</td><td>低血线攻击+35%，吸血+10%</td><td>—</td><td>无</td><td>药人命格+草木采集（血源草替代消耗）</td></tr></tbody></table></div>
+<blockquote><strong>属性搭配与闯关策略</strong>：血法师是刀尖跳舞的职业，所有技能包括空格都消耗生命，但攻击全职业最高（223）。闯关时必须精确计算血量：Q【血祭】自残15%换高爆发，命中后吸血回补；空格【血遁】既是位移又是减防手段，但连续使用会快速压血线，需配合药人命格采集的血源草替代消耗。E【血契】将灵兽变为输出核心（灵兽攻击+60%），自身承担伤害，适合"灵兽主输出+血法师辅助减防"的反向打法。面对地狱档BOSS（攻击342）时，血法师被摸2-3下即死，必须利用血遁+右键闪避实现"零受击"，是高风险高回报的极限职业。</blockquote>
+<p><strong>契约联动</strong>：灵兽继承系数-10%（血法师更依赖自身输出）；但"血契"可使灵兽攻击暴增，适合伙伴契约爆发流。</p>
+<p><strong>命格联动</strong>：医仙命格使吸血效果+15%；药人命格解锁"血源草"采集，可替代部分生命消耗。</p>
+<p><strong>剧情关联</strong>：白民国LINK_15；无肠国LINK_17（血法师可安全食用万宴残羹无负面）。</p>
+<hr>
+<h3>2.8 先知（新增）</h3>
+<p><strong>解锁条件</strong>：巫咸国主线选择"阻止献祭"路线（恶念-30），且持有"天相"或"巫族"命格。</p>
+<p><strong>属性修正</strong>：生命0.80 / 灵力1.40 / 攻击0.80 / 防御0.80 <strong>战斗定位</strong>：预知控场，时间操控，极致辅助。</p>
+<p><strong>技能组</strong></p>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>技能名</th><th>按键</th><th>类型</th><th>基准效果</th><th>上限效果</th><th>CD</th><th>消耗</th><th>上限触发条件</th></tr></thead><tbody><tr><td>命运丝线</td><td>鼠标左键</td><td>普攻</td><td>远程丝线，三段，第三段标记敌人（使其下次技能范围可见）</td><td>标记持续8秒，被标记敌人受伤+15%</td><td>—</td><td>无</td><td>天相命格+10%</td></tr><tr><td>预知</td><td>Q</td><td>辅助·洞察</td><td>显示周围敌人接下来3秒行动轨迹与技能范围（仅玩家可见），期间对标记敌人伤害+25%</td><td>显示5秒，伤害+40%，可共享给灵兽</td><td>15秒</td><td>20灵力</td><td>天相命格+10%</td></tr><tr><td>时滞</td><td>E</td><td>控制·减速</td><td>范围内敌人技能读条延长50%，移速-30%，持续5秒</td><td>读条延长75%，移速-50%，攻速-20%</td><td>18秒</td><td>25灵力</td><td>符箓命格+20%持续时间</td></tr><tr><td>命运裁决</td><td>R</td><td>终极·时停</td><td>暂停时间2秒（仅友方可动），期间造成伤害在时停结束后一次性结算×1.5倍</td><td>暂停3.5秒，结算×1.8倍</td><td>能量槽满</td><td>70灵力</td><td>灵气共鸣+5%/层</td></tr><tr><td>预知闪</td><td>空格</td><td>位移·反击</td><td>向前位移，无敌0.35秒（比基础位移长0.05秒），若闪避成功触发自动反击（命运丝线，攻击×60%）</td><td>无敌0.45秒，反击攻击×100%且标记敌人（受伤+15%持续5秒）</td><td>8秒</td><td>25耐力</td><td>天相命格+10%、轮回者命格使时停后恢复生命×20%</td></tr><tr><td>天眼</td><td>被动</td><td>常驻</td><td>闪避判定窗口+0.1秒（0.3→0.4秒）；格挡判定窗口+0.1秒（0.2→0.3秒）；受致命伤10%概率自动闪避（内置CD 60秒）</td><td>闪避/格挡窗口再+0.05秒；自动闪避概率15%</td><td>—</td><td>无</td><td>天相命格+10%</td></tr></tbody></table></div>
+<blockquote><strong>属性搭配与闯关策略</strong>：先知是团队辅助核心，但单人闯关同样强势。空格【预知闪】拥有全职业最长的无敌帧（0.35秒），且闪避成功自动反击，配合被动天眼的闪避窗口加成，可实现"极限闪避→自动反击→标记增伤"的循环。Q【预知】让BOSS技能完全透明，提前3秒看到攻击轨迹，是应对高难BOSS（如大人国竞技场、厌火国旱魃）的神技。R【命运裁决】时停期间可疯狂输出，结算时一次性爆发，配合高倍率技能（如灵兽投射、血祭）可打出全游戏最高单次伤害。推荐携带控制型灵兽（轮回蝶、三首犬）延长控场链。</blockquote>
+<p><strong>契约联动</strong>：不改动契约；但预知效果可使灵兽自动躲避BOSS技能（AI受益）。</p>
+<p><strong>命格联动</strong>：天相命格是解锁前置；轮回者命格使"命运裁决"时停结束后额外恢复主角生命×20%。</p>
+<p><strong>剧情关联</strong>：巫咸国LINK_06；三首国LINK_12（先知+三世镜碎片=真·轮回眼）；一目国LINK_19（先知可提前看到独目失明事件）。</p>
+<hr>
+<h3>2.9 战狂（新增）</h3>
+<p><strong>解锁条件</strong>：大人国不周竞技场连胜20场 + 劳民国获取"战意结晶"×3（或完成维持永动路线）。</p>
+<p><strong>属性修正</strong>：生命1.15 / 灵力0.60 / 攻击1.25 / 防御0.90 <strong>战斗定位</strong>：狂战士，低血高伤，以战养战。</p>
+<p><strong>技能组</strong></p>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>技能名</th><th>按键</th><th>类型</th><th>基准效果</th><th>上限效果</th><th>CD</th><th>消耗</th><th>上限触发条件</th></tr></thead><tbody><tr><td>战斧</td><td>鼠标左键</td><td>普攻</td><td>慢速高伤近战，三段，第三段破甲-25%</td><td>攻速+15%，第三段破甲-40%</td><td>—</td><td>无</td><td>剑心命格+1段普攻</td></tr><tr><td>浴血</td><td>Q</td><td>爆发·自残</td><td>主动扣除当前生命20%，进入战狂状态（攻击+40%，攻速+20%，吸血+15%），持续8秒</td><td>攻击+55%，攻速+30%，吸血+25%</td><td>15秒</td><td>25灵力</td><td>狂战命格+10%攻击</td></tr><tr><td>不屈</td><td>E</td><td>生存·重置</td><td>被动：受致命伤保留1血，无敌3秒（每场1次）。主动使用：重置该机制CD</td><td>主动使用额外恢复生命30%</td><td>60秒</td><td>30灵力</td><td>七杀命格+5%暴击</td></tr><tr><td>战神降临</td><td>R</td><td>终极·变身</td><td>全属性+50%，每秒扣生命3%，持续12秒。期间击杀敌人延长3秒并恢复生命20%</td><td>全属性+70%，扣血2%，延长5秒</td><td>能量槽满</td><td>60灵力</td><td>兽血沸腾联动</td></tr><tr><td>血战格挡</td><td>空格</td><td>防御·血偿</td><td>按住空格格挡，不耗耐力而是每秒扣1%当前生命；精准格挡触发【浴血】叠加（攻击+5%持续3秒，可叠3层）；普通格挡减伤50%</td><td>每秒扣0.5%生命，精准格挡叠加层数上限5层，每层攻击+7%，减伤60%</td><td>—</td><td>每秒扣1%生命</td><td>狂战命格+10%攻击、七杀命格+5%暴击</td></tr><tr><td>战意</td><td>被动</td><td>常驻</td><td>每损失10%生命，攻击+3%（上限27%）；击杀敌人攻击+5%可叠5层（持续15秒）</td><td>每损失10%攻击+4%（上限36%）；可叠7层</td><td>—</td><td>无</td><td>狂战命格+10%攻击</td></tr></tbody></table></div>
+<blockquote><strong>属性搭配与闯关策略</strong>：战狂是"越残越猛"的狂战士，空格【血战格挡】以血换攻——按住空格持续扣血压血线，精准格挡叠加攻击BUFF，配合被动战意的低血增伤，可实现"半血以下攻击翻倍"的恐怖输出。Q【浴血】主动扣血进入战狂状态，与空格格挡的扣血叠加，快速进入高伤区。E【不屈】提供一次免死金牌，主动使用可重置，是硬抗BOSS大招的底气。R【战神降临】全属性提升但持续扣血，适合清小怪延长，面对BOSS时需谨慎开启时机。推荐携带高吸血或护盾型灵兽（如碧磷蛇、寿桃精）弥补自残损耗。</blockquote>
+<p><strong>契约联动</strong>：替命机制强化——战狂的"不屈"可与灵战士E技"替命"叠加，实现双重保命。</p>
+<p><strong>命格联动</strong>：狂战命格是最佳搭配；七杀命格使战狂状态期间暴击+10%。</p>
+<p><strong>剧情关联</strong>：大人国LINK_03；劳民国LINK_14（战狂可直接使用战意结晶无负面）。</p>
+<hr>
+<h3>2.10 毒龙使（新增）</h3>
+<p><strong>解锁条件</strong>：黑齿国主线选择"以毒攻毒"路线（恶念+40），且持有毒系灵兽（毒蛛/碧磷蛇/毒龙真魂）作为本命契约。</p>
+<p><strong>属性修正</strong>：生命0.90 / 灵力1.10 / 攻击1.00 / 防御0.80 <strong>战斗定位</strong>：持续毒伤，层数叠加，腐蚀减防。</p>
+<p><strong>技能组</strong></p>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>技能名</th><th>按键</th><th>类型</th><th>基准效果</th><th>上限效果</th><th>CD</th><th>消耗</th><th>上限触发条件</th></tr></thead><tbody><tr><td>毒爪</td><td>鼠标左键</td><td>普攻</td><td>近战三段，附加腐蚀（防御-3%/层，上限10层）</td><td>防御-5%/层，上限12层</td><td>—</td><td>无</td><td>毒灵契合</td></tr><tr><td>毒龙吐息</td><td>Q</td><td>攻击·Dot</td><td>扇形毒雾，攻击×120%+剧毒（攻击×20%/秒，5秒）。若目标已中毒，刷新并叠加1层</td><td>伤害×150%，剧毒×30%/秒，可叠3层</td><td>14秒</td><td>22灵力</td><td>毒龙真魂本命</td></tr><tr><td>毒鳞护体</td><td>E</td><td>辅助·反伤</td><td>获得毒鳞，近战攻击者中毒（攻击×15%/秒），主角对中毒敌人伤害+20%，持续10秒</td><td>攻击者中毒×25%/秒，主角伤害+35%</td><td>18秒</td><td>25灵力</td><td>诡道命格+15%陷阱伤害</td></tr><tr><td>万毒噬天</td><td>R</td><td>终极·爆发</td><td>全场毒爆，所有敌人身上中毒立即结算剩余伤害×2倍，并附加新剧毒（攻击×30%/秒，8秒）</td><td>结算×2.5倍，新剧毒×40%/秒</td><td>能量槽满</td><td>65灵力</td><td>万灵共鸣BUFF+20%</td></tr><tr><td>蛇行</td><td>空格</td><td>位移·剧毒</td><td>向前蛇行位移，无敌0.3秒，路径留下剧毒（攻击×15%/秒，3秒），位移后下次普攻附加3层龙毒</td><td>无敌0.4秒，剧毒×25%/秒，下次普攻附加5层龙毒</td><td>8秒</td><td>25耐力</td><td>毒龙真魂本命、诡道命格+15%陷阱伤害</td></tr><tr><td>毒龙血脉</td><td>被动</td><td>常驻</td><td>所有攻击附带1层龙毒（最多10层，每层每秒攻击×3%，持续6秒）；对中毒敌人攻击+15%；毒系灵兽继承系数+10%</td><td>龙毒上限15层，对中毒敌人+25%，毒系继承+15%</td><td>—</td><td>无</td><td>毒龙真魂本命</td></tr></tbody></table></div>
+<blockquote><strong>属性搭配与闯关策略</strong>：毒龙使是DOT流大师，闯关核心是"叠毒→结算→再叠毒"。普攻腐蚀减防+龙毒DOT叠加，Q【毒龙吐息】刷新并叠加毒层，空格【蛇行】位移同时铺毒路径封锁BOSS走位。当BOSS身上叠满10层龙毒时，R【万毒噬天】一次性结算所有剩余DOT×2倍，造成巨额爆发伤害，随后立即补上新的剧毒。面对高防御BOSS（如结胸龟、机关兽）时，腐蚀减防可叠加至-50%防御，配合毒爆的真实伤害（DOT结算无视部分防御），是破高防阵容的首选。推荐本命契约毒龙真魂或碧磷蛇，最大化毒系继承系数。</blockquote>
+<p><strong>契约联动</strong>：毒系灵兽继承系数+10%（本命契约可达210%，伙伴可达160%）；与毒龙真魂本命契约时，龙毒层数上限额外+5。</p>
+<p><strong>命格联动</strong>：诡道命格使毒伤+15%；药人命格使毒系灵兽采集草木时额外产出解毒草。</p>
+<p><strong>剧情关联</strong>：黑齿国LINK_07；无肠国LINK_17（毒龙使可安全进入饕餮胃囊无腐蚀）。</p>
+<hr>
+<h2>三、隐藏职业互斥与兼容规则</h2>
+<blockquote><strong>重构说明（B-01修复）</strong>：以下表格已修复Markdown格式，补全竖线与表头，确保脚本可解析。</blockquote>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>规则类型</th><th>具体说明</th></tr></thead><tbody><tr><td><strong>互斥组A</strong></td><td>背誓者 ↔ 兽魂行者：背誓者无法拥有本命契约，兽魂行者强制要求本命契约，二者不可同时解锁。</td></tr><tr><td><strong>互斥组B</strong></td><td>战狂 ↔ 医仙命格：战狂主动压血线与医仙治疗逻辑冲突，若已解锁医仙隐藏技能，战狂任务链不可触发。</td></tr><tr><td><strong>互斥组C</strong></td><td>血法师 ↔ 医仙隐藏技能：血法师以血代蓝机制会覆盖医仙的"回春诀"隐藏技能，二者不可同时拥有。</td></tr><tr><td><strong>兼容强化①</strong></td><td>守墓人 + 巫族命格：唤灵持续时间+20%，且可在非古墓场景（如战场）唤灵。</td></tr><tr><td><strong>兼容强化②</strong></td><td>先知 + 轮回者命格：命运裁决时停结束后额外恢复主角生命×20%。</td></tr><tr><td><strong>兼容强化③</strong></td><td>毒龙使 + 诡道命格：龙毒视为陷阱类效果，享受诡道+15%伤害加成。</td></tr><tr><td><strong>切换惩罚</strong></td><td>隐藏职业之间切换需消耗"忘川水"×1（MAT-SC21，见03-5灵魂结晶总库），或扣除当前经验值30%。</td></tr></tbody></table></div>
+<blockquote><strong>忘川水（MAT-SC21）产出来源（B-07修复）</strong>：引用03-5第三节，已确认以下途径： 1. <strong>三首国轮回井</strong>：每周目固定产出 ×3 2. <strong>巫咸国净魂池任务线</strong>：一次性产出 ×2（不可重复） 3. <strong>高恶念值黑市（交胫国/任意国家恶念&gt;60）</strong>：概率刷新，单价 5000 金币</blockquote>
+<hr>
+<h2>四、50级基准速查与平衡验证</h2>
+<h3>4.1 隐藏职业50级裸身属性（无BUFF）</h3>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>隐藏职业</th><th>生命</th><th>灵力</th><th>攻击</th><th>防御</th><th>空格机制类型</th><th>预估击杀50级普通BOSS时长</th></tr></thead><tbody><tr><td>封灵师</td><td>799</td><td>874</td><td>151</td><td>79</td><td>位移·控场</td><td>~100秒（依赖多灵兽协击）</td></tr><tr><td>兽魂行者</td><td>1,128</td><td>470</td><td>214</td><td>93</td><td>防御·弹反</td><td>~75秒（兽化期间）/~110秒（常态）</td></tr><tr><td>墨家传人</td><td>846</td><td>739</td><td>169</td><td>84</td><td>位移·陷阱</td><td>~105秒（阵地战，傀儡持续输出）</td></tr><tr><td>背誓者</td><td>940</td><td>672</td><td>178</td><td>93</td><td>位移·双效</td><td>~90秒（伙伴200%接近本命）</td></tr><tr><td>山海绘卷师</td><td>799</td><td>806</td><td>160</td><td>74</td><td>位移·随机</td><td>~95秒（随机性大，欧皇可至80秒）</td></tr><tr><td>守墓人</td><td>940</td><td>605</td><td>169</td><td>98</td><td>位移·恐惧</td><td>~115秒（亡灵场景可缩短至90秒）</td></tr><tr><td>血法师</td><td>1,034</td><td>336</td><td>223</td><td>65</td><td>位移·腐蚀</td><td>~70秒（自残爆发）/~130秒（保守打）</td></tr><tr><td>先知</td><td>752</td><td>941</td><td>142</td><td>74</td><td>位移·反击</td><td>~140秒（但团队容错率极高）</td></tr><tr><td>战狂</td><td>1,081</td><td>403</td><td>223</td><td>84</td><td>防御·血偿</td><td>~80秒（低血线）/~120秒（满血）</td></tr><tr><td>毒龙使</td><td>846</td><td>739</td><td>178</td><td>74</td><td>位移·剧毒</td><td>~110秒（Dot结算后稳定）</td></tr></tbody></table></div>
+<h3>4.2 平衡性说明</h3>
+<ul><li><strong>兽魂行者</strong>：常态下与灵战士持平；完全兽化期间（15秒）属性=灵兽×120%，配合本命230%继承，理论攻击可达 178×2.3×1.2≈491，为全职业最高爆发窗口。空格【兽魂铁壁】精准格挡免费释放灵兽Q技，常态下即可维持高输出，但灵力极低（470）限制技能频率，符合"高爆发低续航"定位。</li></ul>
+<ul><li><strong>血法师</strong>：攻击223为全职业最高，但防御仅65，且技能自残。空格【血遁】虽提供位移减防，但连续使用会快速压血线，在地狱档BOSS（攻击342）面前被摸2-3下即死，高风险高回报。</li></ul>
+<ul><li><strong>战狂</strong>：空格【血战格挡】以血换攻，配合被动战意和Q【浴血】，可在半血以下达到攻击+70%以上的恐怖增幅，但持续扣血机制要求玩家必须速战速决，是"要么秒BOSS要么被秒"的极端职业。</li></ul>
+<ul><li><strong>先知</strong>：攻击仅142，但空格【预知闪】无敌帧最长（0.35秒）且自动反击，配合天眼被动，是生存能力最强的辅助核心。R【命运裁决】的时停结算机制在组队模式下价值极高。</li></ul>
+<ul><li><strong>背誓者</strong>：虽无本命，但伙伴契约200%已接近基准本命200%，且保留原职业Q/E操作惯性，空格【背誓之跃】攻守一体，是上手难度最低的隐藏职业。</li></ul>
+<hr>
+<h2>五、隐藏职业与20国剧情关联索引</h2>
+<p>表格</p>
+<div class="tw"><table><thead><tr><th>隐藏职业</th><th>核心关联国家</th><th>剧情触发点</th><th>特殊效果</th></tr></thead><tbody><tr><td>封灵师</td><td>厌火国(NAT_02)</td><td>破棺路线，无本命击败旱魃</td><td>解锁后可在巫咸国触发"封灵问天"</td></tr><tr><td>兽魂行者</td><td>毛民国(NAT_13)</td><td>兽魂行者身份与梼杌幼崽共鸣</td><td>可直接签约梼杌幼崽，跳过血脉觉醒路线惩罚</td></tr><tr><td>墨家传人</td><td>青丘国(NAT_01)</td><td>悬空木阁底层机关谜题</td><td>劳民国永动齿轮伤害免疫</td></tr><tr><td>背誓者</td><td>心魔试炼副本</td><td>累计3次强行解约+3次心魔</td><td>与轩辕国黄帝剑灵剧情互斥</td></tr><tr><td>山海绘卷师</td><td>三首国(NAT_12)</td><td>图鉴收集与三世镜碎片共鸣</td><td>集齐图鉴+三世镜=解锁全视之眼线索</td></tr><tr><td>守墓人</td><td>巫咸国(NAT_06)</td><td>低恶念结局×3</td><td>可直接与大巫师团亡灵对话跳过战斗</td></tr><tr><td>血法师</td><td>白民国(NAT_15)</td><td>寻找替代路线</td><td>无肠国万宴残羹无负面食用</td></tr><tr><td>先知</td><td>巫咸国(NAT_06)</td><td>阻止献祭路线</td><td>一目国独目失明事件提前预警</td></tr><tr><td>战狂</td><td>大人国(NAT_03)+劳民国(NAT_14)</td><td>竞技场连胜20场+战意结晶×3</td><td>可直接使用劳民国战意结晶无负面</td></tr><tr><td>毒龙使</td><td>黑齿国(NAT_07)</td><td>以毒攻毒路线+毒系本命</td><td>无肠国饕餮胃囊腐蚀免疫</td></tr></tbody></table></div>
+<hr>
+<h2>【未定/待研究补充区】</h2>
+<ul><li>[ ] 血法师在地狱档BOSS战（攻击342）中的生存率是否过低？需验证自残阈值是否合理</li></ul>
+<ul><li>[ ] 先知的"时停"机制在多人模式（若未来加入）中的同步问题</li></ul>
+<ul><li>[ ] 战狂与灵战士E技"替命"的叠加逻辑：是否可实现"替命→不屈→替命"三重保命？</li></ul>
+<ul><li>[ ] 毒龙使的龙毒层数在长时间BOSS战中是否会溢出？需验证10层上限的合理性</li></ul>
+<ul><li>[ ] 兽魂行者空格【兽魂铁壁】在兽化期间免费释放SKILL_R的触发频率是否过高？</li></ul>
+<ul><li>[ ] 此处留白：_________________________</li></ul>
+</div></div></body></html>
