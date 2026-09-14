@@ -1,164 +1,537 @@
 <!DOCTYPE html>
-<html lang="zh-CN"><head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>02-2_职业技能库 · 杨长辉作品集</title>
-<style>
-*{box-sizing:border-box}
-body{font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;line-height:1.85;color:#26303f;margin:0;background:#f6f8fc;font-size:15.5px}
-.wrap{max-width:900px;margin:0 auto;padding:26px 22px 80px}
-.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px;font-size:13px}
-.crumb{color:#7c8aa3;word-break:break-all}
-.crumb b{color:#1d4ed8}
-.back{white-space:nowrap;padding:6px 13px;border-radius:8px;background:#1d4ed8;color:#fff;text-decoration:none;font-size:13px}
-h1{font-size:25px;margin:0 0 4px;letter-spacing:.5px;line-height:1.4}
-.meta{color:#8a97ab;font-size:13px;margin:0 0 20px}
-.doc{background:#fff;border-radius:14px;padding:30px 34px 40px;box-shadow:0 2px 14px rgba(30,50,90,.06)}
-.doc h1,.doc h2,.doc h3,.doc h4{color:#12306e;line-height:1.5}
-.doc h1{font-size:22px;margin:26px 0 12px;padding-bottom:8px;border-bottom:2px solid #e5ecfa}
-.doc h2{font-size:19px;margin:24px 0 10px;padding-left:11px;border-left:4px solid #1d4ed8}
-.doc h3{font-size:16.5px;margin:20px 0 8px;color:#1d4ed8}
-.doc h4{font-size:15px;margin:16px 0 6px;color:#38507f}
-.doc p{margin:0 0 13px;text-align:justify}
-.doc strong{color:#12306e}
-.doc ul{padding-left:22px;margin:0 0 13px}
-.doc li{margin:4px 0}
-.doc pre{background:#0f2035;color:#d7e3f7;padding:15px 17px;border-radius:10px;overflow-x:auto;font-size:13.5px;line-height:1.65;font-family:ui-monospace,Menlo,Consolas,monospace}
-.doc code{background:#eef2fa;padding:1px 5px;border-radius:4px;font-size:13.5px;color:#12306e}
-.doc pre code{background:none;color:inherit;padding:0}
-.doc blockquote{margin:0 0 14px;padding:11px 16px;background:#f3f6fd;border-left:4px solid #9db4e8;border-radius:0 8px 8px 0;color:#3c4b64}
-.doc hr{border:0;border-top:1px solid #e5ecfa;margin:24px 0}
-.tw{overflow-x:auto;margin:0 0 16px;border-radius:9px;border:1px solid #e5ecfa}
-.doc table{border-collapse:collapse;width:100%;font-size:13.5px}
-.doc th{background:#eef3fc;color:#12306e;font-weight:600}
-.doc th,.doc td{border:1px solid #e0e8f6;padding:7px 10px;text-align:left;white-space:nowrap}
-.doc tbody tr:nth-child(even){background:#fafbfe}
-.doc .ms{margin:0 0 20px;border:1px solid #e5ecfa;border-radius:11px;overflow:hidden;background:#fbfcfe}
-.doc .ms img{display:block;width:100%;height:auto}
-.doc .ms figcaption{font-size:12.5px;color:#93a0b4;text-align:center;padding:8px 10px;background:#f6f8fc;border-top:1px solid #eef2fa}
-.doc .poem{margin:0 0 3px;line-height:2.15;font-size:16.5px;color:#1f2b3d;letter-spacing:.8px}
-.doc .psrc{margin:10px 0 0;font-size:12.5px;color:#a3aebb;text-align:right}
-.doc .ocrnote{margin:0 0 18px;padding:10px 15px;background:#f3f6fd;border-left:4px solid #9db4e8;border-radius:0 8px 8px 0;color:#5a6a80;font-size:13px}
-@media(max-width:640px){.wrap{padding:16px 12px 50px}.doc{padding:20px 16px 30px}h1{font-size:20px}}
-</style></head><body>
-<div class="wrap">
-<div class="topbar"><div class="crumb">游戏策划专题 / 02-山海师：灵契 / 02_人物与职业系统 / <b>02-2_职业技能库</b></div>
-<a class="back" href="../../../index.html">← 返回目录</a></div>
-<h1>02-2_职业技能库</h1>
-<p class="meta">约 5,641 字 · 原件 <a href="02-2_%E8%81%8C%E4%B8%9A%E6%8A%80%E8%83%BD%E5%BA%93.md.md">02-2_职业技能库.md.md</a></p>
-<div class="doc">
-<p>02-2_职业技能库</p>
-<h1>引用宪法：v0.2（全局核心参数总表）</h1>
-<h1>关联文档：02-1_人物基础数值库、02-3_隐藏职业库、02-4_山海灵兽与英雄数据库、03-4_战斗与碰撞数值</h1>
-<h1>状态：已重构 | 待审：灵兽F/G键位在手柄模式下的映射方案</h1>
-<hr>
-<h2>一、职业基础信息表</h2>
-<div class="tw"><table><thead><tr><th>职业</th><th>武器</th><th>定位</th><th>攻击距离</th><th>核心机制</th><th>被动天赋（常驻，无按键）</th></tr></thead><tbody><tr><td>驭灵师</td><td>灵笔/符箓</td><td>中距离控场·灵兽强化</td><td>中</td><td>强化灵兽技能，人兽协同</td><td>墨韵（破甲叠加）</td></tr><tr><td>灵战士</td><td>灵刃/兽爪臂铠</td><td>近身高频输出·肉盾夹击</td><td>近</td><td>与灵兽夹击，破甲连击</td><td>兽血（低血自动爆发）</td></tr><tr><td>灵术师</td><td>灵珠/兽骨法器</td><td>远程AOE·元素转化</td><td>远</td><td>元素转化，远程轰炸</td><td>元素亲和（常驻增伤）</td></tr></tbody></table></div>
-<hr>
-<h2>二、全局战斗操作框架（重制版）</h2>
-<h3>2.1 键位总览</h3>
-<div class="tw"><table><thead><tr><th>按键</th><th>功能</th><th>详细机制</th></tr></thead><tbody><tr><td>WASD</td><td>主角移动</td><td>八方向移动，水墨拖影特效</td></tr><tr><td>鼠标左键</td><td>主角普攻（连段）</td><td>根据职业变化武器形态，连段间可插入闪避取消后摇</td></tr><tr><td>鼠标右键</td><td>主角闪避</td><td>0.3秒无敌帧，消耗耐力25点（上限100，每秒回20），可连闪2次，第3次消耗翻倍并疲劳3秒</td><td>（灵战士为格挡）</td></tr><tr><td>Q</td><td>人技1（主攻）</td><td>驭灵师·敕令·攻 / 灵战士·兽血沸腾 / 灵术师·兽灵转化</td></tr><tr><td>E</td><td>人技2（辅助/生存）</td><td>驭灵师·敕令·守 / 灵战士·替命 / 灵术师·灵兽投射</td></tr><tr><td>R</td><td>人兽合体奥义</td><td>需能量槽满，契约等级越高充能越快</td></tr><tr><td>空格</td><td>职业特色防御/位移</td></tr><tr><td>F</td><td>灵兽主动技1（SKILL_Q）</td><td>由当前出战灵兽决定，玩家手动释放</td></tr><tr><td>G</td><td>灵兽主动技2（SKILL_W）</td><td>由当前出战灵兽决定，玩家手动释放</td></tr><tr><td>1-4数字键</td><td>道具/灵材快捷使用</td><td>战斗中可临时投喂灵材给灵兽回血或加BUFF</td></tr><tr><td>Tab键</td><td>切换出战灵兽</td><td>非战斗状态可切换；切换后F/G技能自动替换为新灵兽技能</td></tr><tr><td>c</td><td>召唤山海兽</td></tr></tbody></table></div>
-<h3>2.2 键位设计哲学（修正版）</h3>
-<blockquote><strong>左撇子键位修正</strong>：原 I/O/P 方案与右手方向键距离过远，改为数字键盘区方案。</blockquote>
-<div class="tw"><table><thead><tr><th>键位</th><th>手指归属</th><th>设计意图</th></tr></thead><tbody><tr><td>Q</td><td>左手小指</td><td>主攻技，高频释放，小指可快速连点</td></tr><tr><td>E</td><td>左手无名指</td><td>辅助/生存技，混乱战况下的本能按键</td></tr><tr><td>R</td><td>左手食指</td><td>奥义大招，需要前摇意识与时机判断</td></tr><tr><td>空格</td><td>左手拇指</td><td>职业核心差异键：灵战士格挡弹反，驭灵师/灵术师特色位移</td></tr><tr><td>F</td><td>左手食指</td><td>灵兽主攻技，与Q形成"人兽双攻"连招</td></tr><tr><td>G</td><td>左手食指</td><td>灵兽功能技，距离F键近，可快速衔接F→G连招</td></tr></tbody></table></div>
-<blockquote><strong>职业差异化设计</strong>：空格是三大职业操作手感的分水岭。灵战士按住空格即可格挡，精准时机触发弹反，高风险高回报；驭灵师与灵术师按空格触发职业特色位移，无敌帧与元素/灵兽特效联动，强调走位与控场。所有职业共享鼠标右键基础闪避，确保基础生存下限一致。</blockquote>
-<h3>2.3 自定义键位支持</h3>
-<blockquote><strong>系统规范</strong>：游戏内设置菜单提供「键位自定义」面板，允许玩家对以下按键进行重映射。</blockquote>
-<div class="tw"><table><thead><tr><th>可自定义项</th><th>默认键</th><th>禁止映射键</th><th>冲突检测</th></tr></thead><tbody><tr><td>移动-上</td><td>W</td><td>不可为空</td><td>与技能键重复时自动标红</td></tr><tr><td>移动-下</td><td>S</td><td>不可为空</td><td>同上</td></tr><tr><td>移动-左</td><td>A</td><td>不可为空</td><td>同上</td></tr><tr><td>移动-右</td><td>D</td><td>不可为空</td><td>同上</td></tr><tr><td>普攻</td><td>鼠标左键</td><td>不可为空</td><td>—</td></tr><tr><td>闪避</td><td>鼠标右键</td><td>不可为空</td><td>—</td></tr><tr><td>人技1</td><td>Q</td><td>不可与移动键重复</td><td>若重复则技能优先，移动失效（需警告）</td></tr><tr><td>人技2</td><td>E</td><td>不可与移动键重复</td><td>同上</td></tr><tr><td>合体奥义</td><td>R</td><td>不可与移动键重复</td><td>同上</td></tr><tr><td>职业特色（格挡/位移）</td><td>空格</td><td>不可与移动键重复</td><td>同上</td></tr><tr><td>灵兽技1</td><td>F</td><td>不可与移动键重复</td><td>同上</td></tr><tr><td>灵兽技2</td><td>G</td><td>不可与移动键重复</td><td>同上</td></tr><tr><td>道具1-4</td><td>1/2/3/4</td><td>不可与移动键重复</td><td>同上</td></tr><tr><td>切换灵兽</td><td>Tab</td><td>不可与移动键重复</td><td>同上</td></tr></tbody></table></div>
-<blockquote><strong>预设方案</strong>：提供三套官方预设，玩家可一键切换： - <strong>默认PC键位</strong>：上文所述Q/E/R/空格/F/G方案 - <strong>左撇子键位</strong>：数字键区方案，移动改为方向键 - <strong>动作游戏键位</strong>：人技1→鼠标中键，人技2→Shift，灵兽技→Q/E，奥义→R（适合习惯鼠标释放技能的玩家）</blockquote>
-<div class="tw"><table><thead><tr><th>键位</th><th>默认PC</th><th>左撇子（方向键移动）</th><th>动作游戏键位</th></tr></thead><tbody><tr><td>移动</td><td>WASD</td><td>方向键 ↑↓←→</td><td>WASD</td></tr><tr><td>普攻</td><td>鼠标左键</td><td>数字键 1</td><td>鼠标左键</td></tr><tr><td>闪避</td><td>鼠标右键</td><td>数字键 2</td><td>鼠标右键</td></tr><tr><td>人技1</td><td>Q</td><td>数字键 4</td><td>鼠标中键</td></tr><tr><td>人技2</td><td>E</td><td>数字键 5</td><td>左 Shift</td></tr><tr><td>奥义</td><td>R</td><td>数字键 6</td><td>R</td></tr><tr><td>职业特色</td><td>空格</td><td>数字键 0</td><td>空格</td></tr><tr><td>灵兽技1</td><td>F</td><td>数字键 7</td><td>Q</td></tr><tr><td>灵兽技2</td><td>G</td><td>数字键 8</td><td>E</td></tr><tr><td>切换灵兽</td><td>Tab</td><td>数字键 9</td><td>Tab</td></tr></tbody></table></div>
-<blockquote><strong>手柄映射（新增）</strong>：LT 闪避 / RT 普攻 / LB 灵兽技1(F) / RB 灵兽技2(G) / Y 奥义 / B 人技2 / X 人技1 / A 跳跃(空格特色) / 方向键切换灵兽。</blockquote>
-<hr>
-<h2>三、驭灵师技能组</h2>
-<h3>3.1 普攻【点灵】（鼠标左键三段连段，可插入闪避取消后摇）</h3>
-<div class="tw"><table><thead><tr><th>段数</th><th>基准倍率</th><th>上限倍率</th><th>灵兽协击基准</th><th>灵兽协击上限</th><th>特殊效果</th></tr></thead><tbody><tr><td>第1段</td><td>40%</td><td>55%</td><td>—</td><td>—</td><td>墨痕轨迹</td></tr><tr><td>第2段</td><td>50%</td><td>65%</td><td>—</td><td>—</td><td>墨痕扩散</td></tr><tr><td>第3段</td><td>80%</td><td>110%</td><td>50%灵兽攻击力</td><td>70%灵兽攻击力</td><td>灵兽幻影突刺</td></tr><tr><td><strong>连段合计</strong></td><td><strong>170%</strong></td><td><strong>230%</strong></td><td><strong>+50%灵兽</strong></td><td><strong>+70%灵兽</strong></td><td>—</td></tr></tbody></table></div>
-<blockquote><strong>上限触发条件</strong>：符箓命格+20%持续时间（间接提升墨痕叠加效率）、本命契约200%继承（提升灵兽协击伤害）、诡道命格+15%陷阱伤害（墨痕视为陷阱类效果）</blockquote>
-<h3>3.2 主动技能组</h3>
-<div class="tw"><table><thead><tr><th>技能名</th><th>按键</th><th>基准效果</th><th>上限效果</th><th>CD</th><th>灵力消耗</th><th>上限触发条件</th></tr></thead><tbody><tr><td>敕令·攻</td><td>Q</td><td>灵兽下次主动技（F/G）伤害×1.5</td><td>灵兽下次主动技伤害×1.8</td><td>12秒</td><td>15</td><td>驭兽命格+10%、伙伴契约150%继承</td></tr><tr><td>敕令·守</td><td>E</td><td>灵兽冲向主角形成护盾，吸收一次致命伤害；护盾值=灵兽防御×200%</td><td>护盾值=灵兽防御×280%</td><td>18秒</td><td>20</td><td>天相命格+10%治疗量、本命契约200%继承</td></tr><tr><td>万灵归宗</td><td>R</td><td>同时召唤所有已契约灵兽幻影，每只每次造成灵兽攻击×120%，持续5秒（约攻击6-8次）</td><td>每只每次造成灵兽攻击×160%</td><td>能量槽满</td><td>50</td><td>万灵共鸣BUFF+20%、灵气共鸣+5%/层（上限10层+50%）</td></tr></tbody></table></div>
-<h3>3.3 职业特色【灵兽瞬闪】（空格键，位移·协同）</h3>
-<div class="tw"><table><thead><tr><th>项目</th><th>基准值</th><th>上限值</th><th>上限触发条件</th></tr></thead><tbody><tr><td>效果</td><td>灵兽扑向主角将其带离原地，0.3秒无敌，落点周围小范围减速30%持续2秒</td><td>无敌0.4秒，减速50%持续3秒，落点触发灵兽协击（攻击×80%）</td><td>本命契约200%继承、驭兽命格+10%、诡道命格+15%陷阱伤害（落点墨痕视为陷阱）</td></tr><tr><td>耐力消耗</td><td>25点</td><td>25点</td><td>—</td></tr><tr><td>CD</td><td>8秒</td><td>6秒</td><td>符箓命格+20%持续时间（间接减CD手感）</td></tr><tr><td>触发方式</td><td>按下空格即时释放</td><td>按下空格</td><td>—</td></tr></tbody></table></div>
-<blockquote><strong>联动设计</strong>：灵兽瞬闪落点留下墨痕，与普攻墨痕叠加，形成"闪避→破甲→Q敕令·攻→F灵兽主攻"的四连爆发。驭灵师无格挡，依赖瞬闪与右键闪避的双位移生存。</blockquote>
-<h3>3.4 被动天赋【墨韵】（常驻，无按键，自动生效）</h3>
-<div class="tw"><table><thead><tr><th>项目</th><th>基准值</th><th>上限值</th><th>上限触发条件</th></tr></thead><tbody><tr><td>效果</td><td>普攻附带墨痕，降低目标5%防御</td><td>降低目标8%防御</td><td>诡道命格+15%、符箓命格+20%持续时间</td></tr><tr><td>持续时间</td><td>5秒</td><td>8秒</td><td>符箓命格+20%持续时间</td></tr><tr><td>叠加层数</td><td>3层（最高减防15%）</td><td>5层（最高减防40%）</td><td>诡道命格+2层叠加上限</td></tr><tr><td>触发方式</td><td>常驻被动，普攻命中自动触发</td><td>常驻被动</td><td>—</td></tr><tr><td>灵力消耗</td><td>无</td><td>无</td><td>—</td></tr><tr><td>CD</td><td>无</td><td>无</td><td>—</td></tr></tbody></table></div>
-<blockquote><strong>属性搭配与闯关策略</strong>：驭灵师闯关需根据BOSS属性切换灵兽。面对火属性BOSS，切换冰/月属性灵兽（如绒绒兔），利用E【敕令·守】护盾抗住开场爆发，空格【灵兽瞬闪】拉开距离，普攻叠加墨痕破甲至5层后，Q【敕令·攻】+F【灵兽主攻技】打出属性克制爆发。墨痕破甲与灵兽属性Debuff叠加，可实现"减防→增伤→属性克制"三重乘算。</blockquote>
-<hr>
-<h2>四、灵战士技能组</h2>
-<h3>4.1 普攻【裂空爪】（鼠标左键三段近战）</h3>
-<div class="tw"><table><thead><tr><th>段数</th><th>基准倍率</th><th>上限倍率</th><th>特殊效果</th><th>上限效果</th></tr></thead><tbody><tr><td>第1段</td><td>60%</td><td>80%</td><td>—</td><td>—</td></tr><tr><td>第2段</td><td>70%</td><td>90%</td><td>—</td><td>—</td></tr><tr><td>第3段</td><td>100%</td><td>130%</td><td>破甲-30%防御，持续5秒</td><td>破甲-40%防御，持续5秒</td></tr><tr><td><strong>连段合计</strong></td><td><strong>230%</strong></td><td><strong>300%</strong></td><td><strong>破甲5秒</strong></td><td><strong>破甲5秒</strong></td></tr></tbody></table></div>
-<blockquote><strong>上限触发条件</strong>：剑心命格+1段普攻（间接提升DPS）、狂战命格+10%攻击、本命契约200%继承（灵兽协击伤害提升）</blockquote>
-<h3>4.2 主动技能组</h3>
-<div class="tw"><table><thead><tr><th>技能名</th><th>按键</th><th>基准效果</th><th>上限效果</th><th>CD</th><th>灵力消耗</th><th>上限触发条件</th></tr></thead><tbody><tr><td>兽血沸腾</td><td>Q</td><td>主角与灵兽攻速+30%，持续8秒</td><td>攻速+45%，持续10秒</td><td>15秒</td><td>20</td><td>狂战命格+10%攻击、人兽同契期间被动触发阈值提升</td></tr><tr><td>替命</td><td>E</td><td>灵兽替主角承受下一次伤害，并反击敌人；反击伤害=灵兽攻击×150%</td><td>反击伤害=灵兽攻击×200%</td><td>20秒</td><td>25</td><td>七杀命格+5%暴击、本命契约200%继承</td></tr><tr><td>人兽同契</td><td>R</td><td>融合为"战灵形态"，全属性+50%，持续10秒；期间免疫控制</td><td>全属性+70%，持续12秒</td><td>能量槽满</td><td>60</td><td>兽魂行者隐藏职业、灵气共鸣+5%/层（上限10层+50%）</td></tr></tbody></table></div>
-<h3>4.3 职业特色【铁壁格挡】（空格键，防御·弹反）</h3>
-<div class="tw"><table><thead><tr><th>项目</th><th>基准值</th><th>上限值</th><th>上限触发条件</th></tr></thead><tbody><tr><td>效果</td><td>按住空格耗耐力（每秒10点），受击前0.2秒精准格挡触发"灵契反击"，灵兽立即释放一次免费协击；普通格挡减伤70%</td><td>精准格挡减伤90%，灵兽协击伤害×1.5，反击附带破甲-15%防御</td><td>剑心命格+1段普攻、七杀命格+5%暴击、狂战命格+10%攻击</td></tr><tr><td>耐力消耗</td><td>按住每秒10点</td><td>按住每秒10点</td><td>—</td></tr><tr><td>触发方式</td><td>按住空格，松手取消</td><td>按住空格</td><td>—</td></tr><tr><td>灵力消耗</td><td>无</td><td>无</td><td>—</td></tr></tbody></table></div>
-<blockquote><strong>联动设计</strong>：铁壁格挡是灵战士的核心差异。右键闪避用于紧急脱身，空格格挡用于正面硬刚。精准格反后接Q【兽血沸腾】可打出"弹反→攻速爆发→普攻连段"的站撸循环。人兽同契R期间，格挡判定窗口临时延长0.05秒。</blockquote>
-<h3>4.4 被动天赋【兽血】（常驻，无按键，自动生效）</h3>
-<div class="tw"><table><thead><tr><th>项目</th><th>基准值</th><th>上限值</th><th>上限触发条件</th></tr></thead><tbody><tr><td>触发条件</td><td>生命值低于30%时自动触发</td><td>生命值低于40%时自动触发</td><td>狂战命格+10%攻击（提升触发阈值）、背誓者命格（延长惩罚但提升触发阈值）</td></tr><tr><td>效果</td><td>自动触发兽血沸腾（攻速+30%，8秒）</td><td>攻速+45%，持续10秒</td><td>狂战命格+10%、七杀命格+5%暴击</td></tr><tr><td>内置CD</td><td>60秒</td><td>45秒</td><td>背誓者命格减少内置CD</td></tr><tr><td>触发方式</td><td>被动自动，无需按键</td><td>被动自动</td><td>—</td></tr><tr><td>灵力消耗</td><td>无</td><td>无</td><td>—</td></tr></tbody></table></div>
-<blockquote><strong>属性搭配与闯关策略</strong>：灵战士是唯一的格挡职业，面对高攻击频率的BOSS（如大人国裂山虎王）时，空格精准弹反可打断BOSS连招并触发灵兽协击。闯关时优先选择金属性/土属性灵兽（如铁骨虎、山岳巨猿），利用灵兽高防御与E【替命】吸收致命伤害，自身专注破甲连击。兽血被动+Q主动可实现"残血→双攻速爆发→反杀"的狂战士循环。</blockquote>
-<hr>
-<h2>五、灵术师技能组</h2>
-<h3>5.1 普攻【灵弹】（鼠标左键元素飞弹，属性随当前灵兽改变）</h3>
-<div class="tw"><table><thead><tr><th>段数</th><th>基准倍率</th><th>上限倍率</th><th>溅射/异常</th><th>上限溅射</th></tr></thead><tbody><tr><td>第1段</td><td>35%</td><td>50%</td><td>—</td><td>—</td></tr><tr><td>第2段</td><td>45%</td><td>60%</td><td>—</td><td>—</td></tr><tr><td>第3段</td><td>60%</td><td>80%</td><td>小范围溅射30%</td><td>溅射45%</td></tr><tr><td><strong>连段合计</strong></td><td><strong>140%</strong></td><td><strong>190%</strong></td><td><strong>+溅射</strong></td><td><strong>+溅射</strong></td></tr></tbody></table></div>
-<blockquote><strong>上限触发条件</strong>：混元命格+2%全属性、五行匹配命格+15%对应元素伤害、本命契约200%继承（灵兽属性提升间接提升灵弹属性伤害）</blockquote>
-<h3>5.2 主动技能组</h3>
-<div class="tw"><table><thead><tr><th>技能名</th><th>按键</th><th>基准效果</th><th>上限效果</th><th>CD</th><th>灵力消耗</th><th>上限触发条件</th></tr></thead><tbody><tr><td>兽灵转化</td><td>Q</td><td>改变主角攻击属性为灵兽主属性，附加异常状态（火=灼烧/冰=冻结/毒=腐蚀），持续10秒；异常伤害=攻击×15%</td><td>异常伤害=攻击×25%</td><td>12秒</td><td>18</td><td>五行匹配命格+15%对应元素伤害、混元命格+2%全属性</td></tr><tr><td>灵兽投射</td><td>E</td><td>将灵兽投掷向目标区域，造成大范围属性爆炸，灵兽暂时离场3秒；爆炸伤害=灵兽攻击×250%</td><td>爆炸伤害=灵兽攻击×350%</td><td>16秒</td><td>30</td><td>伙伴契约150%继承、破军命格+10%破甲效率</td></tr><tr><td>天罚·兽临</td><td>R</td><td>召唤巨型灵兽虚影覆盖半场，持续落下属性陨石，持续8秒（0.5秒/颗，共16颗）；每颗陨石=灵兽攻击×100%</td><td>每颗陨石=灵兽攻击×140%</td><td>能量槽满</td><td>70</td><td>万灵共鸣BUFF+20%、本命契约200%继承</td></tr></tbody></table></div>
-<h3>5.3 职业特色【元素遁】（空格键，位移·元素）</h3>
-<div class="tw"><table><thead><tr><th>项目</th><th>基准值</th><th>上限值</th><th>上限触发条件</th></tr></thead><tbody><tr><td>效果</td><td>化为当前灵兽属性元素向前位移，无敌0.3秒，路径留下元素效果持续3秒（火=灼烧攻击×10%/秒/冰=减速40%/毒=腐蚀减防5%）</td><td>无敌0.4秒，路径元素效果持续5秒且伤害+50%，附加对应元素共鸣（主角该元素伤害+15%持续5秒）</td><td>五行匹配命格+15%对应元素伤害、混元命格+2%全属性、阴阳命格+10%异常抵抗（转化为异常增伤）</td></tr><tr><td>耐力消耗</td><td>25点</td><td>25点</td><td>—</td></tr><tr><td>CD</td><td>8秒</td><td>6秒</td><td>混元命格+2%全属性（手感优化）</td></tr><tr><td>触发方式</td><td>按下空格+方向键释放</td><td>按下空格+方向键</td><td>—</td></tr></tbody></table></div>
-<blockquote><strong>联动设计</strong>：元素遁路径留下的元素领域可与Q【兽灵转化】联动，形成"遁入火路径→火属性普攻→E【灵兽投射】火爆炸"的纯火连招。灵兽离场3秒期间，右键闪避作为备用生存手段。</blockquote>
-<h3>5.4 被动天赋【元素亲和】（常驻，无按键，自动生效）</h3>
-<div class="tw"><table><thead><tr><th>项目</th><th>基准值</th><th>上限值</th><th>上限触发条件</th></tr></thead><tbody><tr><td>效果</td><td>元素伤害+8%（常驻，属性随当前灵兽改变）</td><td>元素伤害+15% + 异常状态持续时间+20%</td><td>五行匹配命格+15%对应元素伤害、混元命格+2%全属性、阴阳命格+10%异常抵抗（转化为异常增伤）</td></tr><tr><td>触发方式</td><td>常驻被动，无需按键</td><td>常驻被动</td><td>—</td></tr><tr><td>灵力消耗</td><td>无</td><td>无</td><td>—</td></tr><tr><td>CD</td><td>无</td><td>无</td><td>—</td></tr></tbody></table></div>
-<blockquote><strong>属性搭配与闯关策略</strong>：灵术师闯关核心是"元素连锁"。面对木属性BOSS（如女子国共生藤），切换火属性灵兽（如玄火蛇），Q【兽灵转化】切火属性附加灼烧，空格【元素遁】留下火路径封锁走位，普攻第三段溅射叠加灼烧层数，E【灵兽投射】火爆炸触发灼烧结算。不同关卡需灵活切换灵兽属性，利用元素克制（见第八节速查表/宪法6.4）提升25%基础伤害。</blockquote>
-<hr>
-<h2>六、灵兽技能库键位映射与结构</h2>
-<h3>6.1 技能槽位标准结构（所有灵兽通用）</h3>
-<div class="tw"><table><thead><tr><th>槽位代号</th><th>技能类型</th><th>说明</th><th>是否必定义</th><th>铁律</th></tr></thead><tbody><tr><td>SKILL_Q</td><td>主动攻击技</td><td>灵兽主要输出/控制技能，伤害型或Debuff型</td><td>是</td><td>—</td></tr><tr><td>SKILL_W</td><td>主动功能技</td><td>位移/控制/特殊机制（隐身、嘲讽、召唤等）</td><td>是</td><td>—</td></tr><tr><td>SKILL_E</td><td><strong>辅助技（必留）</strong></td><td>治疗/护盾/增益/净化/减伤等辅助效果</td><td><strong>是</strong></td><td><strong>禁止放纯伤害技能</strong></td></tr><tr><td>SKILL_R</td><td>终极技/奥义</td><td>高伤害大招或特殊合体效果，消耗能量或长CD</td><td>是</td><td>—</td></tr></tbody></table></div>
-<blockquote><strong>E位铁律</strong>：所有灵兽的SKILL_E必须是辅助型技能。保证无论玩家切换哪只灵兽出战，灵兽在自动战斗逻辑中优先释放辅助技保护主角。</blockquote>
-<h3>6.2 灵兽键位映射（人主导模式）</h3>
-<div class="tw"><table><thead><tr><th>灵兽槽位</th><th>玩家按键</th><th>说明</th></tr></thead><tbody><tr><td>SKILL_Q</td><td>F键</td><td>灵兽主攻/控制技，玩家手动释放</td></tr><tr><td>SKILL_W</td><td>G键</td><td>灵兽功能/位移技，玩家手动释放</td></tr><tr><td>SKILL_E</td><td>自动触发</td><td>辅助技由AI在主角生命低于60%或受到致命威胁时自动释放，玩家不可手动按</td></tr><tr><td>SKILL_R</td><td>自动触发</td><td>终极技由AI在能量槽满且进入BOSS战时自动释放，玩家不可手动按</td></tr></tbody></table></div>
-<blockquote><strong>设计意图</strong>：玩家同时操控主角（Q/E/R/空格）与灵兽（F/G），共6个主动按键，符合2D ARPG操作上限。灵兽的辅助与大招交给AI自动判断，降低操作负担，确保E键"安全键"原则不被灵兽技能稀释。</blockquote>
-<h3>6.3 基础灵兽技能组示例（键位映射版）</h3>
-<h4>绒绒兔（冰/月）| 初始形态</h4>
-<div class="tw"><table><thead><tr><th>槽位</th><th>玩家按键</th><th>技能名</th><th>类型</th><th>基准效果</th><th>上限效果</th><th>上限触发条件</th></tr></thead><tbody><tr><td>SKILL_Q</td><td>F</td><td>月辉</td><td>攻击型治疗</td><td>小范围治疗友方，恢复灵兽攻击×80%生命</td><td>恢复灵兽攻击×120%生命</td><td>本命契约200%继承、天相命格+10%</td></tr><tr><td>SKILL_W</td><td>G</td><td>绒绒冲撞</td><td>功能型控制</td><td>向前翻滚撞击，造成冰属性伤害并减速30%，持续3秒</td><td>减速50%，持续4秒</td><td>伙伴契约150%继承、水灵命格+15%</td></tr><tr><td>SKILL_E</td><td>自动</td><td>毛茸茸</td><td>辅助-护盾</td><td>为主角附加绒毛护盾，吸收灵兽防御×150%伤害，持续6秒</td><td>吸收灵兽防御×250%伤害，持续8秒</td><td>本命契约200%继承、天相命格+10%</td></tr><tr><td>SKILL_R</td><td>自动</td><td>月影降临</td><td>终极-领域治疗</td><td>召唤月光领域，领域内友方每秒恢复灵兽攻击×30%生命，持续5秒</td><td>每秒恢复灵兽攻击×50%生命，持续6秒</td><td>万灵归宗联动、灵气共鸣+5%/层</td></tr></tbody></table></div>
-<h4>玄火蛇（火）| 初始形态</h4>
-<div class="tw"><table><thead><tr><th>槽位</th><th>玩家按键</th><th>技能名</th><th>类型</th><th>基准效果</th><th>上限效果</th><th>上限触发条件</th></tr></thead><tbody><tr><td>SKILL_Q</td><td>F</td><td>火牙</td><td>攻击型Dot</td><td>喷射火焰弹，造成火属性伤害并附加灼烧（攻击×15%/秒，3秒）</td><td>灼烧攻击×25%/秒，持续4秒</td><td>本命契约200%继承、火灵命格+15%</td></tr><tr><td>SKILL_W</td><td>G</td><td>熔岩遁</td><td>功能型位移/控制</td><td>潜入地下1秒后从目标位置窜出，造成范围火伤并击飞</td><td>击飞高度+50%，落地追加眩晕1秒</td><td>伙伴契约150%继承、破军命格+10%</td></tr><tr><td>SKILL_E</td><td>自动</td><td>火鳞护体</td><td>辅助-反伤</td><td>为主角附加火鳞，受到近战攻击时反弹攻击×30%火伤，持续8秒</td><td>反弹攻击×50%火伤，持续10秒</td><td>本命契约200%继承、天相命格+10%</td></tr><tr><td>SKILL_R</td><td>自动</td><td>焚天</td><td>终极-爆发AOE</td><td>召唤火柱冲天，大范围火属性伤害，灼烧效果翻倍</td><td>伤害×1.5倍，灼烧可叠加2层</td><td>万灵归宗联动、灵气共鸣+5%/层</td></tr></tbody></table></div>
-<h4>铁骨虎（金）| 初始形态</h4>
-<div class="tw"><table><thead><tr><th>槽位</th><th>玩家按键</th><th>技能名</th><th>类型</th><th>基准效果</th><th>上限效果</th><th>上限触发条件</th></tr></thead><tbody><tr><td>SKILL_Q</td><td>F</td><td>裂金爪</td><td>攻击型破甲</td><td>三连爪击，第三下破甲-20%防御，持续5秒</td><td>第三下破甲-35%防御，持续6秒</td><td>本命契约200%继承、金灵命格+15%</td></tr><tr><td>SKILL_W</td><td>G</td><td>虎啸</td><td>功能型控制</td><td>范围咆哮，恐惧周围敌人1.5秒</td><td>恐惧2.5秒，恐惧结束后减速30%</td><td>伙伴契约150%继承、七杀命格+5%暴击（恐惧视为暴击前奏）</td></tr><tr><td>SKILL_E</td><td>自动</td><td>虎魄共鸣</td><td>辅助-防御共享</td><td>主角与灵兽共享防御，主角获得灵兽防御×50%加成，持续10秒</td><td>主角获得灵兽防御×80%加成，持续12秒</td><td>本命契约200%继承、天相命格+10%</td></tr><tr><td>SKILL_R</td><td>自动</td><td>白虎降临</td><td>终极-变身爆发</td><td>灵兽巨大化，全属性+40%，攻击附带金属性穿透，持续8秒</td><td>全属性+60%，穿透+20%，持续10秒</td><td>万灵归宗联动、灵气共鸣+5%/层</td></tr></tbody></table></div>
-<h3>6.4 灵兽技能数值基准与浮动上限（通用公式）</h3>
-<div class="tw"><table><thead><tr><th>槽位</th><th>玩家按键</th><th>基准效果</th><th>上限效果</th><th>上限触发条件</th></tr></thead><tbody><tr><td>SKILL_Q</td><td>F</td><td>灵兽攻击×120%</td><td>灵兽攻击×180%</td><td>本命契约200%继承 + 敕令·攻×1.5</td></tr><tr><td>SKILL_W</td><td>G</td><td>灵兽攻击×80% / 控制1.5秒</td><td>灵兽攻击×130% / 控制2.5秒</td><td>伙伴契约150%继承 + 命格契合</td></tr><tr><td>SKILL_E</td><td>自动</td><td>护盾/治疗 = 灵兽防御/攻击×150%</td><td>护盾/治疗 = 灵兽防御/攻击×250%</td><td>本命契约200% + 天相命格+10%</td></tr><tr><td>SKILL_R</td><td>自动</td><td>灵兽攻击×300%</td><td>灵兽攻击×450%</td><td>万灵归宗联动 + 灵气共鸣BUFF</td></tr></tbody></table></div>
-<blockquote><strong>计算说明</strong>：所有灵兽技能的伤害/治疗/护盾数值，均以灵兽当前属性为计算基础。灵兽属性 = 玩家基础属性 × 契约继承系数 × 职业修正系数（驭灵师额外+5%）。因此，本命契约下50级驭灵师灵兽攻击 = 160 × 200% × 1.05 = 336，F技能上限 = 336 × 180% = 604（再经防御减伤公式计算最终伤害）。</blockquote>
-<hr>
-<h2>七、伤害计算公式（汇总·v0.2 统一版）</h2>
-<blockquote><strong>引用宪法 v0.2 第六章</strong>。以下公式为全项目唯一标准，02-1/02-2/02-3/02-4/03-4 必须严格使用。</blockquote>
-<pre><code>实际伤害 = [ (攻击方基准攻击力 × 技能系数) + (灵兽攻击 × 灵兽技能系数) ]
-           × 属性克制系数
-           × 100 / (100 + 目标防御力)
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>02-2 职业技能库</title>
 
-保底伤害：若实际伤害 &lt; 1，则强制为 1
-攻击方基准攻击力 = (10 + 力量×2 + 等级×1) × 职业攻击修正系数
-灵兽攻击 = 玩家宪法基准属性（裸身值，不含装备/BUFF）× 契约继承系数 × 职业灵兽加成系数</code></pre>
-<ul><li><strong>主角攻击方攻击力</strong>：已在 02-1 第三节中乘以职业攻击修正系数，此处不再重复乘算。</li></ul>
-<ul><li><strong>灵兽攻击</strong>：以玩家裸身属性为根，经契约继承与职业加成后，再乘灵兽技能系数。</li></ul>
-<ul><li><strong>属性克制系数</strong>：严格引用宪法 6.4 克制表。02-2 原"火克木/风、水克火/土"等非标准表述全部废止。</li></ul>
-<hr>
-<h2>八、属性克制速查（战斗内 UI 用）</h2>
+
+
+
+
+
+<style data-finalize>
+:root{--blue:#1d4ed8;--ink:#222a36;--muted:#6b7686;--line:#e6ebf3;--soft:#f5f8fd;--bg:#fff}
+html{scroll-behavior:smooth}
+body{max-width:900px;margin:0 auto;padding:48px 32px 96px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-size:16px;line-height:1.9;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;word-break:break-word}
+h1{font-size:32px;line-height:1.35;margin:10px 0 28px;color:#0f1f47;font-weight:800;letter-spacing:.5px;text-align:center}
+h2{font-size:22px;line-height:1.42;margin:44px 0 16px;padding-bottom:10px;color:#13306e;border-bottom:2px solid #eaf0fb;font-weight:700}
+h3{font-size:17px;margin:28px 0 11px;color:#1d4ed8;font-weight:700;padding-left:12px;border-left:4px solid var(--blue)}
+h4{font-size:15.5px;margin:20px 0 8px;color:#38507f;font-weight:700}
+p{margin:13px 0}
+.toc{margin:4px auto 42px;max-width:720px;background:var(--soft);border:1px solid var(--line);border-radius:16px;padding:20px 28px 22px}
+.toc .tocttl{text-align:center;font-size:13px;letter-spacing:6px;color:var(--muted);font-weight:700;margin:0 0 16px}
+.toc ul{list-style:none;margin:0;padding:0;text-align:center}
+.toc ul li{margin:8px 0;line-height:1.55}
+.toc ul li.lv3{margin:5px 0}
+.toc ul li a{color:#1d3a73;text-decoration:none;font-size:14.5px;transition:.15s;border-bottom:1px solid transparent}
+.toc ul li a:hover{color:var(--blue);text-decoration:none;border-bottom-color:#bfd2f7}
+.toc ul li.lv3 a{font-size:13.5px;color:#4a5b78}
+table{border-collapse:collapse;width:100%;margin:20px 0 26px;font-size:14px;background:#fff;border:1px solid #dbe3f2;border-radius:10px;overflow:hidden;display:table}
+thead tr{background:#eef3fc}
+th,td{border:1px solid #e0e8f6;padding:10px 14px;text-align:left;vertical-align:top}
+th{color:#13306e;font-weight:600}
+tbody tr:nth-child(even){background:#fafbfe}
+tbody tr:hover{background:#f3f7ff}
+ul,ol{padding-left:1.9em}
+li{margin:7px 0}
+blockquote{margin:1.1em 0;padding:14px 18px;background:#f3f6fd;border-left:4px solid #9db4e8;border-radius:0 10px 10px 0;color:#3c4b64}
+code{background:#eef2fa;padding:2px 6px;border-radius:4px;font-size:13.5px;color:#12306e;font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
+pre{background:#f3f6fd;border:1px solid var(--line);border-radius:10px;padding:14px;overflow:auto}
+pre code{background:none;padding:0}
+img{max-width:100%;height:auto;border-radius:10px;margin:14px 0;box-shadow:0 1px 6px rgba(20,40,90,.1)}
+a{color:var(--blue)}
+hr{border:none;border-top:1px solid var(--line);margin:32px 0}
+@media(max-width:640px){body{padding:34px 18px 70px}h1{font-size:24px}h2{font-size:19px}table{font-size:13px;display:block;overflow-x:auto}.toc{padding:16px 18px 18px}.toc ul li a{font-size:13.5px}}
+</style>
+</head>
+<body>
+<nav class="toc" data-toc><div class="tocttl">目录</div><ul><li class="lv2"><a href="#sec-2">八、属性克制速查（战斗内 UI
+用）</a></li><li class="lv2"><a href="#sec-3">九、伙伴主导模式键位映射（待后续开发）</a></li><li class="lv2"><a href="#sec-4">触发条件：玩家主动切换（或特定隐藏职业解锁、剧情道具触发）</a></li><li class="lv2"><a href="#sec-5">方案A：单灵兽全技能替换（人退居辅助）</a></li><li class="lv2"><a href="#sec-6">方案B：多灵兽组合技（保留主角辅助）</a></li><li class="lv2"><a href="#sec-7">【未定/待研究补充区】</a></li></ul></nav>
+
+
+
+
+
+
+<div class="sourceCode" id="cb1"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a> 02-2_职业技能库</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu"># 引用宪法：v0.2（全局核心参数总表）</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu"># 关联文档：02-1_人物基础数值库、02-3_隐藏职业库、02-4_山海灵兽与英雄数据库、03-4_战斗与碰撞数值</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu"># 状态：已重构 | 待审：灵兽F/G键位在手柄模式下的映射方案</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">## 一、职业基础信息表</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>|职业|武器|定位|攻击距离|核心机制|被动天赋（常驻，无按键）|</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>|:-:|:-:|:-:|:-:|:-:|:-:|</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>|驭灵师|灵笔/符箓|中距离控场·灵兽强化|中|强化灵兽技能，人兽协同|墨韵（破甲叠加）|</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>|灵战士|灵刃/兽爪臂铠|近身高频输出·肉盾夹击|近|与灵兽夹击，破甲连击|兽血（低血自动爆发）|</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>|灵术师|灵珠/兽骨法器|远程AOE·元素转化|远|元素转化，远程轰炸|元素亲和（常驻增伤）|</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="fu">## 二、全局战斗操作框架（重制版）</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="fu">### 2.1 键位总览</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>|按键|功能|详细机制|</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>|:-:|:-:|:-:|</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>|WASD|主角移动|八方向移动，水墨拖影特效|</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>|鼠标左键|主角普攻（连段）|根据职业变化武器形态，连段间可插入闪避取消后摇|</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>|鼠标右键|主角闪避|0.3秒无敌帧，消耗耐力25点（上限100，每秒回20），可连闪2次，第3次消耗翻倍并疲劳3秒|（灵战士为格挡）</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>|Q|人技1（主攻）|驭灵师·敕令·攻 / 灵战士·兽血沸腾 / 灵术师·兽灵转化|</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>|E|人技2（辅助/生存）|驭灵师·敕令·守 / 灵战士·替命 / 灵术师·灵兽投射|</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>|R|人兽合体奥义|需能量槽满，契约等级越高充能越快|</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>|空格|职业特色防御/位移</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>|F|灵兽主动技1（SKILL_Q）|由当前出战灵兽决定，玩家手动释放|</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>|G|灵兽主动技2（SKILL_W）|由当前出战灵兽决定，玩家手动释放|</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>|1-4数字键|道具/灵材快捷使用|战斗中可临时投喂灵材给灵兽回血或加BUFF|</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>|Tab键|切换出战灵兽|非战斗状态可切换；切换后F/G技能自动替换为新灵兽技能|</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>|c|召唤山海兽|</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="fu">### 2.2 键位设计哲学（修正版）</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **左撇子键位修正**：原 I/O/P 方案与右手方向键距离过远，改为数字键盘区方案。</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>|键位|手指归属|设计意图|</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>|:-:|:-:|:-:|</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>|Q|左手小指|主攻技，高频释放，小指可快速连点|</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>|E|左手无名指|辅助/生存技，混乱战况下的本能按键|</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>|R|左手食指|奥义大招，需要前摇意识与时机判断|</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>|空格|左手拇指|职业核心差异键：灵战士格挡弹反，驭灵师/灵术师特色位移|</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>|F|左手食指|灵兽主攻技，与Q形成&quot;人兽双攻&quot;连招|</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>|G|左手食指|灵兽功能技，距离F键近，可快速衔接F→G连招|</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **职业差异化设计**：空格是三大职业操作手感的分水岭。灵战士按住空格即可格挡，精准时机触发弹反，高风险高回报；驭灵师与灵术师按空格触发职业特色位移，无敌帧与元素/灵兽特效联动，强调走位与控场。所有职业共享鼠标右键基础闪避，确保基础生存下限一致。</span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="fu">### 2.3 自定义键位支持</span></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **系统规范**：游戏内设置菜单提供「键位自定义」面板，允许玩家对以下按键进行重映射。</span></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>|可自定义项|默认键|禁止映射键|冲突检测|</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>|:-:|:-:|:-:|:-:|</span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>|移动-上|W|不可为空|与技能键重复时自动标红|</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>|移动-下|S|不可为空|同上|</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>|移动-左|A|不可为空|同上|</span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>|移动-右|D|不可为空|同上|</span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>|普攻|鼠标左键|不可为空|—|</span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>|闪避|鼠标右键|不可为空|—|</span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>|人技1|Q|不可与移动键重复|若重复则技能优先，移动失效（需警告）|</span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>|人技2|E|不可与移动键重复|同上|</span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>|合体奥义|R|不可与移动键重复|同上|</span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>|职业特色（格挡/位移）|空格|不可与移动键重复|同上|</span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>|灵兽技1|F|不可与移动键重复|同上|</span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>|灵兽技2|G|不可与移动键重复|同上|</span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>|道具1-4|1/2/3/4|不可与移动键重复|同上|</span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a>|切换灵兽|Tab|不可与移动键重复|同上|</span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **预设方案**：提供三套官方预设，玩家可一键切换：</span></span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span></span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; - **默认PC键位**：上文所述Q/E/R/空格/F/G方案</span></span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;     </span></span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; - **左撇子键位**：数字键区方案，移动改为方向键</span></span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;     </span></span>
+<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; - **动作游戏键位**：人技1→鼠标中键，人技2→Shift，灵兽技→Q/E，奥义→R（适合习惯鼠标释放技能的玩家）</span></span>
+<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a>| 键位 | 默认PC | 左撇子（方向键移动） | 动作游戏键位 |</span>
+<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a>|------|--------|----------------------|--------------|</span>
+<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a>| 移动 | WASD | 方向键 ↑↓←→ | WASD |</span>
+<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a>| 普攻 | 鼠标左键 | 数字键 1 | 鼠标左键 |</span>
+<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a>| 闪避 | 鼠标右键 | 数字键 2 | 鼠标右键 |</span>
+<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a>| 人技1 | Q | 数字键 4 | 鼠标中键 |</span>
+<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a>| 人技2 | E | 数字键 5 | 左 Shift |</span>
+<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a>| 奥义 | R | 数字键 6 | R |</span>
+<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a>| 职业特色 | 空格 | 数字键 0 | 空格 |</span>
+<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a>| 灵兽技1 | F | 数字键 7 | Q |</span>
+<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a>| 灵兽技2 | G | 数字键 8 | E |</span>
+<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a>| 切换灵兽 | Tab | 数字键 9 | Tab |</span>
+<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **手柄映射（新增）**：LT 闪避 / RT 普攻 / LB 灵兽技1(F) / RB 灵兽技2(G) / Y 奥义 / B 人技2 / X 人技1 / A 跳跃(空格特色) / 方向键切换灵兽。</span></span>
+<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a><span class="fu">## 三、驭灵师技能组</span></span>
+<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a><span class="fu">### 3.1 普攻【点灵】（鼠标左键三段连段，可插入闪避取消后摇）</span></span>
+<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a>|段数|基准倍率|上限倍率|灵兽协击基准|灵兽协击上限|特殊效果|</span>
+<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a>|:-:|:-:|:-:|:-:|:-:|:-:|</span>
+<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a>|第1段|40%|55%|—|—|墨痕轨迹|</span>
+<span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a>|第2段|50%|65%|—|—|墨痕扩散|</span>
+<span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a>|第3段|80%|110%|50%灵兽攻击力|70%灵兽攻击力|灵兽幻影突刺|</span>
+<span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a>|**连段合计**|**170%**|**230%**|**+50%灵兽**|**+70%灵兽**|—|</span>
+<span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **上限触发条件**：符箓命格+20%持续时间（间接提升墨痕叠加效率）、本命契约200%继承（提升灵兽协击伤害）、诡道命格+15%陷阱伤害（墨痕视为陷阱类效果）</span></span>
+<span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a><span class="fu">### 3.2 主动技能组</span></span>
+<span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-114"><a href="#cb1-114" aria-hidden="true" tabindex="-1"></a>|技能名|按键|基准效果|上限效果|CD|灵力消耗|上限触发条件|</span>
+<span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a>|:-:|:-:|:-:|:-:|:-:|:-:|:-:|</span>
+<span id="cb1-116"><a href="#cb1-116" aria-hidden="true" tabindex="-1"></a>|敕令·攻|Q|灵兽下次主动技（F/G）伤害×1.5|灵兽下次主动技伤害×1.8|12秒|15|驭兽命格+10%、伙伴契约150%继承|</span>
+<span id="cb1-117"><a href="#cb1-117" aria-hidden="true" tabindex="-1"></a>|敕令·守|E|灵兽冲向主角形成护盾，吸收一次致命伤害；护盾值=灵兽防御×200%|护盾值=灵兽防御×280%|18秒|20|天相命格+10%治疗量、本命契约200%继承|</span>
+<span id="cb1-118"><a href="#cb1-118" aria-hidden="true" tabindex="-1"></a>|万灵归宗|R|同时召唤所有已契约灵兽幻影，每只每次造成灵兽攻击×120%，持续5秒（约攻击6-8次）|每只每次造成灵兽攻击×160%|能量槽满|50|万灵共鸣BUFF+20%、灵气共鸣+5%/层（上限10层+50%）|</span>
+<span id="cb1-119"><a href="#cb1-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-120"><a href="#cb1-120" aria-hidden="true" tabindex="-1"></a><span class="fu">### 3.3 职业特色【灵兽瞬闪】（空格键，位移·协同）</span></span>
+<span id="cb1-121"><a href="#cb1-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-122"><a href="#cb1-122" aria-hidden="true" tabindex="-1"></a>|项目|基准值|上限值|上限触发条件|</span>
+<span id="cb1-123"><a href="#cb1-123" aria-hidden="true" tabindex="-1"></a>|:-:|:-:|:-:|:-:|</span>
+<span id="cb1-124"><a href="#cb1-124" aria-hidden="true" tabindex="-1"></a>|效果|灵兽扑向主角将其带离原地，0.3秒无敌，落点周围小范围减速30%持续2秒|无敌0.4秒，减速50%持续3秒，落点触发灵兽协击（攻击×80%）|本命契约200%继承、驭兽命格+10%、诡道命格+15%陷阱伤害（落点墨痕视为陷阱）|</span>
+<span id="cb1-125"><a href="#cb1-125" aria-hidden="true" tabindex="-1"></a>|耐力消耗|25点|25点|—|</span>
+<span id="cb1-126"><a href="#cb1-126" aria-hidden="true" tabindex="-1"></a>|CD|8秒|6秒|符箓命格+20%持续时间（间接减CD手感）|</span>
+<span id="cb1-127"><a href="#cb1-127" aria-hidden="true" tabindex="-1"></a>|触发方式|按下空格即时释放|按下空格|—|</span>
+<span id="cb1-128"><a href="#cb1-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-129"><a href="#cb1-129" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **联动设计**：灵兽瞬闪落点留下墨痕，与普攻墨痕叠加，形成&quot;闪避→破甲→Q敕令·攻→F灵兽主攻&quot;的四连爆发。驭灵师无格挡，依赖瞬闪与右键闪避的双位移生存。</span></span>
+<span id="cb1-130"><a href="#cb1-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-131"><a href="#cb1-131" aria-hidden="true" tabindex="-1"></a><span class="fu">### 3.4 被动天赋【墨韵】（常驻，无按键，自动生效）</span></span>
+<span id="cb1-132"><a href="#cb1-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-133"><a href="#cb1-133" aria-hidden="true" tabindex="-1"></a>|项目|基准值|上限值|上限触发条件|</span>
+<span id="cb1-134"><a href="#cb1-134" aria-hidden="true" tabindex="-1"></a>|:-:|:-:|:-:|:-:|</span>
+<span id="cb1-135"><a href="#cb1-135" aria-hidden="true" tabindex="-1"></a>|效果|普攻附带墨痕，降低目标5%防御|降低目标8%防御|诡道命格+15%、符箓命格+20%持续时间|</span>
+<span id="cb1-136"><a href="#cb1-136" aria-hidden="true" tabindex="-1"></a>|持续时间|5秒|8秒|符箓命格+20%持续时间|</span>
+<span id="cb1-137"><a href="#cb1-137" aria-hidden="true" tabindex="-1"></a>|叠加层数|3层（最高减防15%）|5层（最高减防40%）|诡道命格+2层叠加上限|</span>
+<span id="cb1-138"><a href="#cb1-138" aria-hidden="true" tabindex="-1"></a>|触发方式|常驻被动，普攻命中自动触发|常驻被动|—|</span>
+<span id="cb1-139"><a href="#cb1-139" aria-hidden="true" tabindex="-1"></a>|灵力消耗|无|无|—|</span>
+<span id="cb1-140"><a href="#cb1-140" aria-hidden="true" tabindex="-1"></a>|CD|无|无|—|</span>
+<span id="cb1-141"><a href="#cb1-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-142"><a href="#cb1-142" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **属性搭配与闯关策略**：驭灵师闯关需根据BOSS属性切换灵兽。面对火属性BOSS，切换冰/月属性灵兽（如绒绒兔），利用E【敕令·守】护盾抗住开场爆发，空格【灵兽瞬闪】拉开距离，普攻叠加墨痕破甲至5层后，Q【敕令·攻】+F【灵兽主攻技】打出属性克制爆发。墨痕破甲与灵兽属性Debuff叠加，可实现&quot;减防→增伤→属性克制&quot;三重乘算。</span></span>
+<span id="cb1-143"><a href="#cb1-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-144"><a href="#cb1-144" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-145"><a href="#cb1-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-146"><a href="#cb1-146" aria-hidden="true" tabindex="-1"></a><span class="fu">## 四、灵战士技能组</span></span>
+<span id="cb1-147"><a href="#cb1-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-148"><a href="#cb1-148" aria-hidden="true" tabindex="-1"></a><span class="fu">### 4.1 普攻【裂空爪】（鼠标左键三段近战）</span></span>
+<span id="cb1-149"><a href="#cb1-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-150"><a href="#cb1-150" aria-hidden="true" tabindex="-1"></a>|段数|基准倍率|上限倍率|特殊效果|上限效果|</span>
+<span id="cb1-151"><a href="#cb1-151" aria-hidden="true" tabindex="-1"></a>|:-:|:-:|:-:|:-:|:-:|</span>
+<span id="cb1-152"><a href="#cb1-152" aria-hidden="true" tabindex="-1"></a>|第1段|60%|80%|—|—|</span>
+<span id="cb1-153"><a href="#cb1-153" aria-hidden="true" tabindex="-1"></a>|第2段|70%|90%|—|—|</span>
+<span id="cb1-154"><a href="#cb1-154" aria-hidden="true" tabindex="-1"></a>|第3段|100%|130%|破甲-30%防御，持续5秒|破甲-40%防御，持续5秒|</span>
+<span id="cb1-155"><a href="#cb1-155" aria-hidden="true" tabindex="-1"></a>|**连段合计**|**230%**|**300%**|**破甲5秒**|**破甲5秒**|</span>
+<span id="cb1-156"><a href="#cb1-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-157"><a href="#cb1-157" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **上限触发条件**：剑心命格+1段普攻（间接提升DPS）、狂战命格+10%攻击、本命契约200%继承（灵兽协击伤害提升）</span></span>
+<span id="cb1-158"><a href="#cb1-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-159"><a href="#cb1-159" aria-hidden="true" tabindex="-1"></a><span class="fu">### 4.2 主动技能组</span></span>
+<span id="cb1-160"><a href="#cb1-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-161"><a href="#cb1-161" aria-hidden="true" tabindex="-1"></a>|技能名|按键|基准效果|上限效果|CD|灵力消耗|上限触发条件|</span>
+<span id="cb1-162"><a href="#cb1-162" aria-hidden="true" tabindex="-1"></a>|:-:|:-:|:-:|:-:|:-:|:-:|:-:|</span>
+<span id="cb1-163"><a href="#cb1-163" aria-hidden="true" tabindex="-1"></a>|兽血沸腾|Q|主角与灵兽攻速+30%，持续8秒|攻速+45%，持续10秒|15秒|20|狂战命格+10%攻击、人兽同契期间被动触发阈值提升|</span>
+<span id="cb1-164"><a href="#cb1-164" aria-hidden="true" tabindex="-1"></a>|替命|E|灵兽替主角承受下一次伤害，并反击敌人；反击伤害=灵兽攻击×150%|反击伤害=灵兽攻击×200%|20秒|25|七杀命格+5%暴击、本命契约200%继承|</span>
+<span id="cb1-165"><a href="#cb1-165" aria-hidden="true" tabindex="-1"></a>|人兽同契|R|融合为&quot;战灵形态&quot;，全属性+50%，持续10秒；期间免疫控制|全属性+70%，持续12秒|能量槽满|60|兽魂行者隐藏职业、灵气共鸣+5%/层（上限10层+50%）|</span>
+<span id="cb1-166"><a href="#cb1-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-167"><a href="#cb1-167" aria-hidden="true" tabindex="-1"></a><span class="fu">### 4.3 职业特色【铁壁格挡】（空格键，防御·弹反）</span></span>
+<span id="cb1-168"><a href="#cb1-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-169"><a href="#cb1-169" aria-hidden="true" tabindex="-1"></a>|项目|基准值|上限值|上限触发条件|</span>
+<span id="cb1-170"><a href="#cb1-170" aria-hidden="true" tabindex="-1"></a>|:-:|:-:|:-:|:-:|</span>
+<span id="cb1-171"><a href="#cb1-171" aria-hidden="true" tabindex="-1"></a>|效果|按住空格耗耐力（每秒10点），受击前0.2秒精准格挡触发&quot;灵契反击&quot;，灵兽立即释放一次免费协击；普通格挡减伤70%|精准格挡减伤90%，灵兽协击伤害×1.5，反击附带破甲-15%防御|剑心命格+1段普攻、七杀命格+5%暴击、狂战命格+10%攻击|</span>
+<span id="cb1-172"><a href="#cb1-172" aria-hidden="true" tabindex="-1"></a>|耐力消耗|按住每秒10点|按住每秒10点|—|</span>
+<span id="cb1-173"><a href="#cb1-173" aria-hidden="true" tabindex="-1"></a>|触发方式|按住空格，松手取消|按住空格|—|</span>
+<span id="cb1-174"><a href="#cb1-174" aria-hidden="true" tabindex="-1"></a>|灵力消耗|无|无|—|</span>
+<span id="cb1-175"><a href="#cb1-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-176"><a href="#cb1-176" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **联动设计**：铁壁格挡是灵战士的核心差异。右键闪避用于紧急脱身，空格格挡用于正面硬刚。精准格反后接Q【兽血沸腾】可打出&quot;弹反→攻速爆发→普攻连段&quot;的站撸循环。人兽同契R期间，格挡判定窗口临时延长0.05秒。</span></span>
+<span id="cb1-177"><a href="#cb1-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-178"><a href="#cb1-178" aria-hidden="true" tabindex="-1"></a><span class="fu">### 4.4 被动天赋【兽血】（常驻，无按键，自动生效）</span></span>
+<span id="cb1-179"><a href="#cb1-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-180"><a href="#cb1-180" aria-hidden="true" tabindex="-1"></a>|项目|基准值|上限值|上限触发条件|</span>
+<span id="cb1-181"><a href="#cb1-181" aria-hidden="true" tabindex="-1"></a>|:-:|:-:|:-:|:-:|</span>
+<span id="cb1-182"><a href="#cb1-182" aria-hidden="true" tabindex="-1"></a>|触发条件|生命值低于30%时自动触发|生命值低于40%时自动触发|狂战命格+10%攻击（提升触发阈值）、背誓者命格（延长惩罚但提升触发阈值）|</span>
+<span id="cb1-183"><a href="#cb1-183" aria-hidden="true" tabindex="-1"></a>|效果|自动触发兽血沸腾（攻速+30%，8秒）|攻速+45%，持续10秒|狂战命格+10%、七杀命格+5%暴击|</span>
+<span id="cb1-184"><a href="#cb1-184" aria-hidden="true" tabindex="-1"></a>|内置CD|60秒|45秒|背誓者命格减少内置CD|</span>
+<span id="cb1-185"><a href="#cb1-185" aria-hidden="true" tabindex="-1"></a>|触发方式|被动自动，无需按键|被动自动|—|</span>
+<span id="cb1-186"><a href="#cb1-186" aria-hidden="true" tabindex="-1"></a>|灵力消耗|无|无|—|</span>
+<span id="cb1-187"><a href="#cb1-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-188"><a href="#cb1-188" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **属性搭配与闯关策略**：灵战士是唯一的格挡职业，面对高攻击频率的BOSS（如大人国裂山虎王）时，空格精准弹反可打断BOSS连招并触发灵兽协击。闯关时优先选择金属性/土属性灵兽（如铁骨虎、山岳巨猿），利用灵兽高防御与E【替命】吸收致命伤害，自身专注破甲连击。兽血被动+Q主动可实现&quot;残血→双攻速爆发→反杀&quot;的狂战士循环。</span></span>
+<span id="cb1-189"><a href="#cb1-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-190"><a href="#cb1-190" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-191"><a href="#cb1-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-192"><a href="#cb1-192" aria-hidden="true" tabindex="-1"></a><span class="fu">## 五、灵术师技能组</span></span>
+<span id="cb1-193"><a href="#cb1-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-194"><a href="#cb1-194" aria-hidden="true" tabindex="-1"></a><span class="fu">### 5.1 普攻【灵弹】（鼠标左键元素飞弹，属性随当前灵兽改变）</span></span>
+<span id="cb1-195"><a href="#cb1-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-196"><a href="#cb1-196" aria-hidden="true" tabindex="-1"></a>|段数|基准倍率|上限倍率|溅射/异常|上限溅射|</span>
+<span id="cb1-197"><a href="#cb1-197" aria-hidden="true" tabindex="-1"></a>|:-:|:-:|:-:|:-:|:-:|</span>
+<span id="cb1-198"><a href="#cb1-198" aria-hidden="true" tabindex="-1"></a>|第1段|35%|50%|—|—|</span>
+<span id="cb1-199"><a href="#cb1-199" aria-hidden="true" tabindex="-1"></a>|第2段|45%|60%|—|—|</span>
+<span id="cb1-200"><a href="#cb1-200" aria-hidden="true" tabindex="-1"></a>|第3段|60%|80%|小范围溅射30%|溅射45%|</span>
+<span id="cb1-201"><a href="#cb1-201" aria-hidden="true" tabindex="-1"></a>|**连段合计**|**140%**|**190%**|**+溅射**|**+溅射**|</span>
+<span id="cb1-202"><a href="#cb1-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-203"><a href="#cb1-203" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **上限触发条件**：混元命格+2%全属性、五行匹配命格+15%对应元素伤害、本命契约200%继承（灵兽属性提升间接提升灵弹属性伤害）</span></span>
+<span id="cb1-204"><a href="#cb1-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-205"><a href="#cb1-205" aria-hidden="true" tabindex="-1"></a><span class="fu">### 5.2 主动技能组</span></span>
+<span id="cb1-206"><a href="#cb1-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-207"><a href="#cb1-207" aria-hidden="true" tabindex="-1"></a>|技能名|按键|基准效果|上限效果|CD|灵力消耗|上限触发条件|</span>
+<span id="cb1-208"><a href="#cb1-208" aria-hidden="true" tabindex="-1"></a>|:-:|:-:|:-:|:-:|:-:|:-:|:-:|</span>
+<span id="cb1-209"><a href="#cb1-209" aria-hidden="true" tabindex="-1"></a>|兽灵转化|Q|改变主角攻击属性为灵兽主属性，附加异常状态（火=灼烧/冰=冻结/毒=腐蚀），持续10秒；异常伤害=攻击×15%|异常伤害=攻击×25%|12秒|18|五行匹配命格+15%对应元素伤害、混元命格+2%全属性|</span>
+<span id="cb1-210"><a href="#cb1-210" aria-hidden="true" tabindex="-1"></a>|灵兽投射|E|将灵兽投掷向目标区域，造成大范围属性爆炸，灵兽暂时离场3秒；爆炸伤害=灵兽攻击×250%|爆炸伤害=灵兽攻击×350%|16秒|30|伙伴契约150%继承、破军命格+10%破甲效率|</span>
+<span id="cb1-211"><a href="#cb1-211" aria-hidden="true" tabindex="-1"></a>|天罚·兽临|R|召唤巨型灵兽虚影覆盖半场，持续落下属性陨石，持续8秒（0.5秒/颗，共16颗）；每颗陨石=灵兽攻击×100%|每颗陨石=灵兽攻击×140%|能量槽满|70|万灵共鸣BUFF+20%、本命契约200%继承|</span>
+<span id="cb1-212"><a href="#cb1-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-213"><a href="#cb1-213" aria-hidden="true" tabindex="-1"></a><span class="fu">### 5.3 职业特色【元素遁】（空格键，位移·元素）</span></span>
+<span id="cb1-214"><a href="#cb1-214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-215"><a href="#cb1-215" aria-hidden="true" tabindex="-1"></a>|项目|基准值|上限值|上限触发条件|</span>
+<span id="cb1-216"><a href="#cb1-216" aria-hidden="true" tabindex="-1"></a>|:-:|:-:|:-:|:-:|</span>
+<span id="cb1-217"><a href="#cb1-217" aria-hidden="true" tabindex="-1"></a>|效果|化为当前灵兽属性元素向前位移，无敌0.3秒，路径留下元素效果持续3秒（火=灼烧攻击×10%/秒/冰=减速40%/毒=腐蚀减防5%）|无敌0.4秒，路径元素效果持续5秒且伤害+50%，附加对应元素共鸣（主角该元素伤害+15%持续5秒）|五行匹配命格+15%对应元素伤害、混元命格+2%全属性、阴阳命格+10%异常抵抗（转化为异常增伤）|</span>
+<span id="cb1-218"><a href="#cb1-218" aria-hidden="true" tabindex="-1"></a>|耐力消耗|25点|25点|—|</span>
+<span id="cb1-219"><a href="#cb1-219" aria-hidden="true" tabindex="-1"></a>|CD|8秒|6秒|混元命格+2%全属性（手感优化）|</span>
+<span id="cb1-220"><a href="#cb1-220" aria-hidden="true" tabindex="-1"></a>|触发方式|按下空格+方向键释放|按下空格+方向键|—|</span>
+<span id="cb1-221"><a href="#cb1-221" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-222"><a href="#cb1-222" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **联动设计**：元素遁路径留下的元素领域可与Q【兽灵转化】联动，形成&quot;遁入火路径→火属性普攻→E【灵兽投射】火爆炸&quot;的纯火连招。灵兽离场3秒期间，右键闪避作为备用生存手段。</span></span>
+<span id="cb1-223"><a href="#cb1-223" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-224"><a href="#cb1-224" aria-hidden="true" tabindex="-1"></a><span class="fu">### 5.4 被动天赋【元素亲和】（常驻，无按键，自动生效）</span></span>
+<span id="cb1-225"><a href="#cb1-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-226"><a href="#cb1-226" aria-hidden="true" tabindex="-1"></a>|项目|基准值|上限值|上限触发条件|</span>
+<span id="cb1-227"><a href="#cb1-227" aria-hidden="true" tabindex="-1"></a>|:-:|:-:|:-:|:-:|</span>
+<span id="cb1-228"><a href="#cb1-228" aria-hidden="true" tabindex="-1"></a>|效果|元素伤害+8%（常驻，属性随当前灵兽改变）|元素伤害+15% + 异常状态持续时间+20%|五行匹配命格+15%对应元素伤害、混元命格+2%全属性、阴阳命格+10%异常抵抗（转化为异常增伤）|</span>
+<span id="cb1-229"><a href="#cb1-229" aria-hidden="true" tabindex="-1"></a>|触发方式|常驻被动，无需按键|常驻被动|—|</span>
+<span id="cb1-230"><a href="#cb1-230" aria-hidden="true" tabindex="-1"></a>|灵力消耗|无|无|—|</span>
+<span id="cb1-231"><a href="#cb1-231" aria-hidden="true" tabindex="-1"></a>|CD|无|无|—|</span>
+<span id="cb1-232"><a href="#cb1-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-233"><a href="#cb1-233" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **属性搭配与闯关策略**：灵术师闯关核心是&quot;元素连锁&quot;。面对木属性BOSS（如女子国共生藤），切换火属性灵兽（如玄火蛇），Q【兽灵转化】切火属性附加灼烧，空格【元素遁】留下火路径封锁走位，普攻第三段溅射叠加灼烧层数，E【灵兽投射】火爆炸触发灼烧结算。不同关卡需灵活切换灵兽属性，利用元素克制（见第八节速查表/宪法6.4）提升25%基础伤害。</span></span>
+<span id="cb1-234"><a href="#cb1-234" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-235"><a href="#cb1-235" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-236"><a href="#cb1-236" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-237"><a href="#cb1-237" aria-hidden="true" tabindex="-1"></a><span class="fu">## 六、灵兽技能库键位映射与结构</span></span>
+<span id="cb1-238"><a href="#cb1-238" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-239"><a href="#cb1-239" aria-hidden="true" tabindex="-1"></a><span class="fu">### 6.1 技能槽位标准结构（所有灵兽通用）</span></span>
+<span id="cb1-240"><a href="#cb1-240" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-241"><a href="#cb1-241" aria-hidden="true" tabindex="-1"></a>|槽位代号|技能类型|说明|是否必定义|铁律|</span>
+<span id="cb1-242"><a href="#cb1-242" aria-hidden="true" tabindex="-1"></a>|:-:|:-:|:-:|:-:|:-:|</span>
+<span id="cb1-243"><a href="#cb1-243" aria-hidden="true" tabindex="-1"></a>|SKILL_Q|主动攻击技|灵兽主要输出/控制技能，伤害型或Debuff型|是|—|</span>
+<span id="cb1-244"><a href="#cb1-244" aria-hidden="true" tabindex="-1"></a>|SKILL_W|主动功能技|位移/控制/特殊机制（隐身、嘲讽、召唤等）|是|—|</span>
+<span id="cb1-245"><a href="#cb1-245" aria-hidden="true" tabindex="-1"></a>|SKILL_E|**辅助技（必留）**|治疗/护盾/增益/净化/减伤等辅助效果|**是**|**禁止放纯伤害技能**|</span>
+<span id="cb1-246"><a href="#cb1-246" aria-hidden="true" tabindex="-1"></a>|SKILL_R|终极技/奥义|高伤害大招或特殊合体效果，消耗能量或长CD|是|—|</span>
+<span id="cb1-247"><a href="#cb1-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-248"><a href="#cb1-248" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **E位铁律**：所有灵兽的SKILL_E必须是辅助型技能。保证无论玩家切换哪只灵兽出战，灵兽在自动战斗逻辑中优先释放辅助技保护主角。</span></span>
+<span id="cb1-249"><a href="#cb1-249" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-250"><a href="#cb1-250" aria-hidden="true" tabindex="-1"></a><span class="fu">### 6.2 灵兽键位映射（人主导模式）</span></span>
+<span id="cb1-251"><a href="#cb1-251" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-252"><a href="#cb1-252" aria-hidden="true" tabindex="-1"></a>|灵兽槽位|玩家按键|说明|</span>
+<span id="cb1-253"><a href="#cb1-253" aria-hidden="true" tabindex="-1"></a>|:-:|:-:|:-:|</span>
+<span id="cb1-254"><a href="#cb1-254" aria-hidden="true" tabindex="-1"></a>|SKILL_Q|F键|灵兽主攻/控制技，玩家手动释放|</span>
+<span id="cb1-255"><a href="#cb1-255" aria-hidden="true" tabindex="-1"></a>|SKILL_W|G键|灵兽功能/位移技，玩家手动释放|</span>
+<span id="cb1-256"><a href="#cb1-256" aria-hidden="true" tabindex="-1"></a>|SKILL_E|自动触发|辅助技由AI在主角生命低于60%或受到致命威胁时自动释放，玩家不可手动按|</span>
+<span id="cb1-257"><a href="#cb1-257" aria-hidden="true" tabindex="-1"></a>|SKILL_R|自动触发|终极技由AI在能量槽满且进入BOSS战时自动释放，玩家不可手动按|</span>
+<span id="cb1-258"><a href="#cb1-258" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-259"><a href="#cb1-259" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **设计意图**：玩家同时操控主角（Q/E/R/空格）与灵兽（F/G），共6个主动按键，符合2D ARPG操作上限。灵兽的辅助与大招交给AI自动判断，降低操作负担，确保E键&quot;安全键&quot;原则不被灵兽技能稀释。</span></span>
+<span id="cb1-260"><a href="#cb1-260" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-261"><a href="#cb1-261" aria-hidden="true" tabindex="-1"></a><span class="fu">### 6.3 基础灵兽技能组示例（键位映射版）</span></span>
+<span id="cb1-262"><a href="#cb1-262" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-263"><a href="#cb1-263" aria-hidden="true" tabindex="-1"></a><span class="fu">#### 绒绒兔（冰/月）| 初始形态</span></span>
+<span id="cb1-264"><a href="#cb1-264" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-265"><a href="#cb1-265" aria-hidden="true" tabindex="-1"></a>|槽位|玩家按键|技能名|类型|基准效果|上限效果|上限触发条件|</span>
+<span id="cb1-266"><a href="#cb1-266" aria-hidden="true" tabindex="-1"></a>|:-:|:-:|:-:|:-:|:-:|:-:|:-:|</span>
+<span id="cb1-267"><a href="#cb1-267" aria-hidden="true" tabindex="-1"></a>|SKILL_Q|F|月辉|攻击型治疗|小范围治疗友方，恢复灵兽攻击×80%生命|恢复灵兽攻击×120%生命|本命契约200%继承、天相命格+10%|</span>
+<span id="cb1-268"><a href="#cb1-268" aria-hidden="true" tabindex="-1"></a>|SKILL_W|G|绒绒冲撞|功能型控制|向前翻滚撞击，造成冰属性伤害并减速30%，持续3秒|减速50%，持续4秒|伙伴契约150%继承、水灵命格+15%|</span>
+<span id="cb1-269"><a href="#cb1-269" aria-hidden="true" tabindex="-1"></a>|SKILL_E|自动|毛茸茸|辅助-护盾|为主角附加绒毛护盾，吸收灵兽防御×150%伤害，持续6秒|吸收灵兽防御×250%伤害，持续8秒|本命契约200%继承、天相命格+10%|</span>
+<span id="cb1-270"><a href="#cb1-270" aria-hidden="true" tabindex="-1"></a>|SKILL_R|自动|月影降临|终极-领域治疗|召唤月光领域，领域内友方每秒恢复灵兽攻击×30%生命，持续5秒|每秒恢复灵兽攻击×50%生命，持续6秒|万灵归宗联动、灵气共鸣+5%/层|</span>
+<span id="cb1-271"><a href="#cb1-271" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-272"><a href="#cb1-272" aria-hidden="true" tabindex="-1"></a><span class="fu">#### 玄火蛇（火）| 初始形态</span></span>
+<span id="cb1-273"><a href="#cb1-273" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-274"><a href="#cb1-274" aria-hidden="true" tabindex="-1"></a>|槽位|玩家按键|技能名|类型|基准效果|上限效果|上限触发条件|</span>
+<span id="cb1-275"><a href="#cb1-275" aria-hidden="true" tabindex="-1"></a>|:-:|:-:|:-:|:-:|:-:|:-:|:-:|</span>
+<span id="cb1-276"><a href="#cb1-276" aria-hidden="true" tabindex="-1"></a>|SKILL_Q|F|火牙|攻击型Dot|喷射火焰弹，造成火属性伤害并附加灼烧（攻击×15%/秒，3秒）|灼烧攻击×25%/秒，持续4秒|本命契约200%继承、火灵命格+15%|</span>
+<span id="cb1-277"><a href="#cb1-277" aria-hidden="true" tabindex="-1"></a>|SKILL_W|G|熔岩遁|功能型位移/控制|潜入地下1秒后从目标位置窜出，造成范围火伤并击飞|击飞高度+50%，落地追加眩晕1秒|伙伴契约150%继承、破军命格+10%|</span>
+<span id="cb1-278"><a href="#cb1-278" aria-hidden="true" tabindex="-1"></a>|SKILL_E|自动|火鳞护体|辅助-反伤|为主角附加火鳞，受到近战攻击时反弹攻击×30%火伤，持续8秒|反弹攻击×50%火伤，持续10秒|本命契约200%继承、天相命格+10%|</span>
+<span id="cb1-279"><a href="#cb1-279" aria-hidden="true" tabindex="-1"></a>|SKILL_R|自动|焚天|终极-爆发AOE|召唤火柱冲天，大范围火属性伤害，灼烧效果翻倍|伤害×1.5倍，灼烧可叠加2层|万灵归宗联动、灵气共鸣+5%/层|</span>
+<span id="cb1-280"><a href="#cb1-280" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-281"><a href="#cb1-281" aria-hidden="true" tabindex="-1"></a><span class="fu">#### 铁骨虎（金）| 初始形态</span></span>
+<span id="cb1-282"><a href="#cb1-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-283"><a href="#cb1-283" aria-hidden="true" tabindex="-1"></a>|槽位|玩家按键|技能名|类型|基准效果|上限效果|上限触发条件|</span>
+<span id="cb1-284"><a href="#cb1-284" aria-hidden="true" tabindex="-1"></a>|:-:|:-:|:-:|:-:|:-:|:-:|:-:|</span>
+<span id="cb1-285"><a href="#cb1-285" aria-hidden="true" tabindex="-1"></a>|SKILL_Q|F|裂金爪|攻击型破甲|三连爪击，第三下破甲-20%防御，持续5秒|第三下破甲-35%防御，持续6秒|本命契约200%继承、金灵命格+15%|</span>
+<span id="cb1-286"><a href="#cb1-286" aria-hidden="true" tabindex="-1"></a>|SKILL_W|G|虎啸|功能型控制|范围咆哮，恐惧周围敌人1.5秒|恐惧2.5秒，恐惧结束后减速30%|伙伴契约150%继承、七杀命格+5%暴击（恐惧视为暴击前奏）|</span>
+<span id="cb1-287"><a href="#cb1-287" aria-hidden="true" tabindex="-1"></a>|SKILL_E|自动|虎魄共鸣|辅助-防御共享|主角与灵兽共享防御，主角获得灵兽防御×50%加成，持续10秒|主角获得灵兽防御×80%加成，持续12秒|本命契约200%继承、天相命格+10%|</span>
+<span id="cb1-288"><a href="#cb1-288" aria-hidden="true" tabindex="-1"></a>|SKILL_R|自动|白虎降临|终极-变身爆发|灵兽巨大化，全属性+40%，攻击附带金属性穿透，持续8秒|全属性+60%，穿透+20%，持续10秒|万灵归宗联动、灵气共鸣+5%/层|</span>
+<span id="cb1-289"><a href="#cb1-289" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-290"><a href="#cb1-290" aria-hidden="true" tabindex="-1"></a><span class="fu">### 6.4 灵兽技能数值基准与浮动上限（通用公式）</span></span>
+<span id="cb1-291"><a href="#cb1-291" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-292"><a href="#cb1-292" aria-hidden="true" tabindex="-1"></a>|槽位|玩家按键|基准效果|上限效果|上限触发条件|</span>
+<span id="cb1-293"><a href="#cb1-293" aria-hidden="true" tabindex="-1"></a>|:-:|:-:|:-:|:-:|:-:|</span>
+<span id="cb1-294"><a href="#cb1-294" aria-hidden="true" tabindex="-1"></a>|SKILL_Q|F|灵兽攻击×120%|灵兽攻击×180%|本命契约200%继承 + 敕令·攻×1.5|</span>
+<span id="cb1-295"><a href="#cb1-295" aria-hidden="true" tabindex="-1"></a>|SKILL_W|G|灵兽攻击×80% / 控制1.5秒|灵兽攻击×130% / 控制2.5秒|伙伴契约150%继承 + 命格契合|</span>
+<span id="cb1-296"><a href="#cb1-296" aria-hidden="true" tabindex="-1"></a>|SKILL_E|自动|护盾/治疗 = 灵兽防御/攻击×150%|护盾/治疗 = 灵兽防御/攻击×250%|本命契约200% + 天相命格+10%|</span>
+<span id="cb1-297"><a href="#cb1-297" aria-hidden="true" tabindex="-1"></a>|SKILL_R|自动|灵兽攻击×300%|灵兽攻击×450%|万灵归宗联动 + 灵气共鸣BUFF|</span>
+<span id="cb1-298"><a href="#cb1-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-299"><a href="#cb1-299" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **计算说明**：所有灵兽技能的伤害/治疗/护盾数值，均以灵兽当前属性为计算基础。灵兽属性 = 玩家基础属性 × 契约继承系数 × 职业修正系数（驭灵师额外+5%）。因此，本命契约下50级驭灵师灵兽攻击 = 160 × 200% × 1.05 = 336，F技能上限 = 336 × 180% = 604（再经防御减伤公式计算最终伤害）。</span></span>
+<span id="cb1-300"><a href="#cb1-300" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-301"><a href="#cb1-301" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-302"><a href="#cb1-302" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-303"><a href="#cb1-303" aria-hidden="true" tabindex="-1"></a><span class="fu">## 七、伤害计算公式（汇总·v0.2 统一版）</span></span>
+<span id="cb1-304"><a href="#cb1-304" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-305"><a href="#cb1-305" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **引用宪法 v0.2 第六章**。以下公式为全项目唯一标准，02-1/02-2/02-3/02-4/03-4 必须严格使用。</span></span>
+<span id="cb1-306"><a href="#cb1-306" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-307"><a href="#cb1-307" aria-hidden="true" tabindex="-1"></a><span class="in">```plain</span></span>
+<span id="cb1-308"><a href="#cb1-308" aria-hidden="true" tabindex="-1"></a><span class="in">实际伤害 = [ (攻击方基准攻击力 × 技能系数) + (灵兽攻击 × 灵兽技能系数) ]</span></span>
+<span id="cb1-309"><a href="#cb1-309" aria-hidden="true" tabindex="-1"></a><span class="in">           × 属性克制系数</span></span>
+<span id="cb1-310"><a href="#cb1-310" aria-hidden="true" tabindex="-1"></a><span class="in">           × 100 / (100 + 目标防御力)</span></span>
+<span id="cb1-311"><a href="#cb1-311" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-312"><a href="#cb1-312" aria-hidden="true" tabindex="-1"></a><span class="in">保底伤害：若实际伤害 &lt; 1，则强制为 1</span></span>
+<span id="cb1-313"><a href="#cb1-313" aria-hidden="true" tabindex="-1"></a><span class="in">攻击方基准攻击力 = (10 + 力量×2 + 等级×1) × 职业攻击修正系数</span></span>
+<span id="cb1-314"><a href="#cb1-314" aria-hidden="true" tabindex="-1"></a><span class="in">灵兽攻击 = 玩家宪法基准属性（裸身值，不含装备/BUFF）× 契约继承系数 × 职业灵兽加成系数</span></span></code></pre></div>
+<ul>
+<li><h1 id="sec-1">主角攻击方攻击力：已在 02-1
+第三节中乘以职业攻击修正系数，此处不再重复乘算。</h1></li>
+<li><p><strong>灵兽攻击</strong>：以玩家裸身属性为根，经契约继承与职业加成后，再乘灵兽技能系数。</p></li>
+<li><p><strong>属性克制系数</strong>：严格引用宪法 6.4 克制表。02-2
+原”火克木/风、水克火/土”等非标准表述全部废止。</p></li>
+</ul>
+<hr />
+<h2 id="sec-2">八、属性克制速查（战斗内 UI
+用）</h2>
 <p>表格</p>
-<div class="tw"><table><thead><tr><th>你的属性</th><th>攻击谁更痛</th><th>避开谁</th></tr></thead><tbody><tr><td>火</td><td>金、木</td><td>水、土</td></tr><tr><td>水</td><td>火、土</td><td>木（被克）</td></tr><tr><td>金</td><td>木</td><td>火</td></tr><tr><td>木</td><td>土</td><td>金</td></tr><tr><td>土</td><td>水</td><td>木</td></tr><tr><td>光 ↔ 暗</td><td>互克</td><td>—</td></tr><tr><td>冰</td><td>风/飞行、火</td><td>—</td></tr><tr><td>风</td><td>土/飞行</td><td>冰</td></tr></tbody></table></div>
-<blockquote>灵术师【兽灵转化】可临时改变主角攻击属性，用于针对 BOSS 弱点。</blockquote>
-<hr>
-<h2>九、伙伴主导模式键位映射（待后续开发）</h2>
-<p><strong>触发条件</strong>：玩家主动切换（或特定隐藏职业解锁、剧情道具触发）</p>
-<p><strong>方案A：单灵兽全技能替换（人退居辅助）</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">你的属性</th>
+<th style="text-align: left;">攻击谁更痛</th>
+<th style="text-align: left;">避开谁</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">火</td>
+<td style="text-align: left;">金、木</td>
+<td style="text-align: left;">水、土</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">水</td>
+<td style="text-align: left;">火、土</td>
+<td style="text-align: left;">木（被克）</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">金</td>
+<td style="text-align: left;">木</td>
+<td style="text-align: left;">火</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">木</td>
+<td style="text-align: left;">土</td>
+<td style="text-align: left;">金</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">土</td>
+<td style="text-align: left;">水</td>
+<td style="text-align: left;">木</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">光 ↔︎ 暗</td>
+<td style="text-align: left;">互克</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">冰</td>
+<td style="text-align: left;">风/飞行、火</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">风</td>
+<td style="text-align: left;">土/飞行</td>
+<td style="text-align: left;">冰</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>灵术师【兽灵转化】可临时改变主角攻击属性，用于针对 BOSS 弱点。</p>
+</blockquote>
+<hr />
+<h2 id="sec-3">九、伙伴主导模式键位映射（待后续开发）</h2>
+<h2 id="sec-4">触发条件：玩家主动切换（或特定隐藏职业解锁、剧情道具触发）</h2>
+<h2 id="sec-5">方案A：单灵兽全技能替换（人退居辅助）</h2>
 <p>表格</p>
-<div class="tw"><table><thead><tr><th>按键</th><th>绑定内容</th><th>说明</th></tr></thead><tbody><tr><td>Q</td><td>出战灵兽 SKILL_Q</td><td>灵兽攻击/控制技</td></tr><tr><td>E</td><td>出战灵兽 <strong>SKILL_E（辅助，必留！）</strong></td><td>灵兽辅助技（护盾/治疗/增益/净化）</td></tr><tr><td>R</td><td>出战灵兽 SKILL_R</td><td>灵兽终极技/奥义</td></tr><tr><td>F</td><td>出战灵兽 SKILL_W</td><td>灵兽功能/位移技</td></tr></tbody></table></div>
-<blockquote><strong>注意</strong>：伙伴模式下W键仍仅用于移动，不可绑定技能。灵兽四个技能映射到Q/E/R/F，E位仍必须是辅助技。</blockquote>
-<p><strong>方案B：多灵兽组合技（保留主角辅助）</strong></p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">按键</th>
+<th style="text-align: center;">绑定内容</th>
+<th style="text-align: center;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Q</td>
+<td style="text-align: center;">出战灵兽 SKILL_Q</td>
+<td style="text-align: center;">灵兽攻击/控制技</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">E</td>
+<td style="text-align: center;">出战灵兽
+<strong>SKILL_E（辅助，必留！）</strong></td>
+<td style="text-align: center;">灵兽辅助技（护盾/治疗/增益/净化）</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">R</td>
+<td style="text-align: center;">出战灵兽 SKILL_R</td>
+<td style="text-align: center;">灵兽终极技/奥义</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">出战灵兽 SKILL_W</td>
+<td style="text-align: center;">灵兽功能/位移技</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>注意</strong>：伙伴模式下W键仍仅用于移动，不可绑定技能。灵兽四个技能映射到Q/E/R/F，E位仍必须是辅助技。</p>
+</blockquote>
+<h2 id="sec-6">方案B：多灵兽组合技（保留主角辅助）</h2>
 <p>表格</p>
-<div class="tw"><table><thead><tr><th>按键</th><th>绑定内容</th><th>说明</th></tr></thead><tbody><tr><td>Q</td><td>伙伴灵兽1 SKILL_Q</td><td>攻击型</td></tr><tr><td>F</td><td>伙伴灵兽2 SKILL_W</td><td>功能型</td></tr><tr><td>E</td><td>伙伴灵兽3 <strong>SKILL_E（辅助，必留！）</strong></td><td>辅助型</td></tr><tr><td>R</td><td>合体奥义 / 当前出战灵兽R技</td><td>保留玩家R技或切换为灵兽R技</td></tr></tbody></table></div>
-<blockquote><strong>E位必留辅助原则（铁律）</strong>：无论当前模式（玩家E技为辅助/生存技）还是伙伴模式（灵兽E技为辅助技），E键必须绑定辅助型技能。这是为了保证玩家在混乱战况下始终有一个"安全键"。</blockquote>
-<hr>
-<h2>【未定/待研究补充区】</h2>
-<ul><li>[ ] 灵术师"灵兽投射"离场3秒期间，若主角受到致命伤害，替命机制是否触发？</li></ul>
-<ul><li>[ ] 合体奥义能量槽具体充能数值（按伤害量/受击量/时间？）</li></ul>
-<ul><li>[ ] 驭灵师灵兽瞬闪与灵兽投射（灵术师E）的位移距离对比验证</li></ul>
-<ul><li>[ ] 灵战士铁壁格挡在地狱档BOSS连续多段攻击下的耐力消耗是否过高</li></ul>
-<ul><li>[ ] 元素遁路径效果在多人模式（若未来加入）中的视觉污染评估</li></ul>
-<ul><li>[ ] 此处留白：_________________________</li></ul>
-</div></div></body></html>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">按键</th>
+<th style="text-align: center;">绑定内容</th>
+<th style="text-align: center;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Q</td>
+<td style="text-align: center;">伙伴灵兽1 SKILL_Q</td>
+<td style="text-align: center;">攻击型</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">F</td>
+<td style="text-align: center;">伙伴灵兽2 SKILL_W</td>
+<td style="text-align: center;">功能型</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">E</td>
+<td style="text-align: center;">伙伴灵兽3
+<strong>SKILL_E（辅助，必留！）</strong></td>
+<td style="text-align: center;">辅助型</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">R</td>
+<td style="text-align: center;">合体奥义 / 当前出战灵兽R技</td>
+<td style="text-align: center;">保留玩家R技或切换为灵兽R技</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>E位必留辅助原则（铁律）</strong>：无论当前模式（玩家E技为辅助/生存技）还是伙伴模式（灵兽E技为辅助技），E键必须绑定辅助型技能。这是为了保证玩家在混乱战况下始终有一个”安全键”。</p>
+</blockquote>
+<hr />
+<h2 id="sec-7">【未定/待研究补充区】</h2>
+<ul class="task-list">
+<li><p><label><input type="checkbox"></input>灵术师”灵兽投射”离场3秒期间，若主角受到致命伤害，替命机制是否触发？</label></p></li>
+<li><p><label><input type="checkbox"></input>合体奥义能量槽具体充能数值（按伤害量/受击量/时间？）</label></p></li>
+<li><p><label><input type="checkbox"></input>驭灵师灵兽瞬闪与灵兽投射（灵术师E）的位移距离对比验证</label></p></li>
+<li><p><label><input type="checkbox"></input>灵战士铁壁格挡在地狱档BOSS连续多段攻击下的耐力消耗是否过高</label></p></li>
+<li><p><label><input type="checkbox"></input>元素遁路径效果在多人模式（若未来加入）中的视觉污染评估</label></p></li>
+<li><p><label><input type="checkbox"></input>此处留白：_________________________</label></p></li>
+</ul>
+
+
+
+
+
+
+
+</body>
+</body>
+</html>

@@ -1,113 +1,231 @@
 <!DOCTYPE html>
-<html lang="zh-CN"><head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>0.1版本 · 杨长辉作品集</title>
-<style>
-*{box-sizing:border-box}
-body{font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;line-height:1.85;color:#26303f;margin:0;background:#f6f8fc;font-size:15.5px}
-.wrap{max-width:900px;margin:0 auto;padding:26px 22px 80px}
-.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px;font-size:13px}
-.crumb{color:#7c8aa3;word-break:break-all}
-.crumb b{color:#1d4ed8}
-.back{white-space:nowrap;padding:6px 13px;border-radius:8px;background:#1d4ed8;color:#fff;text-decoration:none;font-size:13px}
-h1{font-size:25px;margin:0 0 4px;letter-spacing:.5px;line-height:1.4}
-.meta{color:#8a97ab;font-size:13px;margin:0 0 20px}
-.doc{background:#fff;border-radius:14px;padding:30px 34px 40px;box-shadow:0 2px 14px rgba(30,50,90,.06)}
-.doc h1,.doc h2,.doc h3,.doc h4{color:#12306e;line-height:1.5}
-.doc h1{font-size:22px;margin:26px 0 12px;padding-bottom:8px;border-bottom:2px solid #e5ecfa}
-.doc h2{font-size:19px;margin:24px 0 10px;padding-left:11px;border-left:4px solid #1d4ed8}
-.doc h3{font-size:16.5px;margin:20px 0 8px;color:#1d4ed8}
-.doc h4{font-size:15px;margin:16px 0 6px;color:#38507f}
-.doc p{margin:0 0 13px;text-align:justify}
-.doc strong{color:#12306e}
-.doc ul{padding-left:22px;margin:0 0 13px}
-.doc li{margin:4px 0}
-.doc pre{background:#0f2035;color:#d7e3f7;padding:15px 17px;border-radius:10px;overflow-x:auto;font-size:13.5px;line-height:1.65;font-family:ui-monospace,Menlo,Consolas,monospace}
-.doc code{background:#eef2fa;padding:1px 5px;border-radius:4px;font-size:13.5px;color:#12306e}
-.doc pre code{background:none;color:inherit;padding:0}
-.doc blockquote{margin:0 0 14px;padding:11px 16px;background:#f3f6fd;border-left:4px solid #9db4e8;border-radius:0 8px 8px 0;color:#3c4b64}
-.doc hr{border:0;border-top:1px solid #e5ecfa;margin:24px 0}
-.tw{overflow-x:auto;margin:0 0 16px;border-radius:9px;border:1px solid #e5ecfa}
-.doc table{border-collapse:collapse;width:100%;font-size:13.5px}
-.doc th{background:#eef3fc;color:#12306e;font-weight:600}
-.doc th,.doc td{border:1px solid #e0e8f6;padding:7px 10px;text-align:left;white-space:nowrap}
-.doc tbody tr:nth-child(even){background:#fafbfe}
-.doc .ms{margin:0 0 20px;border:1px solid #e5ecfa;border-radius:11px;overflow:hidden;background:#fbfcfe}
-.doc .ms img{display:block;width:100%;height:auto}
-.doc .ms figcaption{font-size:12.5px;color:#93a0b4;text-align:center;padding:8px 10px;background:#f6f8fc;border-top:1px solid #eef2fa}
-.doc .poem{margin:0 0 3px;line-height:2.15;font-size:16.5px;color:#1f2b3d;letter-spacing:.8px}
-.doc .psrc{margin:10px 0 0;font-size:12.5px;color:#a3aebb;text-align:right}
-.doc .ocrnote{margin:0 0 18px;padding:10px 15px;background:#f3f6fd;border-left:4px solid #9db4e8;border-radius:0 8px 8px 0;color:#5a6a80;font-size:13px}
-@media(max-width:640px){.wrap{padding:16px 12px 50px}.doc{padding:20px 16px 30px}h1{font-size:20px}}
-</style></head><body>
-<div class="wrap">
-<div class="topbar"><div class="crumb">游戏策划专题 / 02-山海师：灵契 / 历代策划总纲 / <b>0.1版本</b></div>
-<a class="back" href="../../../index.html">← 返回目录</a></div>
-<h1>0.1版本</h1>
-<p class="meta">约 1,734 字 · 原件 <a href="0.1%E7%89%88%E6%9C%AC.doc">0.1版本.doc</a></p>
-<div class="doc">
-<p>山海师：灵契》游戏策划案（完整设计大纲</p>
-<p>一、游戏概述</p>
-<p>游戏名称（暂定）：《山海师：灵契</p>
-<p>游戏类型：2D仙侠灵怪收集/剧情冒险/单机</p>
-<p>目标受众：青少年（13岁以上），偏爱国风水墨、仙侠神话、宠物养成与剧情探索的玩家</p>
-<p>游戏平台：PC端（Steam/WeGame），手机端视后续移植情况再做适配优化</p>
-<p>核心口号：绘山河万象，契万物之灵</p>
-<p>二、美术风格与技术实现</p>
-<p>美术基调：“写意水墨风”。摒弃精细线稿，追求形散神聚的泼墨感。场景与灵兽采用大面积留白、宣纸泛黄底色、青绿与水墨色的晕染交融</p>
-<p>美术生产管线：使用LiblibAI（云端SD）等工具生成概念设计图与立绘，后续通过Godot引擎制作2D骨骼动画</p>
-<p>风格：契合水墨风，采用竹简、卷轴、石板、印章、泼墨字体的设计语言，与整体世界观完全统一</p>
-<p>三、世界观与剧情设计</p>
-<p>宏观背景</p>
-<p>山海界：上古《山海经》中记载的奇异世界，内有大国、厌火国、青丘国、大人国等数十个国家与地域</p>
-<p>天道平衡：天地有阴阳，人类恶念会凝聚成“魔气”，复苏四大凶兽（如穷奇、梼杌等），意图祸乱人间。因阴阳法则，神仙不可降世干预，只能将赐福化作“仙缘”散落人间</p>
-<p>山海师：凡人有幸获得仙缘赐福，便可在梦境中进入山海界，与异兽签订契约，维护人间与山海界的平衡</p>
-<p>剧情特色（多线叙事</p>
-<p>主线驱动力：为了阻止四凶兽复苏，玩家需要周游山海经中的各个国家，寻找平息“魔气”的方法</p>
-<p>国家剧情线：每个国家设计独立的故事背景与矛盾（如：厌火国遭遇旱灾怪谈、青丘国狐族内乱、大人国内部崇尚力量的极端派冲突）。玩家不同的选择会导致该国家“恶念值”变化，直接决定战斗难易度及该国后续剧情的走向</p>
-<p>宠物剧情线：游戏中每一只特定的灵兽（尤其是最终进化形态），都有自己独特的背景故事或支线任务，丰富了收集的乐趣</p>
-<p>四、核心玩法系统</p>
-<p>玄学出生系统（玩家背景</p>
-<p>核心逻辑：开局并非固定选职业，而是“填字补命</p>
-<p>玩法细节</p>
-<p>玩家随意填入一段背景描述（可认真，也可糊弄</p>
-<p>系统自动解析出0~3个“命格标签</p>
-<p>自动补全机制：系统强制补齐至5个标签。若解析不足5个，系统从山海标签库中随机抽取补全（如“孤星”、“药灵”、“破军”等</p>
-<p>标签作用：不影响初始基础属性（全属性固定10）。仅影响玩家与特定山海灵兽的“契合度”与“签约成功率”。标签配合得好，签约神兽更容易，配合不好，则只能靠运气和材料硬堆</p>
-<p>契约与灵兽系统（核心</p>
-<p>获取方式：野外探索遇到异兽，提供对应的“山海灵材”作为贡品进行供奉签约</p>
-<p>契约类型（情感羁绊</p>
-<p>临时契约：非常弱，仅能提供少量协助</p>
-<p>平等契约：灵兽继承主角100%的基础属性加成</p>
-<p>伙伴契约：灵兽继承主角150%的基础属性加成</p>
-<p>本命契约（唯一）：灵兽继承主角200%的基础属性加成。只能签订一个</p>
-<p>宠物成长机制（等级挂钩、平滑过渡</p>
-<p>宠物不单独练级。宠物的战力直接与主角的当前基础属性挂钩</p>
-<p>契约签订后，新宠物会在现实时间2小时内，平滑成长到当前契约等级对应100%的上限</p>
-<p>全员可进化：所有初始极其弱小的灵兽，最终都能通过特定的进化材料和“命格”条件，进化成终极形态（神兽），真正做到“真爱可以无敌</p>
-<p>灵兽职业适配：部分灵兽有职业倾向（如“玄火蛇”更适合灵术师施展火法，“铁骨虎”更适合灵战士近战</p>
-<p>但大部分灵兽基础属性成长均衡，任何职业都能携带</p>
-<p>职业系统与战斗</p>
-<p>初始三大职业：驭灵师（强化宠物技能）、灵战士（人兽协同近战）、灵术师（借用兽力远程施法）。后续有大量隐藏职业可通过达成条件解锁</p>
-<p>角色升级机制：主角打怪获得经验升级，升级增加基础力量（直接作用给灵兽</p>
-<p>转职代价：与心魔试炼完全分离。转职消耗当前50%经验值，无虚弱期，无战斗，纯机械扣除，旨在防止玩家频繁无脑切职业流派</p>
-<p>心魔试炼（更换“本命”的残酷代价</p>
-<p>触发：玩家强行解除唯一的“本命契约</p>
-<p>虚弱惩罚：立刻进入“背誓者”7天虚弱期（游戏内时间换算），期间全属性大幅下降，无法签订新本命</p>
-<p>破局方法：挑战“心魔试炼”副本</p>
-<p>胜利（无奖励）：立刻解除7天虚弱期。随后进入3小时（现实时间）倒计时。倒计时结束后，主角当前等级强行减半（向下取整）。（无奖励、不增加属性上限，只有冰冷的代价</p>
-<p>失败：无额外惩罚，继续处于虚弱期，等待结束或恢复状态后重新挑战</p>
-<p>五、体验感与目标受众贴合度</p>
-<p>针对青少年群体</p>
-<p>画面风格清新写意、色彩柔和，不追求血腥暴力</p>
-<p>低门槛、高上限：前期任何人都能轻松抓到弱小的宠物开始旅程，但在探索国家故事和搭配不同职业、灵兽的深度上具备极高研究价值（尤其是“所有小宠物都能进化成顶级神兽”，非常迎合青少年喜欢养成并培育自己独特爱宠的心理</p>
-<p>剧情虽有“恶念”与“凶兽”的危机设定，但不黑暗绝望，整体基调是治愈、探索、拯救山海</p>
-<p>六、技术开发落地方案</p>
-<p>引擎：Godot4（基于GDScript开发，对独立开发者极度友好，低配置电脑也能跑</p>
-<p>辅助开发：使用Trae或Cursor这类AI编程助手，用中文下指令，一次性生成数百行基础代码</p>
-<p>开发路线图</p>
-<p>阶段一（当前）：完成策划案，用LiblibAI生成基础宠物图鉴、人物立绘</p>
-<p>阶段二（原型）：在Godot中实现玩家跑图、玄学背景生成代码、灵兽跟随及基础绑定</p>
-<p>阶段三（核心）：实现战斗系统、职业转换、以及心魔试炼的惩罚机制</p>
-<p>阶段四（内容）：填充不同国家的剧情和不同阶段的灵兽分支进化</p>
-</div></div></body></html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>0.1版本</title>
+
+
+
+
+
+
+<style data-finalize>
+:root{--blue:#1d4ed8;--ink:#222a36;--muted:#6b7686;--line:#e6ebf3;--soft:#f5f8fd;--bg:#fff}
+html{scroll-behavior:smooth}
+body{max-width:900px;margin:0 auto;padding:48px 32px 96px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-size:16px;line-height:1.9;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;word-break:break-word}
+h1{font-size:32px;line-height:1.35;margin:10px 0 28px;color:#0f1f47;font-weight:800;letter-spacing:.5px;text-align:center}
+h2{font-size:22px;line-height:1.42;margin:44px 0 16px;padding-bottom:10px;color:#13306e;border-bottom:2px solid #eaf0fb;font-weight:700}
+h3{font-size:17px;margin:28px 0 11px;color:#1d4ed8;font-weight:700;padding-left:12px;border-left:4px solid var(--blue)}
+h4{font-size:15.5px;margin:20px 0 8px;color:#38507f;font-weight:700}
+p{margin:13px 0}
+.toc{margin:4px auto 42px;max-width:720px;background:var(--soft);border:1px solid var(--line);border-radius:16px;padding:20px 28px 22px}
+.toc .tocttl{text-align:center;font-size:13px;letter-spacing:6px;color:var(--muted);font-weight:700;margin:0 0 16px}
+.toc ul{list-style:none;margin:0;padding:0;text-align:center}
+.toc ul li{margin:8px 0;line-height:1.55}
+.toc ul li.lv3{margin:5px 0}
+.toc ul li a{color:#1d3a73;text-decoration:none;font-size:14.5px;transition:.15s;border-bottom:1px solid transparent}
+.toc ul li a:hover{color:var(--blue);text-decoration:none;border-bottom-color:#bfd2f7}
+.toc ul li.lv3 a{font-size:13.5px;color:#4a5b78}
+table{border-collapse:collapse;width:100%;margin:20px 0 26px;font-size:14px;background:#fff;border:1px solid #dbe3f2;border-radius:10px;overflow:hidden;display:table}
+thead tr{background:#eef3fc}
+th,td{border:1px solid #e0e8f6;padding:10px 14px;text-align:left;vertical-align:top}
+th{color:#13306e;font-weight:600}
+tbody tr:nth-child(even){background:#fafbfe}
+tbody tr:hover{background:#f3f7ff}
+ul,ol{padding-left:1.9em}
+li{margin:7px 0}
+blockquote{margin:1.1em 0;padding:14px 18px;background:#f3f6fd;border-left:4px solid #9db4e8;border-radius:0 10px 10px 0;color:#3c4b64}
+code{background:#eef2fa;padding:2px 6px;border-radius:4px;font-size:13.5px;color:#12306e;font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
+pre{background:#f3f6fd;border:1px solid var(--line);border-radius:10px;padding:14px;overflow:auto}
+pre code{background:none;padding:0}
+img{max-width:100%;height:auto;border-radius:10px;margin:14px 0;box-shadow:0 1px 6px rgba(20,40,90,.1)}
+a{color:var(--blue)}
+hr{border:none;border-top:1px solid var(--line);margin:32px 0}
+@media(max-width:640px){body{padding:34px 18px 70px}h1{font-size:24px}h2{font-size:19px}table{font-size:13px;display:block;overflow-x:auto}.toc{padding:16px 18px 18px}.toc ul li a{font-size:13.5px}}
+</style>
+</head>
+<body>
+<h3 id="sec-1">0.1版本</h3>
+
+<h3 id="sec-2">0.1版本</h3>
+
+<h3 id="sec-3">0.1版本</h3>
+
+<h3 id="sec-4">0.1版本</h3>
+
+<h3 id="sec-5">0.1版本</h3>
+
+<h3 id="sec-6">0.1版本</h3>
+
+<h3 id="sec-7">0.1版本</h3>
+
+<p><span lang="zh-CN">《山海师：灵契》游戏策划案（完整设计大纲）</span></p>
+<p><span lang="zh-CN">一、 游戏概述</span></p>
+<p><span lang="zh-CN">游戏名称（暂定）：《山海师：灵契》</span></p>
+<p><br />
+</p>
+<p><span lang="zh-CN">游戏类型：</span>2D <span lang="zh-CN">仙侠灵怪收集 </span>/ <span lang="zh-CN">剧情冒险 </span>/
+<span lang="zh-CN">单机 </span>RPG</p>
+<p><br />
+</p>
+<p><span lang="zh-CN">目标受众：青少年（</span>13<span lang="zh-CN">岁以上），偏爱国风水墨、仙侠神话、宠物养成与剧情探索的玩家。</span></p>
+<p><br />
+</p>
+<p><span lang="zh-CN">游戏平台：</span>PC <span lang="zh-CN">端（</span>Steam / WeGame<span lang="zh-CN">），手机端视后续移植情况再做适配优化。</span></p>
+<p><br />
+</p>
+<p><span lang="zh-CN">核心口号：绘山河万象，契万物之灵。</span></p>
+<p><br />
+</p>
+<p><span lang="zh-CN">二、 美术风格与技术实现</span></p>
+<p><span lang="zh-CN">美术基调：“写意水墨风”。摒弃精细线稿，追求形散神聚的泼墨感。场景与灵兽采用大面积留白、宣纸泛黄底色、青绿与水墨色的晕染交融。</span></p>
+<p><br />
+</p>
+<p><span lang="zh-CN">美术生产管线：使用 </span>LiblibAI<span lang="zh-CN">（云端 </span>SD<span lang="zh-CN">）等工具生成概念设计图与立绘，后续通过 </span>Godot <span lang="zh-CN">引擎制作 </span>2D <span lang="zh-CN">骨骼动画。</span></p>
+<p><br />
+</p>
+<p>UI <span lang="zh-CN">风格：契合水墨风，采用竹简、卷轴、石板、印章、泼墨字体的设计语言，与整体世界观完全统一。</span></p>
+<p><br />
+</p>
+<p><span lang="zh-CN">三、 世界观与剧情设计</span></p>
+<p>3.1 <span lang="zh-CN">宏观背景</span></p>
+<p><span lang="zh-CN">山海界：上古《山海经》中记载的奇异世界，内有大国、厌火国、青丘国、大人国等数十个国家与地域。</span></p>
+<p><br />
+</p>
+<p><span lang="zh-CN">天道平衡：天地有阴阳，人类恶念会凝聚成“魔气”，复苏四大凶兽（如穷奇、梼杌等），意图祸乱人间。因阴阳法则，神仙不可降世干预，只能将赐福化作“仙缘”散落人间。</span></p>
+<p><br />
+</p>
+<p><span lang="zh-CN">山海师：凡人有幸获得仙缘赐福，便可在梦境中进入山海界，与异兽签订契约，维护人间与山海界的平衡。</span></p>
+<p><br />
+</p>
+<p>3.2 <span lang="zh-CN">剧情特色（多线叙事）</span></p>
+<p><span lang="zh-CN">主线驱动力：为了阻止四凶兽复苏，玩家需要周游山海经中的各个国家，寻找平息“魔气”的方法。</span></p>
+<p><br />
+</p>
+<p><span lang="zh-CN">国家剧情线：每个国家设计独立的故事背景与矛盾（如：厌火国遭遇旱灾怪谈、青丘国狐族内乱、大人国内部崇尚力量的极端派冲突）。玩家不同的选择会导致该国家“恶念值”变化，直接决定战斗难易度及该国后续剧情的走向。</span></p>
+<p><br />
+</p>
+<p><span lang="zh-CN">宠物剧情线：游戏中每一只特定的灵兽（尤其是最终进化形态），都有自己独特的背景故事或支线任务，丰富了收集的乐趣。</span></p>
+<p><br />
+</p>
+<p><span lang="zh-CN">四、 核心玩法系统</span></p>
+<p>4.1 <span lang="zh-CN">玄学出生系统（玩家背景）</span></p>
+<p><span lang="zh-CN">核心逻辑：开局并非固定选职业，而是“填字补命”。</span></p>
+<p><br />
+</p>
+<p><span lang="zh-CN">玩法细节：</span></p>
+<p><br />
+</p>
+<p><span lang="zh-CN">玩家随意填入一段背景描述（可认真，也可糊弄）。</span></p>
+<p><br />
+</p>
+<p><span lang="zh-CN">系统自动解析出 </span>0~3 <span lang="zh-CN">个“命格标签”。</span></p>
+<p><br />
+</p>
+<p><span lang="zh-CN">自动补全机制：系统强制补齐至 </span>5 <span lang="zh-CN">个标签。若解析不足</span>5<span lang="zh-CN">个，系统从山海标签库中随机抽取补全（如“孤星”、“药灵”、“破军”等）。</span></p>
+<p><br />
+</p>
+<p><span lang="zh-CN">标签作用：不影响初始基础属性（全属性固定</span>10<span lang="zh-CN">）。仅影响玩家与特定山海灵兽的“契合度”与“签约成功率”。标签配合得好，签约神兽更容易，配合不好，则只能靠运气和材料硬堆。</span></p>
+<p><br />
+</p>
+<p>4.2 <span lang="zh-CN">契约与灵兽系统（核心）</span></p>
+<p><span lang="zh-CN">获取方式：野外探索遇到异兽，提供对应的“山海灵材”作为贡品进行供奉签约。</span></p>
+<p><br />
+</p>
+<p><span lang="zh-CN">契约类型（情感羁绊）：</span></p>
+<p><br />
+</p>
+<p><span lang="zh-CN">临时契约：非常弱，仅能提供少量协助。</span></p>
+<p><br />
+</p>
+<p><span lang="zh-CN">平等契约：灵兽继承主角 </span>100% <span lang="zh-CN">的基础属性加成。</span></p>
+<p><br />
+</p>
+<p><span lang="zh-CN">伙伴契约：灵兽继承主角 </span>150% <span lang="zh-CN">的基础属性加成。</span></p>
+<p><br />
+</p>
+<p><span lang="zh-CN">本命契约（唯一）：灵兽继承主角 </span>200% <span lang="zh-CN">的基础属性加成。只能签订一个。</span></p>
+<p><br />
+</p>
+<p><span lang="zh-CN">宠物成长机制（等级挂钩、平滑过渡）：</span></p>
+<p><br />
+</p>
+<p><span lang="zh-CN">宠物不单独练级。宠物的战力直接与主角的当前基础属性挂钩。</span></p>
+<p><br />
+</p>
+<p><span lang="zh-CN">契约签订后，新宠物会在现实时间 </span>2<span lang="zh-CN">小时内，平滑成长到当前契约等级对应</span>100%<span lang="zh-CN">的上限。</span></p>
+<p><br />
+</p>
+<p><span lang="zh-CN">全员可进化：所有初始极其弱小的灵兽，最终都能通过特定的进化材料和“命格”条件，进化成终极形态（神兽），真正做到“真爱可以无敌”。</span></p>
+<p><br />
+</p>
+<p><span lang="zh-CN">灵兽职业适配：部分灵兽有职业倾向（如“玄火蛇”更适合灵术师施展火法，“铁骨虎”更适合灵战士近战），但大部分灵兽基础属性成长均衡，任何职业都能携带。</span></p>
+<p><br />
+</p>
+<p>4.3 <span lang="zh-CN">职业系统与战斗</span></p>
+<p><span lang="zh-CN">初始三大职业：驭灵师（强化宠物技能）、灵战士（人兽协同近战）、灵术师（借用兽力远程施法）。后续有大量隐藏职业可通过达成条件解锁。</span></p>
+<p><br />
+</p>
+<p><span lang="zh-CN">角色升级机制：主角打怪获得经验升级，升级增加基础力量（直接作用给灵兽）。</span></p>
+<p><br />
+</p>
+<p><span lang="zh-CN">转职代价：与心魔试炼完全分离。转职消耗当前
+</span>50% <span lang="zh-CN">经验值，无虚弱期，无战斗，纯机械扣除，旨在防止玩家频繁无脑切职业流派。</span></p>
+<p><br />
+</p>
+<p>4.4 <span lang="zh-CN">心魔试炼（更换“本命”的残酷代价）</span></p>
+<p><span lang="zh-CN">触发：玩家强行解除唯一的“本命契约”。</span></p>
+<p><br />
+</p>
+<p><span lang="zh-CN">虚弱惩罚：立刻进入“背誓者”</span>7<span lang="zh-CN">天虚弱期（游戏内时间换算），期间全属性大幅下降，无法签订新本命。</span></p>
+<p><br />
+</p>
+<p><span lang="zh-CN">破局方法：挑战“心魔试炼”副本。</span></p>
+<p><br />
+</p>
+<p><span lang="zh-CN">胜利（无奖励）：立刻解除</span>7<span lang="zh-CN">天虚弱期。随后进入 </span>3<span lang="zh-CN">小时（现实时间）倒计时。倒计时结束后，主角当前等级强行减半（向下取整）。（无奖励、不增加属性上限，只有冰冷的代价）。</span></p>
+<p><br />
+</p>
+<p><span lang="zh-CN">失败：无额外惩罚，继续处于虚弱期，等待结束或恢复状态后重新挑战。</span></p>
+<p><br />
+</p>
+<p><span lang="zh-CN">五、 体验感与目标受众贴合度</span></p>
+<p><span lang="zh-CN">针对青少年群体：</span></p>
+<p><br />
+</p>
+<p><span lang="zh-CN">画面风格清新写意、色彩柔和，不追求血腥暴力。</span></p>
+<p><br />
+</p>
+<p><span lang="zh-CN">低门槛、高上限：前期任何人都能轻松抓到弱小的宠物开始旅程，但在探索国家故事和搭配不同职业、灵兽的深度上具备极高研究价值（尤其是“所有小宠物都能进化成顶级神兽”，非常迎合青少年喜欢养成并培育自己独特爱宠的心理）。</span></p>
+<p><br />
+</p>
+<p><span lang="zh-CN">剧情虽有“恶念”与“凶兽”的危机设定，但不黑暗绝望，整体基调是治愈、探索、拯救山海。</span></p>
+<p><br />
+</p>
+<p><span lang="zh-CN">六、 技术开发落地方案</span></p>
+<p><span lang="zh-CN">引擎：</span>Godot 4<span lang="zh-CN">（基于
+</span>GDScript <span lang="zh-CN">开发，对独立开发者极度友好，低配置电脑也能跑）。</span></p>
+<p><br />
+</p>
+<p>AI <span lang="zh-CN">辅助开发：使用 </span>Trae <span lang="zh-CN">或 </span>Cursor <span lang="zh-CN">这类 </span>AI <span lang="zh-CN">编程助手，用中文下指令，一次性生成数百行基础代码。</span></p>
+<p><br />
+</p>
+<p><span lang="zh-CN">开发路线图：</span></p>
+<p><br />
+</p>
+<p><span lang="zh-CN">阶段一（当前）：完成策划案，用 </span>LiblibAI
+<span lang="zh-CN">生成基础宠物图鉴、人物立绘。</span></p>
+<p><span lang="zh-CN">阶段二（原型）：在 </span>Godot <span lang="zh-CN">中实现玩家跑图、玄学背景生成代码、灵兽跟随及基础绑定。</span></p>
+<p><span lang="zh-CN">阶段三（核心）：实现战斗系统、职业转换、以及心魔试炼的惩罚机制。</span></p>
+<p><span lang="zh-CN">阶段四（内容）：填充不同国家的剧情和不同阶段的灵兽分支进化。</span></p>
+
+
+
+
+
+
+
+</body>
+</body>
+</html>
